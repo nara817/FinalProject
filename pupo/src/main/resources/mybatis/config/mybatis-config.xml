@@ -12,7 +12,12 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-
+<!-- kim -->
+		
+		<typeAlias alias="UserDTO" type="com.gdu.pupo.domain.UserDTO" />
+		<typeAlias alias="SleepUserDTO" type="com.gdu.pupo.domain.SleepUserDTO" />
+		<typeAlias alias="LeaveUserDTO" type="com.gdu.pupo.domain.LeaveUserDTO" />
+		<typeAlias alias="UserAccessDTO" type="com.gdu.pupo.domain.UserAccessDTO" />
 	</typeAliases>
 
 </configuration>

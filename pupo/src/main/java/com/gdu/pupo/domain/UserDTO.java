@@ -1,6 +1,6 @@
 package com.gdu.pupo.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,4 +29,8 @@ public class UserDTO {
   private Date pwModifiedAt;
   private String autologinId;
   private Date autologinExpiredAt;
+  private int sellerCheck;
+  private int point;
+  private String grade;
+  
 }

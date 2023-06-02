@@ -17,7 +17,8 @@ public interface UserService {
   public void autologin(HttpServletRequest request, HttpServletResponse response);
   public void logout(HttpServletRequest request, HttpServletResponse response);
   public void leave(HttpServletRequest request, HttpServletResponse response);
-  public void sleepUserHandle();
+
+	/* public void sleepUserHandle(); */
   public void restore(HttpServletRequest request, HttpServletResponse response);
   public boolean checkPw(String id, String pw);
   public UserDTO getUserById(String id);

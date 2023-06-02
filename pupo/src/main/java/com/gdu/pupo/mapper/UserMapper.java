@@ -23,9 +23,16 @@ public interface UserMapper {
 	  public UserDTO selectAutologin(String autologinId);
 	  public int insertLeaveUser(LeaveUserDTO leaveUserDTO);
 	  public int deleteUser(String id);
-	  public int insertSleepUser();
+
+		/* public int insertSleepUser(); */
 	  public int deleteUserForSleep();
 	  public int insertRestoreUser(String id);
 	  public int deleteSleepUser(String id);
+	  public int modifyUserInfo(UserDTO userDTO);
+	  public UserDTO selectFindUserId(UserDTO userDTO);
+	  public String selectUserPwByUserDTO(UserDTO userDTO);
+	  public int updateUserTempPw(UserDTO userDTO);
+	  public String selectUserPwCheck(UserDTO userDTO);
+	  public int updateUserPw(UserDTO userDTO);
 	  
 }
