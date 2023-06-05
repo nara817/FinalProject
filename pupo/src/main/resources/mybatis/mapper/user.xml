@@ -179,13 +179,7 @@
   </select>
 
 
-    <!--유저존재여부찾기 찾기 -->
-   <select id="selectUserPwByUserDTO" parameterType="UserDTO" resultType="String">
-    SELECT COUNT(ID) cntUserYn
-      FROM USER_T
-      WHERE ID = #{id}
-        AND EMAIL = #{email}
-  </select>
+
   
       <!--임시비밀번호 저장 -->
   <update id="updateUserTempPw" parameterType="UserDTO">
@@ -323,15 +317,35 @@
      WHERE ID = #{id}
   </delete>
   
-    <!-- 회원정보 수정 -->
-  <update id="modifyUserInfo" parameterType="UserDTO">
+  <select id="selectUserByUserDTO" parameterType="UserDTO" resultType="UserDTO">
+    SELECT ID
+      FROM USER_T
+     WHERE ID = #{id}
+       AND PW = #{pw}
+  </select>
+  
+  <update id="updateUserAccess" parameterType="String">
+    UPDATE USER_ACCESS_T
+       SET LAST_LOGIN_AT = NOW()
+     WHERE ID = #{id}
+  </update>
+  
+   <insert id="insertUserAccess" parameterType="String">
+    INSERT INTO USER_ACCESS_T (
+        ID
+      , LAST_LOGIN_AT
+    ) VALUES (
+        #{id}
+      , NOW()
+    )
+  </insert>
+  
+   <update id="deleteAutologin" parameterType="String">
     UPDATE USER_T
-       SET NAME = #{name}
-        , GENDER = #{gender}
-        , EMAIL = #{email}
-        , MOBILE = #{mobile}
-    WHERE ID = #{id}
-</update> 
+       SET AUTOLOGIN_ID = NULL
+         , AUTOLOGIN_EXPIRED_AT = NULL
+     WHERE ID = #{id}
+  </update>
  
 
 </mapper>

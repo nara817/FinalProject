@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
-<head th:replace="~{/layout/header::headFrag('user')}"></head>
 <script src="/js/lib/jquery-3.6.4.min.js"></script>
 <script th:inline="javascript">
 
@@ -38,7 +37,7 @@
       // 아이디 중복 체크 ajax
       $.ajax({
         type: 'get',
-        url: '${contextPath}/user/verifyId.do',
+        url: '/user/verifyId.do',
         data: 'id=' + id,
         dataType: 'json',
         success: function(resData){  // resData = {"enableId": true} 또는 {"enableId": false}
@@ -145,7 +144,7 @@
       strYear += '<option value="' + y + '">' + y + '</option>';
     }
     $('#birthyear').append(strYear);
-    $('#birthyear').val("${user.birthyear}");
+    $('#birthyear').val(/*[[${user.birthyear}]]*/);
     
     
     // 월(1 ~ 12월)
@@ -158,7 +157,7 @@
       }
     }
     $('#birthmonth').append(strMonth);
-    var monthDate = "${user.birthdate}";
+    var monthDate = /*[[${user.birthdate}]]*/"";
 
     $('#birthmonth').val(monthDate.substring(0,2));
     
@@ -243,7 +242,7 @@ function fnCheckEmail() {
       // 이메일 중복 체크
       $.ajax({
         type: 'get',
-        url: '${contextPath}/user/verifyEmail.do',
+        url: '/user/verifyEmail.do',
         data: 'email=' + email,
         dataType: 'json',
         success: function(resData) { // resData = {"enableEmail": true} 또는 {"enableEmail": false}
@@ -320,7 +319,7 @@ function fnCheckEmail() {
             <div class="loginBoxTitle" id="loginBox_input">User Information</div>
             <div class="info"><span class="highlight">일부</span>회원정보만 수정 가능합니다.</div>
             <hr>
-            <form id="modifyInfo" th:action="@{/user/modifyInfo}" method="post">
+            <form id="modifyInfo" th:action="@{/user/modifyInfo.do}" method="post">
                 <input type="hidden" name="location" th:value="${location}">
                 <input type="hidden" name="event" th:value="${event}">
                 <div>
@@ -348,7 +347,7 @@ function fnCheckEmail() {
                 </div>
                 <div>
                     <label for="birthyear" class="birthyear">생년월일</label>
-                    <select name="birthyear" id="birthyear"></select>
+                    <select name="birthyear" id="birthyear" ></select>
                     <select name="birthmonth" id="birthmonth"></select>
                     <select name="birthdate" id="birthdate"></select>
                 </div>

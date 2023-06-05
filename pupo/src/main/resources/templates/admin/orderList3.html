@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>구독상품 주문조회</title>
+</head>
+<body>
+    <h1>주문 조회</h1>
+    <div>
+        <form th:action="@{/orders}" method="get">
+            <label>주문번호:</label>
+            <input type="text" name="orderNumber" />
+            <label>회원ID:</label>
+            <input type="text" name="userId" />
+            <button type="submit">검색</button>
+        </form>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" /></th>
+                    <th>주문번호</th>
+                    <th>주문상태
+                        <a th:href="?sort=status">▲</a>
+                        <a th:href="?sort=-status">▼</a>
+                    </th>
+                    <th>운송장번호</th>
+                    <th>상품명</th>
+                    <th>수량</th>
+                    <th>금액(원가)</th>
+                    <th>금액(할인)</th>
+                    <th>배송비</th>
+                    <th>금액(최종)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="order : ${orders}">
+                    <td><input type="checkbox" /></td>
+                    <td th:text="${order.orderNumber}"></td> <!-- /* 주문번호 */ -->
+                    <td th:text="${order.status}"></td> <!-- /* 주문상태 */ -->
+                    <td th:text="${order.trackingNumber}"></td> <!-- /* 운송장번호 */ -->
+                    <td th:text="${order.productName}"></td> <!-- /* 상품명 */ -->
+                    <td th:text="${order.quantity}"></td> <!-- /* 수량 */ -->
+                    <td th:text="${order.originalPrice}"></td> <!-- /* 금액 */ -->
+                    <td th:text="${order.discountedPrice}"></td> <!-- /* 할인 금액*/ -->
+                    <td th:text="${order.deliveryFee}"></td> <!-- /* 배송비 */ -->
+                    <td th:text="${order.finalAmount}"></td> <!-- /* 결제금액 */ -->
+                </tr>
+                <tr>
+                    <td colspan="5"></td>
+                    <td th:text="${totalQuantity}"></td>
+                    <td th:text="${totalOriginalPrice}"></td>
+                    <td th:text="${totalDiscountedPrice}"></td>
+                    <td th:text="${totalDeliveryFee}"></td>
+                    <td th:text="${totalFinalAmount}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- /* 페이지네이션 */ -->
+    <div>
+        <ul>
+            <li><a th:href="@{/orders?page=1}">&lt;</a></li>
+            <li th:each="page : ${pages}">
+                <a th:href="@{/orders(page=${page})}" th:text="${page}"></a>
+            </li>
+            <li><a th:href="@{/orders?page=${totalPages}}">&gt;</a></li>
+        </ul>
+    </div>
+</body>
+</html>
