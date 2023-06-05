@@ -12,12 +12,38 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-<!-- kim -->
+	
+		<!-- User -->			
+		<typeAlias alias="UserDTO" 					type="com.gdu.pupo.domain.UserDTO" />
+		<typeAlias alias="SleepUserDTO"				type="com.gdu.pupo.domain.SleepUserDTO" />
+		<typeAlias alias="LeaveUserDTO" 			type="com.gdu.pupo.domain.LeaveUserDTO" />
+		<typeAlias alias="UserAccessDTO" 			type="com.gdu.pupo.domain.UserAccessDTO" />
 		
-		<typeAlias alias="UserDTO" type="com.gdu.pupo.domain.UserDTO" />
-		<typeAlias alias="SleepUserDTO" type="com.gdu.pupo.domain.SleepUserDTO" />
-		<typeAlias alias="LeaveUserDTO" type="com.gdu.pupo.domain.LeaveUserDTO" />
-		<typeAlias alias="UserAccessDTO" type="com.gdu.pupo.domain.UserAccessDTO" />
+		<!-- jo / Faq / Qna / Notice -->
+		<typeAlias alias="FaqDTO" 					type="com.gdu.pupo.domain.FaqDTO" />
+		<typeAlias alias="NoticeDTO" 				type="com.gdu.pupo.domain.NoticeDTO" />
+		<typeAlias alias="QnaDTO" 					type="com.gdu.pupo.domain.QnaDTO" />
+		<typeAlias alias="SummernoteNoticeImageDTO" type="com.gdu.pupo.domain.SummernoteNoticeImageDTO" />
+		<typeAlias alias="SummernoteQnaImageDTO" 	type="com.gdu.pupo.domain.SummernoteQnaImageDTO" />
+		
+		<!-- yu / RegularProduct / Coupon -->
+		<typeAlias alias="RegularCouponDTO" 		type="com.gdu.home.domain.RegularCouponDTO" />
+		<typeAlias alias="RegularCouponUserDTO" 	type="com.gdu.pupo.domain.RegularCouponUserDTO" />
+		<typeAlias alias="RegularShipDTO" 			type="com.gdu.pupo.domain.RegularDeliveryAddressDTO" />
+		<typeAlias alias="RegularDetailImgDTO" 		type="com.gdu.pupo.domain.RegularDetailImgDTO" />
+		<typeAlias alias="RegularProductDTO" 		type="com.gdu.pupo.domain.RegularProductDTO" />
+		<typeAlias alias="RegularPurchaseDTO" 		type="com.gdu.pupo.domain.RegularPurchaseDTO" />
+		<typeAlias alias="RegularReviewDTO" 		type="com.gdu.pupo.domain.RegularReviewDTO" />
+		<typeAlias alias="UserGradeDTO" 			type="com.gdu.pupo.domain.UserGradeDTO" />
+		
+		<!-- park / Item / Cart -->
+		<typeAlias alias="ItemDTO" 					type="com.gdu.home.domain.ItemDTO" />
+		<typeAlias alias="ShipDTO" 					type="com.gdu.home.domain.ShipDTO" />
+		<typeAlias alias="ReviewDTO" 				type="com.gdu.home.domain.ReviewDTO" />
+		<typeAlias alias="CartDTO" 					type="com.gdu.home.domain.CartDTO" />
+		<typeAlias alias="CartListDTO" 				type="com.gdu.home.domain.CartListDTO" />
+		<typeAlias alias="OrderDTO" 				type="com.gdu.home.domain.OrderDTO" />
+						
 	</typeAliases>
 
 </configuration>
