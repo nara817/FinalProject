@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <title>일반상품 주문조회</title>
+    <style>
+        /* CSS 스타일을 여기에 추가하세요 */
+        .dropdown-content {
+            display: none;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- /* nav bar */  -->
+    <nav>
+        <ul>
+            <li><a th:href="#">카테고리</a></li>
+            <li class="dropdown">
+                <a th:href="#">회원관리</a>
+                <div class="dropdown-content">
+                    <a th:href="#">회원조회</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a th:href="#">주문조회</a>
+                <div class="dropdown-content">
+                    <a th:href="#">구독상품</a>
+                    <a th:href="#">일반상품</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a th:href="#">고객센터</a>
+                <div class="dropdown-content">
+                    <a th:href="#">고객문의</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+<!-- /* nav bar */  -->
+
+    <script th:inline="javascript">
+
+    </script>
+</body>
+</html>
