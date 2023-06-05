@@ -475,7 +475,7 @@ public class UserServiceImpl implements UserService {
 					}
 	
 					out.println("<script>");
-					out.println("location.href='" + request.getContextPath() + "/user/sendTemporaryPassword.form';");
+					out.println("location.href='" + request + "/user/sendTemporaryPassword.form';");
 					out.println("</script>");
 					out.flush();
 					out.close();

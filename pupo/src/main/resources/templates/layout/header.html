@@ -26,8 +26,8 @@
   */-->
   <div th:fragment="gnbFrag">
     <div th:if="${#strings.isEmpty(session.loginId)}">
-      <span><a th:href="@{/user/login.html}">로그인</a></span>
-      <span><a th:href="@{/user/agree.html}">회원가입</a></span>
+      <span><a aria-current="page" th:href="@{/user/login.form}">로그인</a></span>
+      <span><a th:href="@{/user/agree.form}">회원가입</a></span>
     </div>
     <div th:unless="${#strings.isEmpty(session.loginId)}">
       <span><a th:href="@{/user/checkPw.do}" th:text="${session.loginId}"></a>님 반갑습니다</span>
