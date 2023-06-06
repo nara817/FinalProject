@@ -21,7 +21,7 @@ import com.gdu.pupo.service.UserService;
 import lombok.RequiredArgsConstructor;	
 
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/user")
 @Controller
 public class UserController {
 

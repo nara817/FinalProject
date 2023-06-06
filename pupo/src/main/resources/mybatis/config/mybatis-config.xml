@@ -29,7 +29,7 @@
 		<!-- yu / RegularProduct / Coupon -->
 		<typeAlias alias="CouponDTO" 				type="com.gdu.pupo.domain.CouponDTO" />
 		<typeAlias alias="CouponUserDTO" 			type="com.gdu.pupo.domain.CouponUserDTO" />
-		<typeAlias alias="RegularShipDTO" 			type="com.gdu.pupo.domain.RegularDeliveryAddressDTO" />
+		<typeAlias alias="RegularShipDTO" 			type="com.gdu.pupo.domain.RegularShipDTO" />
 		<typeAlias alias="RegularDetailImgDTO" 		type="com.gdu.pupo.domain.RegularDetailImgDTO" />
 		<typeAlias alias="RegularProductDTO" 		type="com.gdu.pupo.domain.RegularProductDTO" />
 		<typeAlias alias="RegularPurchaseDTO" 		type="com.gdu.pupo.domain.RegularPurchaseDTO" />
