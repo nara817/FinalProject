@@ -179,8 +179,6 @@ public class UserServiceImpl implements UserService {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("loginId", id);
-			session.setAttribute("sellerChk", loginUserDTO.getSellerCheck()); // 구분 값 가져오기
-			
 
 			int updateResult = userMapper.updateUserAccess(id);
 			if (updateResult == 0) {
