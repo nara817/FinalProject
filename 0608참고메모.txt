@@ -1,0 +1,49 @@
+2023-06-08
+---------------------------------------------------
+로그인, 회원가입 확인 , db 회원정보 저장 확인
+---------------------------------------------------
+
+1) pom.xml 
+<dependency> 추가
+"    <!-- 업로드 -->
+    <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.5</version>
+        </dependency>"
+"	<!-- 썸네일 -->
+	<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+	<dependency>
+	    <groupId>net.coobird</groupId>
+	    <artifactId>thumbnailator</artifactId>
+	    <version>0.4.13</version>
+	</dependency>"
+"  <!-- 데이터 크롤링(jsoup)-->
+  <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.4</version>
+        </dependency>"
+"  <!-- spring-context-support 써드 파티 라이브러리 -->
+  <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>5.3.3</version>
+        </dependency>"
+"  <!-- jackson- -->
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.14.2</version>
+</dependency>"
+
+2) UserServiceImpl
+login sellercheck 세션 저장 추가
+
+3) index.html
+sellercheck 구분에 따른 페이지 보여주기 수정
+
