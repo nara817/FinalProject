@@ -141,7 +141,7 @@
     let year = new Date().getFullYear();
     let strYear = '<option value="">년도</option>';
     for(let y = year - 100; y <= year + 1; y++){
-      strYear += '<option value="' + y + '">' + y + '</option>';
+      strYear += '<option value="' + y + '">' + y + '년</option>';
     }
     $('#birthyear').append(strYear);
     $('#birthyear').val(/*[[${user.birthyear}]]*/);
@@ -159,7 +159,8 @@
     $('#birthmonth').append(strMonth);
     var monthDate = /*[[${user.birthdate}]]*/"";
 
-    $('#birthmonth').val(monthDate.substring(0,2));
+    /* $('#birthmonth').val(monthDate.substring(0,2)); */
+    $('#birthmonth').val(/*[[${#strings.substring(user.birthdate, 0, 2)}]]*/);
     
     fnSetDate(monthDate);
     
@@ -191,7 +192,7 @@
       $('#birthdate').append(strDay);
 
       
-    });
+    })
     
   }
 
@@ -199,7 +200,7 @@ function fnSetDate(monthDate){
     $('#birthdate').empty();
     let endDay = 0;
     let strDay = '';
-    switch(monthDate.substring(0,2)){
+    switch('${#strings.substring(monthDate.content, 0, 2)}'){
     case '02':
       endDay = 29; break;
     case '04':

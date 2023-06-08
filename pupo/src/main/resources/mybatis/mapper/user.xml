@@ -162,6 +162,8 @@
         , GENDER = #{gender}
         , EMAIL = #{email}
         , MOBILE = #{mobile}
+      	, BIRTHYEAR = #{birthyear}
+      	, BIRTHDATE =#{birthdate}
     WHERE ID = #{id}
   </update>
   
