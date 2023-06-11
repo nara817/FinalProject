@@ -10,34 +10,104 @@
   <meta charset="UTF-8">
   <title th:text="${title}"></title>
   <script th:src="@{/js/lib/jquery-3.6.4.min.js}"></script>
+  <script th:src="@{/bootstrap-5.0.2/js/bootstrap.min.js}"></script>
   <link rel="stylesheet" th:href="@{/css/style.css(ver=1.0)}">
+  <link rel="stylesheet" th:href="@{/bootstrap-5.0.2/css/bootstrap.min.css(ver=1.0)}">
 </head>
 
 
 <body>
 
-
-  <!--/* Link URL Expression : @{} (경로 작성할 때 사용) */-->
-  
-  
   <!--/*
     div 태그를 조각(fragment)으로 만든다.
       - 조각이름 : gnbFrag
   */-->
-  <div th:fragment="gnbFrag">
-    <div th:if="${#strings.isEmpty(session.loginId)}">
-      <span><a aria-current="page" th:href="@{/user/login.form}">로그인</a></span>
-      <span><a th:href="@{/user/agree.form}">회원가입</a></span>
+<div th:fragment="gnbFrag">
+
+<div>
+
+    <h3 style="display:none;">로그인 안했을때 네비바1</h3>
+    <div th:if="${#strings.isEmpty(session.loginId)}" >
+     <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown" style="justify-content: flex-end">
+          <ul class="navbar-nav justify-content-end">
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/user/login.form}">로그인<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/user/agree.form}">회원가입</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" th:href="@{/customerCenter/centerHome.html}" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                고객센터
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" th:href="@{/customerCenter/faq.html}">공지사항</a></li>
+                <li><a class="dropdown-item" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a></li>
+                <li><a class="dropdown-item" th:href="@{/customerCenter/faq.html}">1:1 문의</a></li>
+                <li><a class="dropdown-item" th:href="@{/customerCenter/faq.html}">고객의 소리</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+     </div>
+        
+        
+     <h3 style="display:none;">로그인 했을때 네비바1</h3>
+     <div th:unless="${#strings.isEmpty(session.loginId)}" >
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown" style="justify-content: flex-end">
+          <ul class="navbar-nav justify-content-end">
+            <li class="nav-item active">
+              <div class="nav-link" 
+              style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none"
+              th:text="|${session.loginId} 님 반갑습니다|"></div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/user/logout.do}">로그아웃</a>
+            </li>
+            
+              <li class="nav-item">
+            <th:block th:if="${session.loginId  != null and session.sellerChk == 0}">
+              <a class="nav-link" th:href="@{/user/mypage.do}">마이페이지</a>
+            </th:block>
+              </li>
+              <li class="nav-item">
+            <th:block th:if="${session.loginId != null and session.sellerChk == 1}">
+              <a class="nav-link" th:href="@{/user/mypage.do}">판매자페이지</a>
+            </th:block>
+              </li>
+              <li class="nav-item">
+            <th:block th:if="${session.loginId != null and session.sellerChk == 2}">
+              <a class="nav-link" th:href="@{/user/mypage.do}">관리자페이지</a>
+            </th:block>
+              </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" th:href="@{/customerCenter/centerHome.html}" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                고객센터
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" th:href="@{/customerCenter/faq.html}">공지사항</a></li>
+                <li><a class="dropdown-item" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a></li>
+                <li><a class="dropdown-item" th:href="@{/customerCenter/faq.html}">1:1 문의</a></li>
+                <li><a class="dropdown-item" th:href="@{/customerCenter/faq.html}">고객의 소리</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
     </div>
-    <div th:unless="${#strings.isEmpty(session.loginId)}">
-      <span><a th:href="@{/user/checkPw.do}" th:text="${session.loginId}"></a>님 반갑습니다</span>
-      <span><a th:href="@{/user/logout.do}">로그아웃</a></span>
+
+<!-- 타이틀 -->  
+  <hr>
+    <div id="title"class="text-center text-dark">
+       <h1><a class="display-2" th:href="@{/}" style="text-decoration-line: none;">Full Power Salad</a></h1>
     </div>
-    <ul>
-      <li><a th:href="@{/bbs/list.do}">BBS</a></li>
-    </ul>
-  </div>
+  <hr>
+
+</div>  
   
-  
+</div>
 </body>
 </html>
