@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.pupo.mapper.RegularMapper">
+
+
+   <!-- 상품등록 -->
+   <insert id="addRegular" useGeneratedKeys="true" keyProperty="regularNo" parameterType="regularProductDTO">
+    INSERT INTO REGULAR_PRODUCT_T (
+        REGULAR_NAME
+      , REGULAR_SELL_PRICE
+      , REGULAR_ORIGIN_PRICE
+      , REGULAR_DISPLAY
+      , REGULAR_STOCK
+      , REGULAR_CATEGORY
+      , REGULAR_STATE
+      , REGULAR_SIMPLE_DETAIL
+    ) VALUES (
+      	#{regularName}
+      , #{regularSellPrice}
+      , #{regularOriginPrice}
+      , #{regularDisplay}
+      , #{regularStock}
+      , #{regularCategory}
+      , #{regularState}
+      , #{regularSimpleDetail}
+    )
+  </insert>
+  
+  <!-- 상품 상세 이미지 등록 -->
+  <insert id="addRegImg" useGeneratedKeys="true" keyProperty="regDetailImgNo" parameterType="RegularDetailImgDTO" >
+    INSERT INTO REGULAR_DETAIL_IMG_T (
+        REGULAR_NO
+      , REG_DETAIL_IMG_NAME
+      , REG_FILESYSTEMNAME
+    ) VALUES (
+        #{regularNo}
+      , #{regDetailImgName}
+      , #{regFilesystemName}
+    )
+  </insert>  
+  
+  <!-- 상품 리스트 불러오기 -->
+  <select id="getRegularList2" parameterType="Map" resultType="RegularProductDTO">
+    SELECT REGULAR_NO, REGULAR_NAME, REGULAR_SELL_PRICE, REGULAR_ORIGIN_PRICE, REGULAR_DISPLAY, REGULAR_STOCK, REGULAR_CATEGORY, REGULAR_STATE, REGULAR_SIMPLE_DETAIL 
+    FROM REGULAR_PRODUCT_T
+    ORDER BY REGULAR_NO DESC
+    LIMIT #{begin}, #{recordPerPage}
+  </select>
+  <select id="getRegularImgList" resultType="RegularDetailImgDTO">
+    SELECT REGULAR_NO, REG_DETAIL_IMG_NAME
+    FROM REGULAR_DETAIL_IMG_T
+  </select>
+  <!-- 총 상품 갯수 -->
+  <select id="getRegularCount" resultType="int">
+    SELECT COUNT(*)
+    FROM REGULAR_PRODUCT_T
+  </select>
+  <select id="getRegularImgByNo" parameterType="int" resultType="RegularDetailImgDTO">
+    SELECT REGULAR_NO, REG_DETAIL_IMG_NAME, REG_FILESYSTEMNAME
+    FROM REGULAR_DETAIL_IMG_T
+    WHERE #{regularNo} = REGULAR_NO
+  </select>
+  
+  <!-- 상세페이지 -->
+  <select id="getRegularByNo" parameterType="int" resultType="RegularProductDTO">
+    SELECT REGULAR_NO 
+		     , REGULAR_NAME
+		     , REGULAR_SELL_PRICE
+		     , REGULAR_ORIGIN_PRICE
+		     , REGULAR_DISPLAY
+		     , REGULAR_STOCK
+		     , REGULAR_CATEGORY
+		     , REGULAR_STATE
+		     , REGULAR_SIMPLE_DETAIL
+	   FROM REGULAR_PRODUCT_T
+	  WHERE REGULAR_NO = #{regularNo}
+  </select>
+  
+  <!-- 서치 리스트  -->
+  <select id="getRegularList" parameterType="Map" resultType="RegularProductDTO">
+    SELECT REGULAR_NO, REGULAR_NAME, REGULAR_SELL_PRICE, REGULAR_ORIGIN_PRICE, REGULAR_DISPLAY, REGULAR_STOCK, REGULAR_CATEGORY, REGULAR_STATE, REGULAR_SIMPLE_DETAIL 
+    FROM REGULAR_PRODUCT_T
+    <where>
+      <if test="column != '' and query != ''">
+        ${column} LIKE CONCAT('%', #{query}, '%')
+      </if>
+    </where>    
+    ORDER BY REGULAR_NO DESC
+    LIMIT #{begin}, #{recordPerPage}
+  </select>
+</mapper>
