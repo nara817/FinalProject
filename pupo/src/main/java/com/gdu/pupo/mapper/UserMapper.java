@@ -1,5 +1,7 @@
 package com.gdu.pupo.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.pupo.domain.LeaveUserDTO;
@@ -34,5 +36,4 @@ public interface UserMapper {
 	  public int updateUserTempPw(UserDTO userDTO);
 	  public String selectUserPwCheck(UserDTO userDTO);
 	  public int updateUserPw(UserDTO userDTO);
-	  
 }
