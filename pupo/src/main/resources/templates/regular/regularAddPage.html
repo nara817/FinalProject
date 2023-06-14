@@ -22,8 +22,6 @@
 
 <body>
 
-
-
 <form th:action="@{/regular/regularAdd.do}" enctype="multipart/form-data" method="post">
    <div>
     <div>상품명<input type="text" name="regularName"></div>
@@ -65,26 +63,28 @@
 </body>
   <script th:inline="javascript">
   function fnFileCheck(vThis){
-	    // 최대 크기 10MB
-	    let maxSize = 1024 * 1024 * 10;
-	    
-	    // 첨부된 파일 목록
-	    let files = vThis.files;
-	    
-	    // 첨부된 파일 순회(크기 체크 + 첨부된 파일명 표시)
-	    $('#fileList').empty();
-	    $.each(files, function(i, file){
-	      
-	      // 크기 체크
-	      if(file.size > maxSize){
-	        alert('각 첨부파일의 최대 크기는 10MB입니다.');
-	        $(vThis).val('');  // 첨부된 파일을 모두 지운다.
-	        $('#fileList').text('첨부 파일의 목록이 이 곳에 표시됩니다');
-	        return;
-	      }
-	      
-	    })
-	    
-	  } 
+      // 최대 크기 10MB
+      let maxSize = 1024 * 1024 * 10;
+      
+      // 첨부된 파일 목록
+      let files = vThis.files;
+      
+      // 첨부된 파일 순회(크기 체크 + 첨부된 파일명 표시)
+      $('#fileList').empty();
+      $.each(files, function(i, file){
+        
+        // 크기 체크
+        if(file.size > maxSize){
+          alert('각 첨부파일의 최대 크기는 10MB입니다.');
+          $(vThis).val('');  // 첨부된 파일을 모두 지운다.
+          $('#fileList').text('첨부 파일의 목록이 이 곳에 표시됩니다');
+          return;
+        }
+        
+      })
+      
+    } 
   </script>
+</body>
+
 </html>

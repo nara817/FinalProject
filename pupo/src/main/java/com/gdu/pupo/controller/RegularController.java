@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gdu.pupo.domain.UserDTO;
 import com.gdu.pupo.service.RegularService;
+import com.gdu.pupo.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class RegularController {
 
   private final RegularService regularService;
+  private final UserService userService;
   
   @GetMapping("/regularMain.html")
   public String regularMain() {
@@ -61,5 +64,20 @@ public class RegularController {
     return regularService.regularMainDisplay(regularNo);
   }
   
+  @PostMapping("/regularPayPage.do")
+  public String regularPayPage(HttpServletRequest request, Model model) {
+    int regularNo = Integer.parseInt(request.getParameter("regularNo"));
+    String loginId = request.getParameter("loginId");
+    model.addAttribute("regularDetail", regularService.regularDetail(regularNo, model));
+    UserDTO userDTO = userService.getUserById(loginId);
+    model.addAttribute("loginId", userDTO);
+    return "regular/regularPayPage";
+  }
+  
+  @PostMapping("/regularPurchase.do")
+  public String regularPurchase(HttpServletRequest request, Model model) {
+    model.addAttribute("regPurchase", regularService.regularPurchase(request, model));
+    return "regular/regularPayDone";
+  }
 }
 

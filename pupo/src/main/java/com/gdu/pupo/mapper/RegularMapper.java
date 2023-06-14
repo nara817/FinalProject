@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.pupo.domain.RegularDetailImgDTO;
 import com.gdu.pupo.domain.RegularProductDTO;
+import com.gdu.pupo.domain.RegularPurchaseDTO;
 
 @Mapper
 public interface RegularMapper {
@@ -18,5 +19,8 @@ public interface RegularMapper {
   public int getRegularCount(); // 총 갯수
   public RegularDetailImgDTO getRegularImgByNo(int regularNo); // 이미지 불러오기
   public RegularProductDTO getRegularByNo(int regularNo); // 상세페이지
-  
+  public int addRegPurchase(RegularPurchaseDTO regularPurchaseDTO); // 주문완료 주문정보 저장
+  public RegularPurchaseDTO getRegularPurchaseByNo(int regPurchaseNo); // 주문완료 시 정보 보여주기
+  public List<RegularPurchaseDTO> regularPayList(); // 정기구독 상태가 1인 주문정보
+  public int regularPayUpdate(int regPurchaseNo); // 정기구독 자동결제 후 결제된 횟수 증가 및 마지막 결제 업데이트
 }

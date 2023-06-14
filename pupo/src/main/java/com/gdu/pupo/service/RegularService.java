@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.gdu.pupo.domain.RegularProductDTO;
+import com.gdu.pupo.domain.RegularPurchaseDTO;
 
 public interface RegularService {
 
@@ -15,4 +16,7 @@ public interface RegularService {
   public ResponseEntity<byte[]> regularDisplay(int regularNo); // 상품썸네일, 그냥이미지
   public RegularProductDTO regularDetail(int regularNo, Model model);
   public ResponseEntity<byte[]> regularMainDisplay(int regularNo);
+  public RegularPurchaseDTO regularPurchase(HttpServletRequest request, Model model); // 구매완료 후 구매 저장
+  public String getToken(); // 아임포트 토큰가져오기
+  public String regAgainPay(); // 자동결제
 }

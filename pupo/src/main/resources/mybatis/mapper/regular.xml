@@ -92,4 +92,61 @@
     ORDER BY REGULAR_NO DESC
     LIMIT #{begin}, #{recordPerPage}
   </select>
+  
+  <!-- 주문완료 주문 저장 -->
+  <insert id="addRegPurchase" useGeneratedKeys="true" keyProperty="regPurchaseNo" parameterType="RegularPurchaseDTO">
+    INSERT INTO REGULAR_PURCHASE_T (
+        ID
+      , REG_SHIP_NO
+      , REGULAR_NO
+      , REG_CUSTOMER_UID
+      , REG_PURCHASE_PRICE
+      , REG_PURCHASE_LAST_PRICE
+      , REG_PURCHASE_AT
+      , REG_DELIVERY_STATUS
+      , REG_PRODUCT_COUNT
+      , REG_PG
+      , REG_LAST_PAY_AT
+      , REG_DELIVERY_DAY
+      , REG_PAY_STATUS
+      , REG_PAY_COUNT
+    ) VALUES (
+        #{id}
+      , #{regShipNo}
+      , #{regularNo}
+      , #{regCustomerUid}
+      , #{regPurchasePrice}
+      , #{regPurchaseLastPrice}
+      , NOW()
+      , 1
+      , #{regProductCount}
+      , #{regPg}
+      , NOW()
+      , #{regDeliveryDay}
+      , 1
+      , 1
+      )
+     
+  </insert>
+  
+  <!-- 주문정보조회 -->
+  <select id="getRegularPurchaseByNo" parameterType="int" resultType="RegularPurchaseDTO">
+    SELECT REG_PURCHASE_NO, ID, REG_SHIP_NO, REGULAR_NO, REG_CUSTOMER_UID, REG_PURCHASE_PRICE, REG_PURCHASE_LAST_PRICE, REG_PURCHASE_AT, REG_DELIVERY_STATUS, REG_PRODUCT_COUNT, REG_PG, REG_LAST_PAY_AT, REG_DELIVERY_DAY, REG_PAY_STATUS, REG_PAY_COUNT
+      FROM REGULAR_PURCHASE_T
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo} 
+  </select>
+  
+  <select id="regularPayList" resultType="RegularPurchaseDTO">
+    SELECT REG_PURCHASE_NO, ID, REG_CUSTOMER_UID, REG_PURCHASE_LAST_PRICE, REG_LAST_PAY_AT, REG_PAY_STATUS
+      FROM REGULAR_PURCHASE_T
+     WHERE REG_PAY_STATUS = 1;
+  </select>
+  
+  <update id="regularPayUpdate" parameterType="int">
+    UPDATE REGULAR_PURCHASE_T
+       SET REG_LAST_PAY_AT = NOW(),
+           REG_PAY_COUNT = REG_PAY_COUNT + 1
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo}
+  </update>
+  
 </mapper>
