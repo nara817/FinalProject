@@ -259,8 +259,8 @@ public class RegularServicelmpl implements RegularService {
      headers.setContentType(MediaType.APPLICATION_JSON);
     
      Map<String, Object> map = new HashMap<>();
-     map.put("imp_key", "1487161351821070");
-     map.put("imp_secret", "oQZPokDFbS2jhLizUOctkDl3WWOHzSs0aCq0B8cYSj6oU24Y4UHJPrpoii3ioDJC3g22uxdFmMUv1IQb");
+     map.put("imp_key", "");
+     map.put("imp_secret", "");
       
      Gson var = new Gson();
      String json=var.toJson(map);
