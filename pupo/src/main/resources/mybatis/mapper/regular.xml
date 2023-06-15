@@ -43,6 +43,18 @@
     )
   </insert>  
   
+  <!-- 상품 메인 이미지 등록 -->
+  <insert id="addRegMainImg" useGeneratedKeys="true" keyProperty="regMainImgNo" parameterType="RegularMainImgDTO" >
+    INSERT INTO REGULAR_MAIN_IMG_T (
+        REGULAR_NO
+      , REG_MAIN_IMG_NAME
+      , REG_FILESYSTEMNAME
+    ) VALUES (
+        #{regularNo}
+      , #{regMainImgName}
+      , #{regFilesystemName}
+    )
+  </insert>  
   <!-- 상품 리스트 불러오기 -->
   <select id="getRegularList2" parameterType="Map" resultType="RegularProductDTO">
     SELECT REGULAR_NO, REGULAR_NAME, REGULAR_SELL_PRICE, REGULAR_ORIGIN_PRICE, REGULAR_DISPLAY, REGULAR_STOCK, REGULAR_CATEGORY, REGULAR_STATE, REGULAR_SIMPLE_DETAIL 
