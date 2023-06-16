@@ -349,9 +349,6 @@
          , AUTOLOGIN_EXPIRED_AT = NULL
      WHERE ID = #{id}
   </update>
-<<<<<<< HEAD
-  
-=======
  <!-- 회원 조회 -->
  <select id="selectUserByCount" parameterType="String" resultType="UserDTO">
     SELECT USER_NO
@@ -374,7 +371,6 @@
       FROM USER_T
      WHERE ID = #{id}
   </select>
->>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
   
  
 

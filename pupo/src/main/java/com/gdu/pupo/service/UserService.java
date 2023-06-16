@@ -28,14 +28,8 @@ public interface UserService {
   public Map<String, Object> findUser(String name, String email);
   public void findPw(HttpServletRequest request, HttpServletResponse response);
   public void modifyPw(HttpServletRequest request, HttpServletResponse response);
-<<<<<<< HEAD
- // public UserDTO verifyTemporaryPassword(String id, String temporaryPassword);
-
-  
- //public void modifyPw(UserDTO userDTO);
-=======
  // public UserDTO verifyTemporaryPassword(String id, String temporaryPassword);  
->>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
+
  //public int updatePwd(int mobile, String password) throws Exception;
 
   

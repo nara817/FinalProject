@@ -27,21 +27,15 @@
   
              <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-<<<<<<< HEAD
                           <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/user/login.html}">로그인</a></li>
                           <li class="nav-item"><a class="nav-link" th:href="@{/user/agree.html}">회원가입</a></li>
                        	  <li class="nav-item" th:if="${session.loginId  != null}"><a class="nav-link" th:href="@{/user/checkPw.html}"th:text="${session.loginId}"></a>님 반갑습니다</li>                
-=======
-                          <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/user/login.form}">로그인</a></li>
-                          <li class="nav-item"><a class="nav-link" th:href="@{/user/agree.form}">회원가입</a></li>
-                       	  <li class="nav-item" th:if="${session.loginId  != null}"><a class="nav-link" th:href="@{/user/checkPw.form}"th:text="${session.loginId}"></a>님 반갑습니다</li>                
->>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
+
                           <li class="nav-item"><a class="nav-link" th:href="@{/user/logout.do}">로그아웃</a></li>
                     <!--     <li class="nav-item"><a class="nav-link" th:href="javascript:fnLeave()">회원탈퇴</a></li>
                     
 					<!-- /* 로그인 구분에 따른 마이페이지 */ -->
 					
-<<<<<<< HEAD
 					
 
 					<li class="nav-item user" th:if="${session.loginId  != null and session.sellerChk == 0}">
@@ -58,47 +52,14 @@
 
 
                            
-=======
-					  <a class="nav-link" th:href="@{/user/mypage.do}">마이페이지</a>
-					</li>
-					</th:block>
-					
-					<th:block th:if="${session.loginId != null and session.sellerChk == 1}">
-					<li class="nav-item seller">
-					  <a class="nav-link" th:href="@{/user/mypage.do}">판매자페이지</a>
-
-
-                           
-                        <li class="nav-item"><a class="nav-link" th:href="@{/main}">고객센터</a></li>
-                    </ul>
-                </div>
-            <div>
-    <ul>
-      <li><a th:href="@{/item/list}">shop</a></li>
-      <li><a th:href="@{seller/list}">register</a></li>
-    </ul>
-  </div>
- 
-
-					</li>
-					</th:if>
-					
-					<th:block th:if="${session.loginId != null and session.sellerChk == 2}">
-					<li class="nav-item admin">
-					  <a class="nav-link" th:href="@{/admin/adminMain.do}">관리자페이지</a>
-					</li>
-					</th:block>
 					                           
->>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
                         <li class="nav-item"><a class="nav-link" th:href="@{/main}">고객센터</a></li>
 
                     </ul>
                 </div>
 
-<<<<<<< HEAD
-=======
-<a th:href="@{/regular/regularMain.html}">정기상품</a>
->>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
+
+
 
 
 </body>

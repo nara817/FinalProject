@@ -76,12 +76,8 @@ public class UserController {
   }
   
   // 로그인
-<<<<<<< HEAD
   //@GetMapping("/login.form")
   @GetMapping("/login.html")
-=======
-  @GetMapping("/login.form")
->>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
   public String loginForm(@RequestHeader("referer") String url, Model model) {
     // 요청 헤더 referer : 로그인 화면으로 이동하기 직전의 주소를 저장하는 헤더 값
     model.addAttribute("url", url);
