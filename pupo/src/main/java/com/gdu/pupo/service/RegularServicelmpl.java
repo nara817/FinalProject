@@ -49,13 +49,17 @@ public class RegularServicelmpl implements RegularService {
   private final MyFileUtil myFileUtil;
   private final PageUtil pageUtil;
   
+  
+  // 카테고리 추가
   @Override
-  public void addRegCategory(HttpServletRequest request) {
+  public void addRegCategory(HttpServletRequest request) { 
     String regularCategoryName = request.getParameter("regularCategoryName");
     RegularCategoryDTO regularCategoryDTO = new RegularCategoryDTO();
     regularCategoryDTO.setRegularCategoryName(regularCategoryName);
     regularMapper.addRegCategory(regularCategoryDTO);
   }
+  
+  // 카테고리 전체 리스트
   @Override
   public void getRegCategory(Model model) {
     List<RegularCategoryDTO> list = regularMapper.getRegCategoryList();
@@ -63,6 +67,8 @@ public class RegularServicelmpl implements RegularService {
     model.addAttribute("category", list);
   }
   
+  
+  // 상품 등록
   @Transactional
   @Override
   public int addRegular(MultipartHttpServletRequest multipartRequest) { // 상품등록 
@@ -238,6 +244,8 @@ public class RegularServicelmpl implements RegularService {
     return addResult;
  }
   
+  
+  // 전체 상품 리스트
   @Override
   public void regularList(HttpServletRequest request, Model model) {
    
@@ -272,6 +280,8 @@ public class RegularServicelmpl implements RegularService {
     model.addAttribute("regularMainImgList", regularMainImgList);
   }
   
+  
+  // 메인 이미지 가져오기
   @Override
   public ResponseEntity<byte[]> regularMainDisplay(int regularNo) {
     RegularMainImgDTO regularMainImgDTO = regularMapper.getRegularMainImgByNo(regularNo);
@@ -286,12 +296,15 @@ public class RegularServicelmpl implements RegularService {
     return image;
   }
   
+  
+  // 상품 상세보기 가져오기
   @Override
   public RegularProductDTO regularDetail(int regularNo, Model model) {
     RegularProductDTO regularProductDTO = regularMapper.getRegularByNo(regularNo);
     return regularProductDTO;
   }
   
+  // 상품 상세보기 이미지 가져오기
   @Override
   public ResponseEntity<byte[]> regularDetailDisplay(int regularNo) {
     RegularDetailImgDTO regularDetailImgDTO = regularMapper.getRegularImgByNo(regularNo);
@@ -306,6 +319,8 @@ public class RegularServicelmpl implements RegularService {
     return image;
   }
   
+  
+  // 구매 완료 후 구매 정보 저장
   @Override
   public RegularPurchaseDTO regularPurchase(HttpServletRequest request, Model model) {
     String regCustomerUid = request.getParameter("regCustomerUid");
@@ -337,6 +352,8 @@ public class RegularServicelmpl implements RegularService {
     return regularMapper.getRegularPurchaseByNo(regPurchaseNo);
   }
   
+  
+  // 아임포트 API 토큰 가져오기
   @Override
   public String getToken() { // 아임포트 토큰 받아오기
     RestTemplate restTemplate = new RestTemplate();
@@ -358,6 +375,7 @@ public class RegularServicelmpl implements RegularService {
     return restTemplate.postForObject("https://api.iamport.kr/users/getToken", entity, String.class);
     }
   
+  // 최종결제시점 기준 1개월 후 자동 결제
   @Override
     public String regAgainPay() {
       String token = getToken();

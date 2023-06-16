@@ -51,9 +51,9 @@ public class RegularController {
   }
   
   // 메인 이미지  보여주기
-  @GetMapping("/regularMainDisplay.do")
+  @GetMapping("/regularDetailDisplay.do")
   public ResponseEntity<byte[]> regularDsiplay(@RequestParam("regularNo") int regularNo){
-    return regularService.regularMainDisplay(regularNo);
+    return regularService.regularDetailDisplay(regularNo);
   }
   
   @GetMapping("/regularDetail.do")
@@ -61,7 +61,8 @@ public class RegularController {
     model.addAttribute("regularDetail", regularService.regularDetail(regularNo, model));
     return "/regular/regularDetail";
   }
-  @GetMapping("/regularDetailDisplay.do")
+  
+  @GetMapping("/regularMainDisplay.do")
   public ResponseEntity<byte[]> regularMainDsiplay(@RequestParam("regularNo") int regularNo){
     return regularService.regularMainDisplay(regularNo);
   }
