@@ -19,7 +19,7 @@ import com.gdu.pupo.service.ItemService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RequestMapping(value = "/")
+@RequestMapping(value="/" , method = {RequestMethod.GET, RequestMethod.POST})
 @Controller
 public class ItemController {
 
@@ -80,8 +80,8 @@ public class ItemController {
     return "redirect:/seller/list";
   }
 
-   @GetMapping("seller/modify.html") 
-   public String modify(int itemNo, Model model) {
+   @PostMapping("seller/modify.html") 
+   public String modify(@RequestParam("itemNo") int itemNo, Model model) {
      itemService.itemListByNo(itemNo, model);
      return "seller/modify"; 
    }
@@ -93,7 +93,7 @@ public class ItemController {
     * "seller/modify"; }
     */   
   @PostMapping("seller/modify.do")
-  public String SellerModify(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
+  public String sellerModify(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
     int updateResult = itemService.itemUpdate(multipartRequest);
     redirectAttributes.addFlashAttribute("updateResult", updateResult);
     return "redirect:/seller/detail?itemNo=" + multipartRequest.getParameter("itemNo");

@@ -75,61 +75,33 @@
 <!-- pagination -->
 
 
-  <select id="getFaqCount" resultType="int">
+  <select id="getFaqCount" parameterType="Map" resultType="int">
     SELECT COUNT(*)
       FROM FAQ
-  </select>
-
-  
-  
-  
-  
-
-<select id="getFaqList" parameterType="Map" resultMap="FaqMap">
-  SELECT FAQ_NO, SELLER_CHECK, ID, FAQ_CATEGORY, FAQ_TITLE, FAQ_CONTENT, FAQ_CREATED_AT, FAQ_MODIFIED_AT, FAQ_HIT
-  FROM (
-    SELECT
-      FAQ_NO,
-      SELLER_CHECK,
-      ID,
-      FAQ_CATEGORY,
-      FAQ_TITLE,
-      FAQ_CONTENT,
-      FAQ_CREATED_AT,
-      FAQ_MODIFIED_AT,
-      FAQ_HIT
-     FROM FAQ     
     <where>
       <if test="kind != null and kind != ''">
         FAQ_CATEGORY = #{kind}
       </if>
-      <if test="searchColumn != null and query != null and searchColumn != '' and query != ''">
-        AND (${searchColumn} LIKE CONCAT('%', #{query}, '%') OR FAQ_TITLE LIKE CONCAT('%', #{query}, '%') OR FAQ_CONTENT LIKE CONCAT('%', #{query}, '%'))
-      </if>
-      <if test="searchColumn == null or searchColumn == ''">
-        AND (FAQ_TITLE LIKE CONCAT('%', #{query}, '%') OR FAQ_CONTENT LIKE CONCAT('%', #{query}, '%'))
+      <if test="query != null and query != ''">
+        FAQ_TITLE LIKE CONCAT('%', #{query}, '%') OR FAQ_CONTENT LIKE CONCAT('%', #{query}, '%'))
       </if>
     </where>
-  ) A
-  <if test="begin != null and recordPerPage != null">
-    LIMIT #{begin}, #{recordPerPage}
-  </if>
-  ORDER BY FAQ_NO DESC
-</select>
+  </select>
 
-
-<select id="getFaqSearchCount" parameterType="Map" resultType="int">
-    SELECT COUNT(F.FAQ_NO)
-    FROM FAQ F
-    <where>
-        <if test="searchColumn != '' and query != ''">
-            ${searchColumn} LIKE CONCAT('%', CONCAT(#{query}, '%'))
-        </if>
-        <if test="kind != null and kind != ''">
-            FAQ_CATEGORY = #{kind}
-        </if>
-    </where>
-</select>
+<select id="getFaqList" parameterType="Map" resultMap="FaqMap">
+	SELECT FAQ_NO, SELLER_CHECK, ID, FAQ_CATEGORY, FAQ_TITLE, FAQ_CONTENT, FAQ_CREATED_AT, FAQ_MODIFIED_AT, FAQ_HIT
+	  FROM FAQ
+	  <where>
+	    <if test="kind != null and kind != ''">
+	      FAQ_CATEGORY = #{kind}
+	    </if>
+	    <if test="query != null and query != ''">
+	      FAQ_TITLE LIKE CONCAT('%', #{query}, '%') OR FAQ_CONTENT LIKE CONCAT('%', #{query}, '%'))
+	    </if>
+	  </where>
+	 ORDER BY FAQ_NO DESC
+	  LIMIT #{begin}, #{recordPerPage}
+	</select>
 
 
 <select id="getFaqCategoryCount" parameterType="String" resultType="int">

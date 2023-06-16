@@ -1,9 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>MooVOD : 아이디 찾기</title>
-<script src="/js/lib/jquery-3.6.4.min.js"></script>
+
+<!--/*
+  1. Variable Expressions           : ${...} (값을 나타낼 때 사용한다.)
+  2. Selection Variable Expressions : *{...} (객체의 특정 필드 값을 나타낼 때 사용한다.)
+  3. Message Expressions
+  4. Link URL Expressions           : @{...} (경로 작성할 때 사용한다.)
+  5. Fragment Expressions           : ~{...} (조각을 사용할 때 사용한다.)
+*/-->
+
+<!--/*
+  ${name}             : request attribute      model.addAttribute("name", "킹콩")
+                                               redirectAttributes.addFlashAttribute("name", "킹콩")
+  ${param.name}       : request parameter      /board/detail.do?name=킹콩
+  ${session.name}     : session attribute      session.setAttribute("name", "킹콩")
+  ${application.name} : application attribute  servletContext.setAttribute("name", "킹콩")
+*/-->
+
+<!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
+<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+
+
+  <!--/* /layout/header.html의 gnbFrag조각으로 div 태그를 바꾼다. */-->
+  <div th:replace="~{/layout/header::gnbFrag}"></div>
+  <div>
+    <h1>아이디 찾기</h1>
+    <div>
+      <label for="name">*이름</label>
+      <input type="text" name="name" id="name" required="required">
+    </div>
+    <div>
+      <label for="email">*이메일</label>
+      <input type="text" name="email" id="email" required="required">
+    </div>
+    <div>
+      <input type="button" th:value="아이디찾기" id="btnFindId" >
+    </div>
+    <div>
+      <a th:href="@{/user/login.form}">로그인</a> |
+      <a th:href="@{/user/findPw.form}">비밀번호 찾기</a> |
+      <a th:href="@{/user/agree.form}">회원가입</a>
+    </div>
+  </div>
+  <hr>
+  <div id="findResult" th:if="@{/resData.findUser != null}">
+    <th:block th:text="'회원님의 아이디는 ' + @{/resData.findUser.id.substring(0, 3)} + '*****' + '입니다.<br>(가입일 : ' + @{/#dates.format(resData.findUser.joinedAt, 'yyyy년 MM월 dd일 a hh:mm:ss')} + ')'"></th:block>
+  </div>
+  <div id="findResult" th:if="@{/resData.findUser == null}">
+    <th:block th:text="'일치하는 회원이 없습니다. 입력 정보를 확인하세요.'"></th:block>
+  </div>
 <script th:inline="javascript">
   function fnFindId() {
     $('#btnFindId').on('click', function(){
@@ -33,33 +78,5 @@
     fnFindId();
   });
 </script>
-</head>
-<body>
-  <div>
-    <h1>아이디 찾기</h1>
-    <div>
-      <label for="name">*이름</label>
-      <input type="text" name="name" id="name" required="required">
-    </div>
-    <div>
-      <label for="email">*이메일</label>
-      <input type="text" name="email" id="email" required="required">
-    </div>
-    <div>
-      <input type="button" th:value="아이디찾기" id="btnFindId" >
-    </div>
-    <div>
-      <a th:href="@{/user/login.form}">로그인</a> |
-      <a th:href="@{/user/findPw.form}">비밀번호 찾기</a> |
-      <a th:href="@{/user/agree.form}">회원가입</a>
-    </div>
-  </div>
-  <hr>
-  <div id="findResult" th:if="@{/resData.findUser != null}">
-    <th:block th:text="'회원님의 아이디는 ' + @{/resData.findUser.id.substring(0, 3)} + '*****' + '입니다.<br>(가입일 : ' + @{/#dates.format(resData.findUser.joinedAt, 'yyyy년 MM월 dd일 a hh:mm:ss')} + ')'"></th:block>
-  </div>
-  <div id="findResult" th:if="@{/resData.findUser == null}">
-    <th:block th:text="'일치하는 회원이 없습니다. 입력 정보를 확인하세요.'"></th:block>
-  </div>
 </body>
 </html>

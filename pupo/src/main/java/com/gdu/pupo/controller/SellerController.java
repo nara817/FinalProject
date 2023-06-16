@@ -1,7 +1,5 @@
 package com.gdu.pupo.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +18,7 @@ public class SellerController {
   private final AdminService adminService;
     
   // 판매자-메인 이동
-  @GetMapping("/seller.do")
+  @GetMapping("/sellerMain.html")
   public String sellerMain(Model model) {
 	  model.addAttribute("userCount", adminService.userCount());
 	  model.addAttribute("sellerCount", adminService.sellerCount());

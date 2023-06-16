@@ -106,6 +106,7 @@ public class ItemServiceImpl implements ItemService {
    @Transactional
    @Override
    public int itemUpdate(MultipartHttpServletRequest multipartRequest) {
+     System.out.println("--------------------------------");
     int itemNo = Integer.parseInt(multipartRequest.getParameter("itemNo"));
     String itemName = multipartRequest.getParameter("itemName");
     String itemCategory = multipartRequest.getParameter("itemCategory");
@@ -127,6 +128,10 @@ public class ItemServiceImpl implements ItemService {
     itemDTO.setDispStat(dispStat);
     itemDTO.setSaleStat(saleStat);
     
+    System.out.println(itemNo);
+    System.out.println("-----------------------------------------------------------------------------");
+    
+    
     int updateResult = itemMapper.itemUpdate(itemDTO);
     
     List<MultipartFile> files = multipartRequest.getFiles("files");
@@ -136,7 +141,7 @@ public class ItemServiceImpl implements ItemService {
           String path = myFileUtil.getPath();
           File dir = new File(path);
           if(dir.exists() == false) {
-            dir.mkdir();
+            dir.mkdirs();
           }
           String originName = multipartFile.getOriginalFilename();
           originName = originName.substring(originName.lastIndexOf("\\") + 1);
@@ -151,7 +156,7 @@ public class ItemServiceImpl implements ItemService {
           }
           AttachDTO attachDTO = new AttachDTO();
           attachDTO.setFilesystemName(filesystemName);
-          attachDTO.setHasThumbnail(updateResult);
+          attachDTO.setHasThumbnail(hasthumbnail ? 1 : 0);
           attachDTO.setOriginName(originName);
           attachDTO.setPath(path);
           attachDTO.setItemNo(itemDTO.getItemNo());

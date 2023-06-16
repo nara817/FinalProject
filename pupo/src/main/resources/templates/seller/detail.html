@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+
+<script th:inline="javascript">
+  function fnList(){
+    location.href="list";
+  }
+  
+/*    function fnRemove(){
+    if(confirm('삭제하시겠습니까?') == false){
+      return;
+    }
+      location.href='remove?itemNo="{item.itemNo}"';
+      alert('삭제되었습니다');
+  } 
+   */
+</script>
+
+<body>
+<form action="modify" method="post" enctype="multipart/form-data" th:action='@{remove.do}'>
+  <div class="container">
+    <div class="mainContent" style="margin-top:50px; margin-left:200px;">
+      <div class="title">
+        <h3>상품 상세</h3>
+        <p>[상품ID: <a th:text="${item.itemNo}"></a>]</p>
+      </div>
+      <div class="modi_form">
+         <table>
+            <div class="container">
+              <tr>
+                <td>상품 이름</td>
+                <td><a th:text="${item.itemName}"></a></td>
+              </tr>
+            </div>
+            <div class="container">
+              <tr>
+                <td>카테고리 분류</td>
+                <td><a th:text="${item.itemCategory}"></a></td>
+              </tr>
+            </div>
+                        
+            <div class="container">
+              <tr>
+                <td>상품 상세정보</td>
+                <td><textarea name="itemContent" id="itemContent" style="height: 200px; width: 350px; resize:none;" th:text="${item.itemComment}"></textarea></td>
+              </tr>
+            </div>
+                            
+            <div class="container">
+              <tr>
+                <td>판매가격</td>
+                <td><a th:text="${item.price}"></a></td>
+              </tr>
+              <tr>
+                <td>정상가격</td>    
+                <td><a th:text="${item.originPrice}"></a></tr>
+              </div>
+                            
+              <div class="container">
+                <tr>
+                  <td>재고</td>
+                  <td><a th:text="${item.stock}"></a></td>
+              </div>
+                    
+              <div class="container">
+                <tr>                    
+                  <td>진열상태</td>
+                  <td><a th:text="${item.dispStat}"></a></tr>      
+                <tr>  
+                  <td>판매상태</td>
+                  <td><a th:text="${item.saleStat}"></a></td>
+                </tr>
+              </div>
+                            
+              <div class="container">
+                <tr>
+                  <td>
+                    <label><small style="opacity:0.75;">메인, 서브 이미지 규격 : 270*300</small></label><br>
+                      <label><i class="fa fa-chevron-right"></i>메인 이미지</label><br>                            
+                      <input type='file' id="files" name="files" accept="image/gif, image/jpeg, image/png, image/jpg" />
+                      <input type='hidden' name="itemImg1" />
+                      <!-- <td><a th:href="${item.itemImg1}"></a> -->
+                      
+                  </td>
+                  <td> 
+                      <div class="select_img1"><img class='itemImg' src=""></div>
+                  </td>
+                </tr>
+              </div>
+   <!--            <div >
+                <tr>
+                  <td>
+                    <label><i class="fa fa-chevron-right"></i>서브 이미지</label><br>
+                    <input type='file' id="itemDetail" name="itemDetail" accept="image/gif, image/jpeg, image/png, image/jpg" />
+                    <input type='hidden' name="itemDetail" />
+                    <td><a th:text="${item.itemDetail}"></a></td>
+                  </td>
+                  <td>
+                    <div class="select_img2"><img class='itemImg' src='/resources/upload/<c:out value="${item.idNo}"/>/<c:out value="${item.itemImg2}"/>'  /></div>
+                  </td>
+                </tr>
+              </div> -->
+                            
+          <!--     <div >
+                <tr>
+                  <td>
+                   <label><i class="fa fa-chevron-right"></i>서브 이미지</label><br>
+                   <input type='file' id="itemImg3" name="uploadFile" accept="image/gif, image/jpeg, image/png, image/jpg" />
+                   <input type='hidden' name="itemImg3" value="<c:out value="${item.itemImg3}"/>">
+                   </td>
+                   <td>
+                     <div class="select_img3"><img class='itemImg' src='/resources/upload/<c:out value="${item.idNo}"/>/<c:out value="${item.itemImg3}"/>' /></div>
+                   </td>
+                </tr>
+              </div>
+                            
+              <div >
+                <tr>
+                  <td>
+                    <label><i class="fa fa-chevron-right"></i>서브 이미지</label><br>
+                    <input type='file' id="itemImg4" name="uploadFile" accept="image/gif, image/jpeg, image/png, image/jpg" />
+                   <input type='hidden' name="itemImg4" value="<c:out value="${item.itemImg4}"/>">
+                  </td>
+                  <td>
+                    <div class="select_img4"><img class='itemImg' src='/resources/upload/<c:out value="${item.idNo}"/>/<c:out value="${item.itemImg4}"/>'  /></div>
+                  </td>
+                </tr>
+              </div>
+              <div >
+               <tr>
+                  <td>
+                    <label><i class="fa fa-chevron-right"></i>상품 상세 설명 이미지</label><br>
+                    <input type='file' id="itemImg5" name="uploadFile" accept="image/gif, image/jpeg, image/png, image/jpg" />
+                    <input type='hidden' name="imgDetail" value="<c:out value="${item.imgDetail}"/>">
+                  </td>
+                  <td>
+                    <div class="select_img5"><img class='itemImg' src='/resources/upload/<c:out value="${item.idNo}"/>/<c:out value="${item.imgDetail}"/>'  /></div>
+                  </td>
+                </tr>
+              </div>   -->
+        </table>
+        <form class="frm_remove" method="post" th:action="@{seller/remove.do}">
+          <input type="hidden" name="itemNo" th:value="${item.itemNo}">
+          <button>삭제</button>
+        </form>
+        <form class="frm_modify" method="post" th:action="@{modify.html}">
+          <input type="hidden" name="itemNo" th:value="${item.itemNo}">
+          <button>수정</button>
+         </form>
+        <div class="modi_btn">
+          <input type="button" value="목록" th:onclick="fnList()">
+        </div>
+      </div>
+  </div>  
+  </form>
+</body>
+
+</html>

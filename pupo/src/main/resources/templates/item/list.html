@@ -26,11 +26,11 @@
                       </a>
                     </div>
                   </th:block>
-                  <th:block th:test="${item.saleStat eq '품절'}">
+                  <!-- <th:block th:test="${item.saleStat eq '품절'}">
                     <div class="pro_img_wrap">
                       <td><a th:href="@{'detail?itemNo=' + ${item.itemNo}}" th:text="${item.itemName}"></a></td>
                       <a th:href="@{'item?itemNo=' + ${item.itemNo}}" class="conts">
-<!--                         <img class="active" th:src="@{/resources/upload/{id}/{itemImg1}(id=${item.id}, itemImg1=${item.itemImg1})}"> -->
+                        <img class="active" th:src="@{/resources/upload/{id}/{itemImg1}(id=${item.id}, itemImg1=${item.itemImg1})}">
                       </a>
                       <div class="soldout">
                         <p>품절</p>
@@ -41,13 +41,13 @@
                     <div class="pro_img_wrap">
                       
                       <a th:href="@{itemNo= + <c:out value='${item.itemNo}'/>}" class="conts">
-<!--                         <img class="active" th:src="@{/resources/upload/{id}/{itemImg1}(id=${item.id}, itemImg1=${item.itemImg1})}"> -->
+                        <img class="active" th:src="@{/resources/upload/{id}/{itemImg1}(id=${item.id}, itemImg1=${item.itemImg1})}">
                       </a>
                       <div class="soldout">
                         <p>판매 중지</p>
                       </div>
                     </div>
-                  </th:block>
+                  </th:block> -->
                   
                   <div class="txt_wrap">
                     
