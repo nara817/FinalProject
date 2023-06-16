@@ -30,7 +30,7 @@ public class AdminController {
   }
 
   // 관리자-메인 이동
-  @GetMapping("/admin.do")
+  @GetMapping("/adminMain.html")
   public String adminMain(Model model) {
 	  model.addAttribute("userCount", adminService.userCount());
 	  model.addAttribute("sellerCount", adminService.sellerCount());

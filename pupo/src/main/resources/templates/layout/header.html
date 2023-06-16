@@ -48,28 +48,12 @@
             </div>
           </div>
         </nav>
-          <nav class="navbar navbar-light">
-           <div>
-             <ul class="nav justify-content-center">
-               <li>
-                 <a class="navbar-brand" th:href="@{/}">
-                   <img th:src="@{/image/pupoimg.jpg}" alt="" width="200" height="50" class="d-inline-block align-text-top">
-                 </a>
-               </li>
-               <li class="nav-item">
-                 <a class="navbar-brand" aria-current="page" href="#">Link</a>
-               </li>
-               <li class="nav-item">
-                 <a class="navbar-brand"  href="#">Link</a>
-               </li>
-               <li class="nav-item">
-                 <a class="navbar-brand"  href="#">Link</a>
-               </li>
-               <li class="nav-item">
-                 <a class="navbar-brand"  href="#" >Link</a>
-               </li>
-               </ul>
-           </div>
+          <nav class="navbar navbar-light bg-light">
+         <div class="container-fluid" >
+           <a class="navbar-brand" th:href="@{/}">
+             <img th:src="@{/image/pupoimg.jpg}" alt="" width="200" height="50" class="d-inline-block align-text-top">
+           </a>
+         </div>
        </nav>
       </div>
     <!-- 로그인 했을때 네비바  -->
@@ -94,12 +78,12 @@
             </li>
             <li class="nav-item">
               <th:block th:if="${session.loginId != null and session.sellerChk == 1}">
-                <a class="text-reset nav-link" th:href="@{/seller/mypage.do}">판매자페이지</a>
+                <a class="text-reset nav-link" th:href="@{/user/mypage.do}">판매자페이지</a>
               </th:block>
             </li>
             <li class="nav-item">
               <th:block th:if="${session.loginId != null and session.sellerChk == 2}">
-                <a class="text-reset nav-link" th:href="@{/admin/adminMain.do">관리자페이지</a>
+                <a class="text-reset nav-link" th:href="@{/admin/adminMain.html}">관리자페이지</a>
               </th:block>
             </li>
           </ul>
@@ -114,29 +98,14 @@
           </div> 
         </div>
       </nav>
-       <nav class="navbar navbar-light">
-           <div>
-             <ul class="nav justify-content-center">
-               <li>
-                 <a class="navbar-brand" th:href="@{/}">
-                   <img th:src="@{/image/pupoimg.jpg}" alt="" width="200" height="50" class="d-inline-block align-text-top">
-                 </a>
-               </li>
-               <li class="nav-item">
-                 <a class="navbar-brand" aria-current="page" href="#">Link</a>
-               </li>
-               <li class="nav-item">
-                 <a class="navbar-brand"  href="#">Link</a>
-               </li>
-               <li class="nav-item">
-                 <a class="navbar-brand"  href="#">Link</a>
-               </li>
-               <li class="nav-item">
-                 <a class="navbar-brand"  href="#" >Link</a>
-               </li>
-               </ul>
-           </div>
+       <nav class="navbar navbar-light bg-light">
+         <div class="container-fluid">
+           <a class="navbar-brand" th:href="@{/}">
+             <img th:src="@{/image/pupoimg.jpg}" alt="" width="200" height="50" class="d-inline-block align-text-top">
+           </a>
+         </div>
        </nav>
+       
     </div>
     <!-- 타이틀 -->  
     <hr>
