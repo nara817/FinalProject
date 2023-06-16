@@ -1,5 +1,6 @@
 package com.gdu.pupo.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +28,7 @@ public interface UserService {
   public Map<String, Object> findUser(String name, String email);
   public void findPw(HttpServletRequest request, HttpServletResponse response);
   public void modifyPw(HttpServletRequest request, HttpServletResponse response);
- // public UserDTO verifyTemporaryPassword(String id, String temporaryPassword);
-  
- //public void modifyPw(UserDTO userDTO);
+ // public UserDTO verifyTemporaryPassword(String id, String temporaryPassword);  
  //public int updatePwd(int mobile, String password) throws Exception;
 
   
