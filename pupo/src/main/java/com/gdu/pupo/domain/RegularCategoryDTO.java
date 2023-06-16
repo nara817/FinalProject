@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegularDetailImgDTO {
-  private int regDetailImgNo;
-  private int regularNo;
-  private String regDetailImgName;
-  private String regFilesystemName;
+public class RegularCategoryDTO {
+  private int regularCategory;
+  private String regularCategoryName;
 }

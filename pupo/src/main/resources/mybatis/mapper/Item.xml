@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.pupo.mapper.ItemMapper">
+
+<select id="itemList" resultType="ItemDTO">
+    SELECT ITEM_NO, ITEM_NAME, ITEM_CATEGORY, ITEM_COMMENT, PRICE, ORIGIN_PRICE, STOCK, DISP_STAT, SALE_STAT
+      FROM ITEM
+     ORDER BY ITEM_NO DESC;
+  </select>
+  
+  <select id="itemListByNo" parameterType="int" resultType="ItemDTO">
+    SELECT ITEM_NO, ITEM_NAME, ITEM_CATEGORY, ITEM_COMMENT, PRICE, ORIGIN_PRICE, STOCK, DISP_STAT, SALE_STAT
+      FROM ITEM
+     WHERE ITEM_NO = #{itemNo}
+  </select>
+
+<insert id="itemRegister" useGeneratedKeys="true" keyProperty="itemNo" parameterType="ItemDTO">
+  INSERT INTO ITEM(ITEM_NAME, ITEM_CATEGORY, ITEM_COMMENT, PRICE, ORIGIN_PRICE, STOCK, DISP_STAT, SALE_STAT)
+     VALUES(#{itemName}, #{itemCategory}, #{itemComment}, #{price}, #{originPrice}, #{stock}, #{dispStat}, #{saleStat})
+</insert>
+
+<insert id="imgRegister" useGeneratedKeys="true" keyProperty="attachNo" parameterType="AttachDTO">
+    INSERT INTO ATTACH(PATH, ORIGIN_NAME, FILESYSTEM_NAME, HAS_THUMBNAIL, ITEM_NO)
+     VALUES(#{path}, #{originName}, #{filesystemName}, #{hasThumbnail}, #{itemNo})
+  </insert>
+  
+<select id="attachList" parameterType="int" resultType="AttachDTO">
+   SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, HAS_THUMBNAIL, ITEM_NO
+     FRON ATTACH
+    WHERE ITEM_NO = #{itemNo}
+ </select>  
+ 
+ <select id="attachByNo" parameterType="int" resultType="AttachDTO">
+    SELECT ITEM_NO, ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, HAS_THUMBNAIL
+      FROM ATTACH
+     WHERE ATTACH_NO = #{attachNo}
+  </select> 
+  
+    <delete id="attachDelete" parameterType="int">
+    DELETE FROM ATTACH
+     WHERE ATTACH_NO = #{attachNo}
+  </delete>
+  
+  <update id="itemUpdate" useGeneratedKeys="true" keyProperty="itemNo" parameterType="ItemDTO">
+    UPDATE ITEM
+       SET ITEM_NAME = #{itemName}
+         , ITEM_CATEGORY = #{itemCategory}
+         , ITEM_COMMENT = #{itemComment}
+         , PRICE = #{price}
+         , ORIGIN_PRICE = #{originPrice}
+         , STOCK = #{stock}
+         , DISP_STAT = #{dispStat}
+         , SALE_STAT = #{saleStat}
+     WHERE ITEM_NO = #{itemNo}
+  </update>
+
+<delete id="itemDelete">
+  DELETE FROM ITEM
+     WHERE ITEM_NO = #{itemNo}
+</delete>
+
+</mapper>
+
+  
