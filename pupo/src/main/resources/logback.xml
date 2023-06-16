@@ -17,6 +17,7 @@
   <logger name="org.apache.ibatis"   level="INFO" />
   <logger name="org.mybatis.spring"  level="INFO" />
   <logger name="com.zaxxer.hikari"   level="INFO" />
+  <logger name="org.thymeleaf"       level="INFO" />
   <logger name="log4jdbc"            level="INFO" />
   <logger name="jdbc"                level="OFF" />
   <logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->

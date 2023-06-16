@@ -1,11 +1,6 @@
 @charset "UTF-8";
-<<<<<<< HEAD
 .pl-37 {
   padding-left: 37rem !important
-=======
-.pl-28 {
-  padding-left: 28rem !important
->>>>>>> 7aab5b0e80c7777a9c0df851f770a053a701ef9c
 }
 .pt-7 {
   padding-top: 7rem !important
@@ -22,42 +17,17 @@
 .pl-12 {
  padding-left: 12rem !important
 }
-<<<<<<< HEAD
 .pl-13 {
  padding-left: 13rem !important
 }
-=======
->>>>>>> 7aab5b0e80c7777a9c0df851f770a053a701ef9c
 #title {
  text-decoration-line: none
 }
 
 
-<<<<<<< HEAD
 
 
 .blind {
     display: none;
   }
-=======
-.dropdown1{
-  position : relative;
-  display : inline-block;
-}
-
-.dropdown1-content{
-  display : none;
-  position : absolute;
-  z-index : 1; /*다른 요소들보다 앞에 배치*/
-  background-color: white;
-}
-
-.dropdown1-content a{
-  display : block;
-}
-
-.dropdown1:hover .dropdown1-content {
-  display: block;
-}
->>>>>>> 7aab5b0e80c7777a9c0df851f770a053a701ef9c
 
