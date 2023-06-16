@@ -3925,6 +3925,14 @@ textarea.form-control-lg {
   border-top-right-radius: 0
 }
 
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+
+}
+
+
 .nav-pills .nav-link {
   background: 0 0;
   border: 0;

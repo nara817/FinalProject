@@ -24,14 +24,32 @@
   <!--/* /layout/header.html의 gnbFrag조각으로 div 태그를 바꾼다. */-->
   <div th:replace="~{/layout/header::gnbFrag}"></div>
   
+  <main>
   
-  <header>
-  <div class="text-muted" th:utext="|HOME >고객센터|"></div>
-  </header>
+    <header>
+      <span class="text-muted pl-7" th:text="|HOME > |"></span>
+      <span class="text-dark" th:text="|고객센터|"></span>
+      <div>
+      <h1 class="text-center font-weight-bold pt-5">무엇을 도와 드릴까요?</h1></div>
+    </header>
   <section>
      
  
-  
+    <h3 style="display:none;">서브메뉴</h3>
+        <ul>
+            <li id="notice">
+            <a th:href="@{/customerCenter/notice.html}">공지사항</a>
+            </li>
+            <li id="faq">
+            <a th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a>
+            </li>
+            <li id="myPersonalInquery">
+            <a href="@{/customerCenter/qna.html}">1:1 문의</a>
+            </li>
+            <li id="qna">
+            <a th:href="@{/customerCenter/faq.html}">고객의 소리</a>
+            </li>
+        </ul>
   
   
   
@@ -40,6 +58,6 @@
 
                     
 
-
+</main>
 </body>
 </html>
