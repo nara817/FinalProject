@@ -4,10 +4,6 @@
 <head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
 <script th:inline="javascript">
 
-function fnList(){
-    location.href="list";
-  }
-
   function fnRegister(){
     alert('등록되었습니다.');
   }
@@ -37,7 +33,9 @@ function fnList(){
         <p>[상품ID: <a th:text="${item.itemNo}"></a>]</p>
       </div>
       <div class="modi_form">
+      
         <form method="post" enctype="multipart/form-data" th:action='@{modify.do}'>
+        <div><input type="hidden" th:value="${item.itemNo}"></div>
           <table>
             <div class="container">
 	            <tr>
@@ -48,14 +46,22 @@ function fnList(){
             <div class="container">
               <tr>
                 <td><label for="category"><i class="fa fa-chevron-right"></i>카테고리 분류</label></td>
-                <td><input type="text" name="getCategory" style="width: 350px;" th:value="${item.itemCategory}"/></td>
+                <td>
+                  <select class="itemCategory" id="itemCategory" name="itemCategory">
+                  <option value="">카테고리 선택</option>
+                  <option value="샐러드">샐러드</option>
+                  <option value="샌드위치">샌드위치</option>
+                  <option value="과일/채소">과일/채소</option>
+                  <option value="정육">정육</option>
+                  </select>
+                </td>
               </tr>
             </div>
                         
             <div class="container">
 	            <tr>
-		            <td><label for="itemContent"><i class="fa fa-chevron-right"></i>상품 상세정보</label></td>
-	              <td><textarea name="itemContent" id="itemContent" style="height: 200px; width: 350px; resize:none;" th:value="${item.itemComment}"></textarea></td>
+		            <td><label for="itemComment"><i class="fa fa-chevron-right"></i>상품 상세정보</label></td>
+	              <td><textarea name="itemComment" id="itemComment" style="height: 200px; width: 350px; resize:none;" th:text="${item.itemComment}"></textarea></td>
 	            </tr>
             </div>
                             
@@ -65,15 +71,15 @@ function fnList(){
                    <label for="price"><i class="fa fa-chevron-right"></i>판매가격</label> 
                 </td>
                 <td>    
-                   <input type="text" name="price" id="price" numberOnly th:value="${item.price}"/><br> 
+                   <input type="text" name="price" id="price" th:value="${item.price}" numberOnly /><br> 
                 </td>
               </tr>
               <tr>
 	              <td>
-	                <label for="normPrice"><i class="fa fa-chevron-right"></i>정상가격</label> 
+	                <label for="originPrice"><i class="fa fa-chevron-right"></i>정상가격</label> 
 	              </td>    
 	              <td>  
-	                <input type="text" name="normPrice" id="normPrice" numberOnly th:value="${item.originPrice}"/>
+	                <input type="text" name="originPrice" id="originPrice" th:value="${item.originPrice}" numberOnly />
 	               </td>
                </tr>
               </div>
@@ -81,7 +87,7 @@ function fnList(){
               <div class="container">
                 <tr>
                   <td><label for="stock"><i class="fa fa-chevron-right"></i>재고</label></td>
-                  <td><input type="text" name="stock" id="stock" numberOnly th:value="${item.stock}"/><br></td>
+                  <td><input type="text" name="stock" id="stock" th:value="${item.stock}" numberOnly /><br></td>
                 </tr>
               </div>
                     
@@ -104,26 +110,10 @@ function fnList(){
                   </td>
                 </tr>
               </div>
-              <!-- <div class="container">
-	              <tr>
-	                <td>
-										<label><i class="fa fa-chevron-right"></i>상품 특성</label><br> 
-									</td>
-	                <input type="hidden" id="chkValue" value='<c:out value="${item.itemChr}"/>'>
-	                <td>
-	                  <input type="checkbox" name="itemChr" value="new">신상품 
-	                  <input type="checkbox" name="itemChr" value="sale">할인
-	                  아무것도 선택하지 않으면 '기본'으로 값이 됨
-	                  <input type="checkbox" name="itemChr" value="default" style="visibility:hidden">
-	                </td>
-	              </tr>
-              </div> -->
-                            
                             
               <div class="container">
 	              <tr>
 		              <td>
-		                <label><small style="opacity:0.75;">메인, 서브 이미지 규격 : 270*300</small></label><br>
 		                  <label><i class="fa fa-chevron-right"></i>메인 이미지</label><br>                            
 		                  <input type='file' id="files" name="files" accept="image/gif, image/jpeg, image/png, image/jpg" />
 		                  <!-- <input type='hidden' name="itemImg1" th:value="${item.itemImg}"/> -->
@@ -134,59 +124,21 @@ function fnList(){
 	              </tr>
               </div>
               <!-- <div class="container">
-	              <tr>
-                  <td>
-	                  <label><i class="fa fa-chevron-right"></i>서브 이미지</label><br>
-	                  <input type='file' id="itemImg2" name="uploadFile" accept="image/gif, image/jpeg, image/png, image/jpg" />
-	                  <input type='hidden' name="itemImg2" value="<c:out value="${item.itemImg2}"/>">
-                  </td>
-                  <td>
-                    <div class="select_img2"><img class='itemImg' src='/resources/upload/<c:out value="${item.idNo}"/>/<c:out value="${item.itemImg2}"/>' onError="this.src='/resources/images/noImg.png'" /></div>
-	                </td>
-	              </tr>
-              </div>
-                            
-              <div class="container">
-                <tr>
-                  <td>
-                   <label><i class="fa fa-chevron-right"></i>서브 이미지</label><br>
-                   <input type='file' id="itemImg3" name="uploadFile" accept="image/gif, image/jpeg, image/png, image/jpg" />
-                   <input type='hidden' name="itemImg3" value="<c:out value="${item.itemImg3}"/>">
-                   </td>
-                   <td>
-                     <div class="select_img3"><img class='itemImg' src='/resources/upload/<c:out value="${item.idNo}"/>/<c:out value="${item.itemImg3}"/>' onError="this.src='/resources/images/noImg.png'" /></div>
-                   </td>
-                </tr>
-              </div>
-                            
-              <div class="container">
-                <tr>
-                  <td>
-                    <label><i class="fa fa-chevron-right"></i>서브 이미지</label><br>
-                    <input type='file' id="itemImg4" name="uploadFile" accept="image/gif, image/jpeg, image/png, image/jpg" />
-                   <input type='hidden' name="itemImg4" value="<c:out value="${item.itemImg4}"/>">
-                  </td>
-                  <td>
-                    <div class="select_img4"><img class='itemImg' src='/resources/upload/<c:out value="${item.idNo}"/>/<c:out value="${item.itemImg4}"/>' onError="this.src='/resources/images/noImg.png'" /></div>
-                  </td>
-                </tr>
-              </div> -->
-              <div class="container">
                <tr>
                   <td>
                     <label><i class="fa fa-chevron-right"></i>상품 상세 설명 이미지</label><br>
                     <input type='file' id="itemImg5" name="uploadFile" accept="image/gif, image/jpeg, image/png, image/jpg" />
-                    <!-- <input type='hidden' name="imgDetail" th:value="${item.imgDetail}"/> -->
+                    <input type='hidden' name="imgDetail" th:value="${item.imgDetail}"/>
                   </td>
                   <td>
                     <div class="select_img5"><img class='itemImg' src='/resources/upload/<c:out value="${item.idNo}"/>/<c:out value="${item.imgDetail}"/>' /></div>
                   </td>
                 </tr>
-              </div>  
+              </div>   -->
             </table>
 	        <div class="modi_btn">
 	          <button id="uploadBtn">등록</button>
-	          <button id="resetBtn" type="button" th:onclick="fnList()">취소</button>
+	          <button id="resetBtn" type="button" th:onclick="history.back()">취소</button>
 	        </div>
         </form>  
       </div>

@@ -23,7 +23,7 @@
   <div class="container">
     <div class="mainContent" style="margin-top:50px; margin-left:200px;">
       <div class="title">
-        <h3>상품 수정</h3>
+        <h3>상품 상세</h3>
         <p>[상품ID: <a th:text="${item.itemNo}"></a>]</p>
       </div>
       <div class="modi_form">
@@ -82,9 +82,10 @@
                       <input type='file' id="files" name="files" accept="image/gif, image/jpeg, image/png, image/jpg" />
                       <input type='hidden' name="itemImg1" />
                       <!-- <td><a th:href="${item.itemImg1}"></a> -->
+                      
                   </td>
                   <td> 
-                      <div class="select_img1"><img class='itemImg' src='/resources/upload/<c:out value="${item.id}"/>/<c:out value="${item.itemImg1}"/>'  /></div>
+                      <div class="select_img1"><img class='itemImg' src=""></div>
                   </td>
                 </tr>
               </div>
@@ -144,7 +145,7 @@
           <input type="hidden" name="itemNo" th:value="${item.itemNo}">
           <button>삭제</button>
         </form>
-        <form class="frm_modify" method="get" th:action="@{modify.html}">
+        <form class="frm_modify" method="post" th:action="@{modify.html}">
           <input type="hidden" name="itemNo" th:value="${item.itemNo}">
           <button>수정</button>
          </form>
