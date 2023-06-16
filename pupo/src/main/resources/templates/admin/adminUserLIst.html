@@ -14,7 +14,11 @@
       width: 100%;
     }
     th, td {
+<<<<<<< HEAD
       text-align: center;
+=======
+      text-align: left;
+>>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
       padding: 2px;
       border-bottom: 1px solid #444444;
     }
@@ -40,6 +44,7 @@
     }
     .fa-user {
       margin-right: 10px;
+<<<<<<< HEAD
     }
     
     .home {
@@ -50,6 +55,9 @@
   .home:hover {
     color: green; /* 마우스를 가져다 대면 초록색으로 변경 */
   }   
+=======
+    }    
+>>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
   </style>
   <script>
 /*     function sortTable {
@@ -85,6 +93,7 @@
       table.replaceChild(tbody, table.ElementsByTagName("tbody")[0]);
     }
  */
+<<<<<<< HEAD
 	// 정렬
 	 $(function(){
 		    // recordPerPage의 변경
@@ -114,12 +123,21 @@
   <h1><i class="fa-solid fa-user"></i>회원관리</h1>
   
   
+=======
+
+
+  </script>
+</head>
+<body>
+  <h1><i class="fa-solid fa-user"></i>회원관리</h1>
+>>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="검색">
     <button onclick="searchTable">검색</button>
   </div>
   <div>
     <label for="role">정렬:</label>
+<<<<<<< HEAD
     <select class="role_select" id="role" name="role">
       <option value="all">전체</option>
       <option value="user">사용자</option>
@@ -129,6 +147,16 @@
     </select>
   </div>
 	
+=======
+    <select id="role" onchange="sortTable">
+      <option value="all">전체</option>
+      <option value="user">사용자</option>
+      <option value="seller">판매자</option>
+      <option value="admin">관리자</option>
+    </select>
+  </div>
+
+>>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
   <table id="memberTable">
     <tr>
       <th>회원번호</th>
@@ -145,6 +173,7 @@
       <th>가입일</th>
     </tr>
     <!-- 여기에 회원 데이터를 동적으로 추가할 예정입니다 -->
+<<<<<<< HEAD
     <tr th:each="user : ${user}">
       <td th:text="${user.userNo}"></td>
       <!-- <td th:text="${user.sellerCheck}"></td> -->
@@ -163,6 +192,20 @@
 		</select>
 	</td>
       <td th:text="${user.grade}"></td>
+=======
+    <tr th:each="user: ${userlist}">
+      <td th:text="${user.userNo}"></td>
+      <td th:text="${user.sellerCheck}"></td>
+      <!-- 판매자 가입시, 승인하지 않을 경우 판매불가상태, 관리자 승인시 판매가능 -->
+   		<td th:text="${user.grade}">
+	      	<select name="승인">
+				<option value="User">판매가능</option>
+				<option value="Admin">판매불가</option>
+			</select>
+		</td>
+      <td th:text="${user.grade}"></td>
+
+>>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
       <td th:text="${user.id}"></td>
       <td th:text="${user.name}"></td>
       <td th:text="${user.gender}"></td>
@@ -170,6 +213,7 @@
       <td th:text="${user.email}"></td>
       <td th:text="${user.roadAddress}"></td>
       <td th:text="${user.detailAddress}"></td>
+<<<<<<< HEAD
       <!-- <td th:text="${user.joinedAt}"></td> -->
       <td th:text="${#dates.format(user.joinedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
       
@@ -184,5 +228,15 @@
 			// DB에서 회원 데이터를 가져와서 동적으로 테이블에 추가하는 로직을 작성해야 합니다.
 			// 여기에 해당 로직을 작성하면 됩니다.
 		</script>
+=======
+      <td th:text="${user.joinedAt}"></td>
+    </tr>
+
+  </table>
+  <script>
+    // DB에서 회원 데이터를 가져와서 동적으로 테이블에 추가하는 로직을 작성해야 합니다.
+    // 여기에 해당 로직을 작성하면 됩니다.
+  </script>
+>>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
 </body>
 </html>

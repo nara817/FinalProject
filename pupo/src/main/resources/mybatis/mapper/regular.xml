@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.pupo.mapper.RegularMapper">
+
+    <!-- 카테고리 추가 하기 -->
+    <insert id="addRegCategory" useGeneratedKeys="true" keyProperty="regularCategory" parameterType="RegularCategoryDTO">
+      INSERT INTO REGULAR_CATEGORY_T(REGULAR_CATEGORY_NAME) VALUES(#{regularCategoryName})
+    </insert>
+    <!-- 카테고리 리스트 가져오기 -->
+		<select id="getRegCategoryList" resultType="RegularCategoryDTO">
+		  SELECT REGULAR_CATEGORY, REGULAR_CATEGORY_NAME
+		  FROM REGULAR_CATEGORY_T
+		</select>
+   <!-- 상품등록 -->
+   <insert id="addRegular" useGeneratedKeys="true" keyProperty="regularNo" parameterType="regularProductDTO">
+    INSERT INTO REGULAR_PRODUCT_T (
+        REGULAR_NAME
+      , REGULAR_SELL_PRICE
+      , REGULAR_ORIGIN_PRICE
+      , REGULAR_DISPLAY
+      , REGULAR_STOCK
+      , REGULAR_CATEGORY
+      , REGULAR_STATE
+      , REGULAR_SIMPLE_DETAIL
+    ) VALUES (
+      	#{regularName}
+      , #{regularSellPrice}
+      , #{regularOriginPrice}
+      , #{regularDisplay}
+      , #{regularStock}
+      , #{regularCategory}
+      , #{regularState}
+      , #{regularSimpleDetail}
+    )
+  </insert>
+  
+  <!-- 상품 상세 이미지 등록 -->
+  <insert id="addRegImg" useGeneratedKeys="true" keyProperty="regDetailImgNo" parameterType="RegularDetailImgDTO" >
+    INSERT INTO REGULAR_DETAIL_IMG_T (
+        REGULAR_NO
+      , REG_DETAIL_IMG_NAME
+      , REG_FILESYSTEMNAME
+    ) VALUES (
+        #{regularNo}
+      , #{regDetailImgName}
+      , #{regFilesystemName}
+    )
+  </insert>  
+  
+  <!-- 상품 메인 이미지 등록 -->
+  <insert id="addRegMainImg" useGeneratedKeys="true" keyProperty="regMainImgNo" parameterType="RegularMainImgDTO" >
+    INSERT INTO REGULAR_MAIN_IMG_T (
+        REGULAR_NO
+      , REG_MAIN_IMG_NAME
+      , REG_FILESYSTEMNAME
+    ) VALUES (
+        #{regularNo}
+      , #{regMainImgName}
+      , #{regFilesystemName}
+    )
+  </insert>  
+  <!-- 상품 리스트 불러오기 -->
+<!--   <select id="getRegularList2" parameterType="Map" resultType="RegularProductDTO">
+    SELECT REGULAR_NO, REGULAR_NAME, REGULAR_SELL_PRICE, REGULAR_ORIGIN_PRICE, REGULAR_DISPLAY, REGULAR_STOCK, REGULAR_CATEGORY, REGULAR_STATE, REGULAR_SIMPLE_DETAIL 
+    FROM REGULAR_PRODUCT_T
+    ORDER BY REGULAR_NO DESC
+    LIMIT #{begin}, #{recordPerPage}
+  </select> -->
+  <select id="getRegularImgList" resultType="RegularDetailImgDTO">
+    SELECT REGULAR_NO, REG_DETAIL_IMG_NAME
+     FROM REGULAR_DETAIL_IMG_T
+  </select>
+  <select id="getRegularMainImgList" resultType="RegularMainImgDTO">
+    SELECT REGULAR_NO, REG_MAIN_IMG_NAME
+     FROM REGULAR_MAIN_IMG_T
+  </select>
+  <!-- 총 상품 갯수 -->
+  <select id="getRegularCount" resultType="int">
+    SELECT COUNT(*)
+    FROM REGULAR_PRODUCT_T
+  </select>
+  
+  <!-- 상품상세이미지 가져오기 -->
+  <select id="getRegularImgByNo" parameterType="int" resultType="RegularDetailImgDTO">
+    SELECT REGULAR_NO, REG_DETAIL_IMG_NAME, REG_FILESYSTEMNAME
+    FROM REGULAR_DETAIL_IMG_T
+    WHERE #{regularNo} = REGULAR_NO
+  </select>
+  <!-- 상품 메인 이미지 가져오기 -->
+  <select id="getRegularMainImgByNo" parameterType="int" resultType="RegularMainImgDTO">
+    SELECT REGULAR_NO, REG_MAIN_IMG_NAME, REG_FILESYSTEMNAME
+    FROM REGULAR_MAIN_IMG_T
+    WHERE #{regularNo} = REGULAR_NO
+  </select>
+    
+  <!-- 상세페이지 -->
+  <select id="getRegularByNo" parameterType="int" resultType="RegularProductDTO">
+    SELECT REGULAR_NO 
+		     , REGULAR_NAME
+		     , REGULAR_SELL_PRICE
+		     , REGULAR_ORIGIN_PRICE
+		     , REGULAR_DISPLAY
+		     , REGULAR_STOCK
+		     , REGULAR_CATEGORY
+		     , REGULAR_STATE
+		     , REGULAR_SIMPLE_DETAIL
+	   FROM REGULAR_PRODUCT_T
+	  WHERE REGULAR_NO = #{regularNo}
+  </select>
+  
+  <!-- 서치 리스트  -->
+  <select id="getRegularList" parameterType="Map" resultType="RegularProductDTO">
+    SELECT REGULAR_NO, REGULAR_NAME, REGULAR_SELL_PRICE, REGULAR_ORIGIN_PRICE, REGULAR_DISPLAY, REGULAR_STOCK, REGULAR_CATEGORY, REGULAR_STATE, REGULAR_SIMPLE_DETAIL 
+    FROM REGULAR_PRODUCT_T
+    <where>
+      <if test="column != '' and query != ''">
+        ${column} LIKE CONCAT('%', #{query}, '%')
+        AND REGULAR_DISPLAY = 1
+      </if>
+    </where>    
+    ORDER BY REGULAR_NO DESC
+    LIMIT #{begin}, #{recordPerPage}
+  </select>
+  
+  <!-- 주문완료 주문 저장 -->
+  <insert id="addRegPurchase" useGeneratedKeys="true" keyProperty="regPurchaseNo" parameterType="RegularPurchaseDTO">
+    INSERT INTO REGULAR_PURCHASE_T (
+        ID
+      , REG_SHIP_NO
+      , REGULAR_NO
+      , REG_CUSTOMER_UID
+      , REG_PURCHASE_PRICE
+      , REG_PURCHASE_LAST_PRICE
+      , REG_PURCHASE_AT
+      , REG_DELIVERY_STATUS
+      , REG_PRODUCT_COUNT
+      , REG_PG
+      , REG_LAST_PAY_AT
+      , REG_DELIVERY_DAY
+      , REG_PAY_STATUS
+      , REG_PAY_COUNT
+    ) VALUES (
+        #{id}
+      , #{regShipNo}
+      , #{regularNo}
+      , #{regCustomerUid}
+      , #{regPurchasePrice}
+      , #{regPurchaseLastPrice}
+      , NOW()
+      , 1
+      , #{regProductCount}
+      , #{regPg}
+      , NOW()
+      , #{regDeliveryDay}
+      , 1
+      , 1
+      )
+     
+  </insert>
+  
+  <!-- 주문정보조회 -->
+  <select id="getRegularPurchaseByNo" parameterType="int" resultType="RegularPurchaseDTO">
+    SELECT REG_PURCHASE_NO, ID, REG_SHIP_NO, REGULAR_NO, REG_CUSTOMER_UID, REG_PURCHASE_PRICE, REG_PURCHASE_LAST_PRICE, REG_PURCHASE_AT, REG_DELIVERY_STATUS, REG_PRODUCT_COUNT, REG_PG, REG_LAST_PAY_AT, REG_DELIVERY_DAY, REG_PAY_STATUS, REG_PAY_COUNT
+      FROM REGULAR_PURCHASE_T
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo} 
+  </select>
+  
+  <select id="regularPayList" resultType="RegularPurchaseDTO">
+    SELECT REG_PURCHASE_NO, ID, REG_CUSTOMER_UID, REG_PURCHASE_LAST_PRICE, REG_LAST_PAY_AT, REG_PAY_STATUS
+      FROM REGULAR_PURCHASE_T
+     WHERE REG_PAY_STATUS = 1;
+  </select>
+  
+  <update id="regularPayUpdate" parameterType="int">
+    UPDATE REGULAR_PURCHASE_T
+       SET REG_LAST_PAY_AT = NOW(),
+           REG_PAY_COUNT = REG_PAY_COUNT + 1
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo}
+  </update>
+  
+</mapper>

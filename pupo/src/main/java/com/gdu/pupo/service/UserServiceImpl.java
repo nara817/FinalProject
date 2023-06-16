@@ -3,6 +3,7 @@ package com.gdu.pupo.service;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -160,9 +161,13 @@ public class UserServiceImpl implements UserService {
 		String pw = request.getParameter("pw");
 
 		// 비밀번호 SHA-256 암호화
+<<<<<<< HEAD
 		//비밀번호 암호화 처리 임시로 끔/관리자 테스트중
 		//pw = securityUtil.getSha256(pw);
 		
+=======
+		//pw = securityUtil.getSha256(pw);
+>>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
 
 		// UserDTO 만들기
 		UserDTO userDTO = new UserDTO();
@@ -538,4 +543,5 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	 }
+
 }

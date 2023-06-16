@@ -9,6 +9,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class FileConfig {
 
 	@Bean
+<<<<<<< HEAD
+=======
+
+>>>>>>> e17e0db4cb4de8ea4fc0e29923dfe9f737894e97
 	public MultipartResolver multipartResolver() {  // Bean 타입은 MultipartResolver로 설정해야 한다.
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 		multipartResolver.setDefaultEncoding("UTF-8");
