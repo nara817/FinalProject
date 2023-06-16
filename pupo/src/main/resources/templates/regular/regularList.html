@@ -1,48 +1,197 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<!--/*
-  1. Variable Expressions           : ${...} (값을 나타낼 때 사용한다.)
-  2. Selection Variable Expressions : *{...} (객체의 특정 필드 값을 나타낼 때 사용한다.)
-  3. Message Expressions
-  4. Link URL Expressions           : @{...} (경로 작성할 때 사용한다.)
-  5. Fragment Expressions           : ~{...} (조각을 사용할 때 사용한다.)
-*/-->
 
-<!--/*
-  ${name}             : request attribute      model.addAttribute("name", "킹콩")
-                                               redirectAttributes.addFlashAttribute("name", "킹콩")
-  ${param.name}       : request parameter      /board/detail.do?name=킹콩
-  ${session.name}     : session attribute      session.setAttribute("name", "킹콩")
-  ${application.name} : application attribute  servletContext.setAttribute("name", "킹콩")
-*/-->
-
-<!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
 <head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+<style>
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .container {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    justify-content: center; /* 가운데 정렬 */
+    gap: 10px; /* 간격 추가 */
+  }
+  
+  /* item에 hidden 처리하기. */
+  .item {
+    width: calc(25% - 7px);
+    aspect-ratio: 6/5;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    
+  }
+  
+  .item:after {
+    /* block & content */
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+  }
+  
+  .imgBox {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  
+  .imgBox img {
+    width: 100%;
+    height: 100%;
+    /* 사진이나 비디오의 규격 맞출 때 object-fit 이용하기. */
+    object-fit: cover;
+    z-index: 1;
+  }
+  
+  .textBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 20px;
+    z-index: 3;
+  }
+  
+  .textBox p {
+    color: white;
+    margin: 5px 0 0;
+  }
+  
+  .textBox__name {
+    font-size: 22px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  
+  .textBox__price {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  
+  /* 마우스 올렸을 때에 기능 추가하기. */
+  .item:hover:after {
+    opacity: 1;
+  }
+  
+  /* 기능 1 : 화면 살짝 불투명 + 화면 커지기. */
+  .item:hover .imgBox img {
+    transform: scale(1.1);
+    /* 블러 처리하기. */
+    filter: blur(3px);
+  }
+  
+  /* 기능 2 : 상품 정보 보이면서 위로 올라가기. */
+  .item:hover .textBox .textBox__name {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  
+  /* 기능 2 : 상품 정보 보이면서 위로 올라가기. */
+  .item:hover .textBox .textBox__price {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  
+  /* 자연스럽게 트랜지션 적용하기. */
+  .item:after,
+  .item .imgBox img,
+  .item .textBox__name,
+  .item .textBox__price {
+    transition: all 0.4s ease-in-out;
+  }
+  
+nav {
+  background-color: #8BC34A; /* 샐러드 쇼핑몰에 맞는 배경 색상 */
+  height: 100vh;
+  width: 200px;
+  position: fixed;
+  top: 100px; /* div의 높이에 맞게 조절해주세요 */
+  left: 0;
+  z-index: 1;
+}
 
+.first {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+    ul.menu {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.menu li a {
+      display: block;
+      color: #FFF; /* 글씨 색상을 흰색으로 설정 */
+      text-decoration: none;
+      padding: 10px;
+      transition: background-color 0.3s;
+    }
+
+    ul.menu li a:hover {
+      background-color: #689F38; /* 호버시 색상 변경 */
+    }
+
+</style>
 <body>
-  <div th:replace="~{/layout/header::gnbFrag}"></div>
+    <nav>
+      <ul class="menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
+
+  <div class="first" th:replace="~{/layout/header::gnbFrag}"></div>
     <form id="frm1" th:action="@{/regular/regularList.do}">
-      <select name="column" id="column">
-        <option value="REGULAR_NAME">FIRST_NAME</option>
+      <select name="column" id="column">  
+        <option value="REGULAR_NAME">상품명</option> 
       </select>
       <input list="auto_complete" type="text" name="query" id="query">
-      <datalist id="auto_complete"></datalist>
       <button>조회</button>
     </form>
     <div th:utext="${pagination}"></div>
-    <div>
-      <th:block th:each="regularList, vs:${regularList}">
-        <th:block th:each="regularImgList, vs:${regularImgList}">
-          <th:block th:if="${regularList.regularNo == regularImgList.regularNo}">
-            <a th:href="@{/regular/regularDetail.do(regularNo=${regularList.regularNo})}">
-              <img th:src="@{/regular/regularDisplay.do(regularNo=${regularImgList.regularNo})}">
-            </a>
-            <div th:text="${regularList.regularName}"></div>
-          </th:block>
-        </th:block>
-      </th:block>
+
+  
+  <div class="container">
+    <div th:each="regularList : ${regularList}" class="item">
+      <div class="imgBox" >
+        <div th:each="regularMainImgList : ${regularMainImgList}" th:if="${regularList.regularNo == regularMainImgList.regularNo}" >
+            <img th:src="@{/regular/regularMainDisplay.do(regularNo=${regularMainImgList.regularNo})}"  style="width: 100%; height: 100%;">
+        </div>
+      </div>
+       <a th:href="@{/regular/regularDetail.do(regularNo=${regularList.regularNo})}">
+        <div class="textBox" >
+          <p class="textBox__name" th:text="${regularList.regularName}"></p>
+          <p class="textBox__price" th:text="${#numbers.formatInteger(regularList.regularSellPrice, 3, 'COMMA') + '원'}"></p>
+        </div>
+       </a>
     </div>
+  </div>
+    
+    
 </body>
 
 </html>

@@ -36,6 +36,7 @@
 		<typeAlias alias="RegularPurchaseDTO" 		type="com.gdu.pupo.domain.RegularPurchaseDTO" />
 		<typeAlias alias="RegularReviewDTO" 		type="com.gdu.pupo.domain.RegularReviewDTO" />
 		<typeAlias alias="UserGradeDTO" 			type="com.gdu.pupo.domain.UserGradeDTO" />
+		<typeAlias alias="RegularCategoryDTO" 			type="com.gdu.pupo.domain.RegularCategoryDTO" />
 		
 		<!-- park / Item / Cart -->
 		<typeAlias alias="ItemDTO" 					type="com.gdu.pupo.domain.ItemDTO" />

@@ -32,7 +32,8 @@ public class RegularController {
   }
   
   @GetMapping("/regularAddPage.html") // 상품등록 페이지
-  public String regularAddPage() {
+  public String regularAddPage(Model model) {
+    regularService.getRegCategory(model);
     return "regular/regularAddPage";
   }
     
@@ -49,9 +50,10 @@ public class RegularController {
     return "/regular/regularList";
   }
   
-  @GetMapping("/regularDisplay.do")
+  // 메인 이미지  보여주기
+  @GetMapping("/regularMainDisplay.do")
   public ResponseEntity<byte[]> regularDsiplay(@RequestParam("regularNo") int regularNo){
-    return regularService.regularDisplay(regularNo);
+    return regularService.regularMainDisplay(regularNo);
   }
   
   @GetMapping("/regularDetail.do")
@@ -59,7 +61,7 @@ public class RegularController {
     model.addAttribute("regularDetail", regularService.regularDetail(regularNo, model));
     return "/regular/regularDetail";
   }
-  @GetMapping("/regularMainDisplay.do")
+  @GetMapping("/regularDetailDisplay.do")
   public ResponseEntity<byte[]> regularMainDsiplay(@RequestParam("regularNo") int regularNo){
     return regularService.regularMainDisplay(regularNo);
   }
@@ -78,6 +80,12 @@ public class RegularController {
   public String regularPurchase(HttpServletRequest request, Model model) {
     model.addAttribute("regPurchase", regularService.regularPurchase(request, model));
     return "regular/regularPayDone";
+  }
+  
+  @PostMapping("/addCategory.do")
+  public String addCategory(HttpServletRequest request) {
+  regularService.addRegCategory(request);
+  return "redirect:/regular/regularAddPage.html";
   }
 }
 

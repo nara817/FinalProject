@@ -39,7 +39,8 @@
   }
   #uploadBtn,
   #resetBtn,
-  #backBtn {
+  #backBtn,
+  #addCategoryBtn {
       background-color: #8FA691 ; 
       border: none;
       color: white;
@@ -130,9 +131,7 @@
           </td>
           <td>                                    
             <select id="regularCategory" name="regularCategory">
-              <option value="1">샐러드</option>
-              <option value="2">건강식</option>
-              <option value="3">육류</option>
+              <option th:each="category : ${category}" th:value="${category.regularCategory}" th:text="${category.regularCategoryName}"></option>
             </select>
           </td>
         </tr>
@@ -224,14 +223,58 @@
       <div class="regi_btn">
         <button id="uploadBtn">상품등록</button>
         <button id="resetBtn" type="reset">Reset Button</button>
+        <button id="addCategoryBtn" type="button" onclick="openCategoryPopup()">상품분류 추가</button>
         <button id="backBtn" type="button" onclick="fnList()">돌아가기</button>
       </div>
     </form>
+   <form id="frmCategory" action="/regular/addCategory.do" method="post">
+     <div id="categoryPopup" style="display: none;">
+        <input type="text" name="regularCategoryName" id="categoryInput" placeholder="상품분류 입력">
+        <button type="button" onclick="saveCategory()">저장</button>
+        <button type="button" onclick="closeCategoryPopup()">취소</button>
+      </div>
+   </form>
   </div>
 </div>
 
 </body>
   <script th:inline="javascript">
+  
+  // 상품분류 입력 창 열기
+  function openCategoryPopup() {
+	    // 팝업 창 열기
+	    document.getElementById("categoryPopup").style.display = "block";
+	  }
+  $('#categoryInput').on('keydown', function(event) {
+	  if (event.keyCode === 13) {
+	    event.preventDefault(); // 기본 동작 중지
+
+	    saveCategory();
+	  }
+	});
+
+	function saveCategory() {
+	  // 상품분류 저장 처리
+	  var newCategory = $('#categoryInput').val();
+
+	  // 중복 체크
+	  var options = $('#regularCategory').find("option");
+	  for (var i = 0; i < options.length; i++) {
+	    if ($(options[i]).text() === newCategory || newCategory === null || newCategory.trim() === '') {
+	      alert('중복된 카테고리 또는 공백 입니다. 다시 입력 해주세요.');
+	      return; // 서브밋 취소
+	    }
+	  }
+
+	  $('#frmCategory').submit();
+
+	  // 팝업 창 닫기
+	  document.getElementById("categoryPopup").style.display = "none";
+	}
+	  function closeCategoryPopup() {
+		    // 팝업 창 닫기
+		    document.getElementById("categoryPopup").style.display = "none";
+		  }
   function fnList(){
 	  location.href="/regular/regularList.do";
   }

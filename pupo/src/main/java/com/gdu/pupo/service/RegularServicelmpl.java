@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.gdu.pupo.domain.GetTokenVO;
+import com.gdu.pupo.domain.RegularCategoryDTO;
 import com.gdu.pupo.domain.RegularDetailImgDTO;
 import com.gdu.pupo.domain.RegularMainImgDTO;
 import com.gdu.pupo.domain.RegularProductDTO;
@@ -47,6 +48,20 @@ public class RegularServicelmpl implements RegularService {
   private final RegularMapper regularMapper;
   private final MyFileUtil myFileUtil;
   private final PageUtil pageUtil;
+  
+  @Override
+  public void addRegCategory(HttpServletRequest request) {
+    String regularCategoryName = request.getParameter("regularCategoryName");
+    RegularCategoryDTO regularCategoryDTO = new RegularCategoryDTO();
+    regularCategoryDTO.setRegularCategoryName(regularCategoryName);
+    regularMapper.addRegCategory(regularCategoryDTO);
+  }
+  @Override
+  public void getRegCategory(Model model) {
+    List<RegularCategoryDTO> list = regularMapper.getRegCategoryList();
+    System.out.println(list + "입니다");
+    model.addAttribute("category", list);
+  }
   
   @Transactional
   @Override
@@ -251,19 +266,19 @@ public class RegularServicelmpl implements RegularService {
     map.put("recordPerPage", recordPerPage);
     
     List<RegularProductDTO> regularList = regularMapper.getRegularList(map);
-    List<RegularDetailImgDTO> regularImgList = regularMapper.getRegularImgList();
+    List<RegularMainImgDTO> regularMainImgList = regularMapper.getRegularMainImgList();
     model.addAttribute("regularList", regularList);
     model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/regular/regularList.do?column=" + column + "&query=" + query));
-    model.addAttribute("regularImgList", regularImgList);
+    model.addAttribute("regularMainImgList", regularMainImgList);
   }
   
   @Override
-  public ResponseEntity<byte[]> regularDisplay(int regularNo) {
-    RegularDetailImgDTO regularDetailImgDTO = regularMapper.getRegularImgByNo(regularNo);
+  public ResponseEntity<byte[]> regularMainDisplay(int regularNo) {
+    RegularMainImgDTO regularMainImgDTO = regularMapper.getRegularMainImgByNo(regularNo);
     ResponseEntity<byte[]> image = null;  
     
     try {
-      File thumbnail = new File(regularDetailImgDTO.getRegDetailImgName(), "s_" + regularDetailImgDTO.getRegFilesystemName());
+      File thumbnail = new File(regularMainImgDTO.getRegMainImgName(), regularMainImgDTO.getRegFilesystemName());
       image = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(thumbnail), HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
@@ -278,7 +293,7 @@ public class RegularServicelmpl implements RegularService {
   }
   
   @Override
-  public ResponseEntity<byte[]> regularMainDisplay(int regularNo) {
+  public ResponseEntity<byte[]> regularDetailDisplay(int regularNo) {
     RegularDetailImgDTO regularDetailImgDTO = regularMapper.getRegularImgByNo(regularNo);
     ResponseEntity<byte[]> image = null;  
     
