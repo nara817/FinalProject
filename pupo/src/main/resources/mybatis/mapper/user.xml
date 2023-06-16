@@ -162,6 +162,8 @@
         , GENDER = #{gender}
         , EMAIL = #{email}
         , MOBILE = #{mobile}
+      	, BIRTHYEAR = #{birthyear}
+      	, BIRTHDATE =#{birthdate}
     WHERE ID = #{id}
   </update>
   
@@ -347,6 +349,29 @@
          , AUTOLOGIN_EXPIRED_AT = NULL
      WHERE ID = #{id}
   </update>
+ <!-- 회원 조회 -->
+ <select id="selectUserByCount" parameterType="String" resultType="UserDTO">
+    SELECT USER_NO
+         , ID
+         , NAME
+         , GENDER
+         , EMAIL
+         , MOBILE
+         , BIRTHYEAR
+         , BIRTHDATE
+         , POSTCODE
+         , ROAD_ADDRESS
+         , JIBUN_ADDRESS
+         , DETAIL_ADDRESS
+         , EXTRA_ADDRESS
+         , JOINED_AT
+         , SELLER_CHECK
+         , POINT
+         , GRADE
+      FROM USER_T
+     WHERE ID = #{id}
+  </select>
+  
  
 
 </mapper>
