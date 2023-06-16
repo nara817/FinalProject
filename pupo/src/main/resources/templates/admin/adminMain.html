@@ -1,96 +1,189 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<!-- 가입 회원 수 아이콘 -->
-<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+  <!-- 아이콘 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
   <title>관리자: 메인페이지</title>
   <style>
-    .quick{
-	display:inline-block;
-	height:150px;
-	width:100%;
-	}
-    .quick_box{
-  	    background-color:white;    	
-    	width:250px;
-    	height:120px;
-    	display:inline-block;
-    	padding:10px;
-    	margin:10px 20px 0 30px;
-    	border-radius:10px;
-    	box-shadow: 4px 8px 16px 4px rgba(0,0,0,0.2);
+    .quick {
+      display: inline-block;
+      height: 150px;
+      width: 100%;
     }
-    .quick_wrap{
-       width:250px;  
-       position:relative;            
-        
+
+    .quick_box {
+      background-color: white;
+      width: 250px;
+      height: 120px;
+      display: inline-block;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-left: 20px;
+      margin-right: 60px;
+      border-radius: 10px;
+      box-shadow: 4px 8px 16px 4px rgba(0, 0, 0, 0.2);
     }
-    .quick_l{
-    	height:25px;
-    	display:inline-block;    	
-    	position:absolute;
-    	right:20px;
-    	margin-top:10px;
-    	color:black;
+
+    .quick_wrap {
+      width: 250px;
+      position: relative;
     }
-    .quick_a{
-    	height:50px;
-    	width:80px;
-    	display:inline-block;    	
-    	margin-top:15px;
-    	margin-left:176px;
-    	color:black;
+
+    .quick_wrap2 {
+      width: 250px;
+      position: relative;
+      margin-top: 30px;
     }
-    .aa{
-	font-size:15px;
-	}
-	.aaa{
-	font-size:30px;
-	font-weight:800;
-	}
+
+    .quick_l {
+      height: 25px;
+      display: inline-block;
+      position: absolute;
+      right: 20px;
+      margin-top: 10px;
+      color: black;
+    }
+
+    .quick_2 {
+      height: 25px;
+      display: inline-block;
+      position: absolute;
+      right: 20px;
+      margin-top: 15px;
+      color: black;
+    }
+
+    .quick_a {
+      height: 50px;
+      width: 80px;
+      display: inline-block;
+      margin-top: 15px;
+      margin-left: 176px;
+      color: black;
+    }
+
+    .aa {
+      font-size: 15px;
+    }
+
+    .aa2 {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .aa3 {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .aaa {
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border-left: none;
+      border-right: none;
+    }
+
+    td {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .fa-user {
+      margin-right: 10px;
+    }
   </style>
-  <script>
-    
-  </script>
 </head>
+
 <body>
-  <h1>관리자 메인 페이지</h1>
+  <h1><i class="fa-regular fa-user"></i>관리자 메인 페이지</h1>
+  
+  <table border="1">
+    <tr th:onclick="|location.href='@{/admin/adminUserList.html}'|">
+      <td>
+        <div class="quick_box">
+          <div class="quick_wrap">
+            <i class="fa fa-user-plus fa-4x" aria-hidden="true"></i>
+            <div class="quick_l">
+              <label class="aa" >가입 회원 수</label>
+            </div>
+            <div class="quick_a">
+              <label class="aaa" id="userCount" th:text="${userCount + ' 명'}"></label>
+            </div>
+          </div>
+        </div>
 
-<div class="quick_box">	
-	<div class="quick_wrap">
-          <i class="fa fa-user-plus fa-4x" aria-hidden="true"></i>
-          <div class="quick_l"><label class="aa" >가입 회원 수</label></div>
-          <div class="quick_a"> <label class="aaa"> 0 명</label></div>
-	</div>
-</div>
+        <div class="quick_box">
+          <div class="quick_wrap">
+            <i class="fa fa-user-plus fa-4x" aria-hidden="true"></i>
+            <div class="quick_l">
+              <label class="aa" th:onclick="|location.href='@{/admin/adminUserList.html}'|">가입 판매자 수</label>
+            </div>
+            <div class="quick_a">
+            
+              <label class="aaa" id="sellerCount" th:text="${sellerCount + ' 명'}"></label>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
 
-<div class="quick_box">	
-	<div class="quick_wrap">
-          <i class="fa fa-user-plus fa-4x" aria-hidden="true"></i>
-          <div class="quick_l"><label class="aa" >가입 판매자 수</label></div>
-          <div class="quick_a"> <label class="aaa"> 0 명</label></div>
-	</div>
-</div> 
+    <tr>
+      <td>
+        <div class="quick_box">
+          <div class="quick_wrap">
+            <i class="fa fa-file-text fa-4x" aria-hidden="true"></i>
+            <div class="quick_l">
+              <label class="aa">고객 문의</label>
+            </div>
+            <div class="quick_a">
+              <label class="aaa">건</label>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
 
-<div class="quick_box">	
-	<div class="quick_wrap">
-	  <i class="fa fa-file-text fa-4x" aria-hidden="true"></i>
-	  <div class="quick_l"><label class="aa" >고객 문의</label></div>
-	  <div class="quick_a"><label class="aaa"><fmt:formatNumber type="number" maxFractionDigits="3" value="${cNum}" />건</label></div>
-	</div>
-</div>
+    <tr>
+      <td>
+        <div class="quick_box" th:onclick="'adminUserList.html'">
+          <div class="quick_wrap2">
+            <i class="fa fa-store fa-4x" aria-hidden="true"></i>
+            <div class="quick_2">
+              <label class="aa2">상품 등록</label>
+            </div>
+          </div>
+        </div>
 
-<div class="quick_box">	
-	<div class="quick_wrap">
-	   <i class="fa-solid fa-box fa-4x" style="color: #000000;" aria-hidden="true"></i>
-	  <div class="quick_l"><label class="aa" >신규 주문</label></div>
-	  <div class="quick_a"><label class="aaa"><fmt:formatNumber type="number" maxFractionDigits="3" value="${cNum}" />건</label></div>
-	</div>
-</div>
-  <script>
-    // DB에서 회원 데이터를 가져와서 동적으로 테이블에 추가하는 로직을 작성해야 합니다.
-    // 여기에 해당 로직을 작성하면 됩니다.
-  </script>
+
+		
+        <div class="quick_box" th:onclick="|location.href='@{/admin/couponList.html}'|">
+          <div class="quick_wrap2">
+            <i class="fa fa-tag fa-4x" aria-hidden="true"></i>
+            <div class="quick_2">
+              <label class="aa3">쿠폰 등록</label>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+  </table>
+  
+  
+    <script th:inline="javascript">
+    function goAdminUserList() {
+      location.href = 'adminUserList.html';
+    }
+
+
+    </script>
 </body>
 </html>

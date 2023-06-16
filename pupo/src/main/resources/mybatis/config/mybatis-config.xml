@@ -27,8 +27,6 @@
 		<typeAlias alias="SummernoteQnaImageDTO" 	type="com.gdu.pupo.domain.SummernoteQnaImageDTO" />
 		
 		<!-- yu / RegularProduct / Coupon -->
-
-
       <typeAlias alias="CouponDTO"             type="com.gdu.pupo.domain.CouponDTO" />
       <typeAlias alias="CouponUserDTO"          type="com.gdu.pupo.domain.CouponUserDTO" />
       <typeAlias alias="RegularShipDTO"          type="com.gdu.pupo.domain.RegularShipDTO" />
@@ -50,6 +48,7 @@
 		<typeAlias alias="CartListDTO" 			type="com.gdu.pupo.domain.CartListDTO" />
 		<typeAlias alias="OrderDTO" 				type="com.gdu.pupo.domain.OrderDTO" />
 		<typeAlias alias="AttachDTO" 				type="com.gdu.pupo.domain.AttachDTO" />
+
 						
 	</typeAliases>
 

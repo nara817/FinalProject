@@ -12,12 +12,15 @@ import lombok.NoArgsConstructor;
 public class FaqDTO {
 	
 	  private int faqNo;
-	  private int category;
-	  private String title;
-	  private String content;
-	  private Date createdAt;
-	  private Date modifiedAt;
-	  private int hit;
+	  private int sellerCheck;
 	  private String id;
+	  private String faqCategory;
+	  private String faqTitle;
+	  private String faqContent;
+	  private Date faqCreatedAt;
+	  private Date faqModifiedAt;
+	  private int faqHit;
+	  
 
+	 
 }

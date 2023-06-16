@@ -29,6 +29,7 @@ public interface UserService {
   public void findPw(HttpServletRequest request, HttpServletResponse response);
   public void modifyPw(HttpServletRequest request, HttpServletResponse response);
  // public UserDTO verifyTemporaryPassword(String id, String temporaryPassword);  
+
  //public int updatePwd(int mobile, String password) throws Exception;
 
   

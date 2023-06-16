@@ -27,7 +27,7 @@ public class UserController {
 
   // field
   private final UserService userService;
-  
+    
   // 이용약관-회원가입
   @GetMapping("/agree.form")
   public String agreeForm() {
@@ -177,7 +177,7 @@ public class UserController {
 	}
 	   
    // 비밀번호 찾기
-  @GetMapping("/findPw.form")  // 비밀번호 찾기 화면으로 이동
+	@GetMapping("/findPw.form")  // 비밀번호 찾기 화면으로 이동
   public String findPwForm() {
     return "user/findPw";
   }
@@ -215,22 +215,12 @@ public class UserController {
 	  public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
 		  userService.modifyPw(request, response);
 	  }
-  /* 비밀번호 변경
-  @GetMapping("updatePwdForm")
-  public void updatePwdForm(int no, Model model) throws Exception {
-    Map<String, Object> params = new HashMap<String, Object>();
-    params.put("type", "app");
-    params.put("userNo", no);
-    model.addAttribute("user", userService.get(params));
-  }*/
-
-	// 비밀번호 변경
-	
-  /*@PostMapping("updatePwd")
-  public String updatePwd(UserDTO user, int mobile, String password) throws Exception {
-    userService.updatePwd(mobile, password);
-    return "redirect:./" + user.getmobile();
-  }*/
-  
+	  
+	  // 사용자-쿠폰 페이지 이동
+	  @GetMapping("/coupon.html")
+	  public String coupon(HttpServletRequest request, Model model) {
+		    return "user/coupon";
+	  }
+	  
 }
 	
