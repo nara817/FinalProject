@@ -35,16 +35,6 @@
                     
 					<!-- /* 로그인 구분에 따른 마이페이지 */ -->
 					
-<<<<<<< HEAD
-<!-- 					
-					<li class="nav-item user" th:if="${session.loginId != null and session.sellerChk == 0}">
-=======
-<!-- 					<li class="nav-item user" th:if="${session.loginId  != null and session.sellerChk == 0}">
-					  <a class="nav-link" th:href="@{/user/mypage.do}">마이페이지</a>
-					</li> -->
-					<th:block th:if="${session.loginId  != null and session.sellerChk == 0}">
-					<li class="nav-item user">
->>>>>>> bd96e692dd789ede50afecae19ad16e2093c42f6
 					  <a class="nav-link" th:href="@{/user/mypage.do}">마이페이지</a>
 					</li>
 					</th:block>
@@ -52,8 +42,6 @@
 					<th:block th:if="${session.loginId != null and session.sellerChk == 1}">
 					<li class="nav-item seller">
 					  <a class="nav-link" th:href="@{/user/mypage.do}">판매자페이지</a>
-<<<<<<< HEAD
-					</li> -->
 
 
                            
