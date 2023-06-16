@@ -18,11 +18,11 @@ public interface FaqMapper {
   public int deleteFaq(int faqNo);
   
   
-  public int getFaqCount();
-  public int getFaqCategoryCount(String kind);
+  public int getFaqCount(Map<String, Object> map);
   public List<FaqDTO> getFaqList(Map<String, Object> map);
+  public int getFaqCategoryCount(String kind);
+  
   public List<FaqDTO> getFaqListUsingSearch(Map<String, Object> map);
-  public int getFaqSearchCount(Map<String, Object> map);
   public List<FaqDTO> getAutoComplete(Map<String, Object> map);
 
   

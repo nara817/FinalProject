@@ -29,11 +29,10 @@ public class FaqServiceImpl implements FaqService {
   
   @Override
   public void getFaqList(HttpServletRequest request, Model model) {
+    
     // 'page' 매개변수가 제공되지 않으면 1로 설정합니다.
     Optional<String> opt1 = Optional.ofNullable(request.getParameter("page"));
     int page = Integer.parseInt(opt1.orElse("1"));
-    
-    int totalRecord = faqMapper.getFaqCount();
 
     // 세션에서 'recordPerPage' 값을 가져옵니다. 세션에 없을 경우 10으로 기본값을 설정합니다.
     HttpSession session = request.getSession();
@@ -48,10 +47,9 @@ public class FaqServiceImpl implements FaqService {
     Optional<String> opt4 = Optional.ofNullable(request.getParameter("orderColumn"));
     String orderColumn = opt4.orElse("FAQ_NO");
     
-    
     // 파라미터 searchColumn이 전달되지 않는 경우 column=""로 처리한다. (검색할 칼럼)
-    Optional<String> opt5 = Optional.ofNullable(request.getParameter("searchColumn"));
-    String searchColumn = opt5.orElse("");
+    //Optional<String> opt5 = Optional.ofNullable(request.getParameter("searchColumn"));
+    //String searchColumn = opt5.orElse("");
     
     // 파라미터 query가 전달되지 않는 경우 query=""로 처리한다. (검색어)
     Optional<String> opt6 = Optional.ofNullable(request.getParameter("query"));
@@ -60,14 +58,17 @@ public class FaqServiceImpl implements FaqService {
     // 파라미터 faqCategory가 전달되지 않는 경우 faqCategory=""로 처리한다. (검색어)
     Optional<String> opt7 = Optional.ofNullable(request.getParameter("kind"));
     String kind = opt7.orElse("");
-    
 
+
+    // 데이터베이스로 전달할 맵(Map)을 생성합니다.
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("query", query);
+    map.put("kind", kind);
+    int totalRecord = faqMapper.getFaqCount(map);
     
     // column과 query를 이용해 검색된 레코드 개수를 구한다.
   
     int kindCount = faqMapper.getFaqCategoryCount(kind);
-    
-    
 
     // 'recordPerPage' 값이 변경되었을 때, 현재 페이지의 데이터가 없는 경우를 확인한다.
     int totalPage = (int) Math.ceil((double) totalRecord / recordPerPage);
@@ -81,14 +82,10 @@ public class FaqServiceImpl implements FaqService {
     System.out.println(page + "page입니다");
     System.out.println(totalRecord + "totalRecord입니다");
     System.out.println(recordPerPage + "recordPerPage입니다");
-    // 데이터베이스로 전달할 맵(Map)을 생성합니다.
-    Map<String, Object> map = new HashMap<String, Object>();
     map.put("begin", pageUtil.getBegin());
     map.put("order", order);
+    map.put("recordPerPage", recordPerPage);
     map.put("orderColumn", orderColumn);
-    map.put("searchColumn", searchColumn);
-    map.put("query", query);
-    map.put("kind", kind);
     
     
     System.out.println(pageUtil.getBegin() + "begin입니다");
@@ -99,20 +96,12 @@ public class FaqServiceImpl implements FaqService {
     
     // pagination.jsp로 전달할 정보를 저장합니다.
     model.addAttribute("faqList",  faqList);
-    model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/customerCenter/faq.html?orderColumn=" + orderColumn + "&order=" + order + "&searchColumn=" + searchColumn + "&query=" + query + "&kind=" + kind));
+    model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/customerCenter/faq.html?orderColumn=" + orderColumn + "&order=" + order + "&query=" + query + "&kind=" + kind));
     model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
     model.addAttribute("kindCount", kindCount);
     model.addAttribute("totalRecord", totalRecord);
     model.addAttribute("page", page);
     
-
-     //마지막 페이지로 이동하는 경우 파라미터 값도 같이 변경합니다.
-    if (page > totalPage) {
-      //마지막 페이지로 설정합니다.
-      page = totalPage;
-       // 파라미터 값을 변경합니다.
-      map.put("begin", pageUtil.getBegin());
-   }
   }
   
   @Override

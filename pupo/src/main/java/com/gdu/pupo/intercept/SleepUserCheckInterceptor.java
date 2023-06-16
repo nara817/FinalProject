@@ -30,14 +30,14 @@ public class SleepUserCheckInterceptor implements HandlerInterceptor {
     
     SleepUserDTO sleepUserDTO = userMapper.selectSleepUserById(id);
     
-    // 휴면 테이블에 정보가 있다면 휴면해제화면(/user/wakeup.form)으로 이동
+    // 휴면 테이블에 정보가 있다면 휴면해제화면(/user/wakeup.html)으로 이동
     if(sleepUserDTO != null) {
       
       // session에 sleepUserId를 올려 놓으면 wakeup.jsp에서 휴면회원의 아이디를 확인할 수 있다.
       HttpSession session = request.getSession();
       session.setAttribute("sleepUserId", id);
       
-      response.sendRedirect(request.getContextPath() + "/user/wakeup.form");
+      response.sendRedirect(request.getContextPath() + "/user/wakeup.html");
       return false;
       
     }

@@ -93,6 +93,7 @@
             <h3 class="blind">자주묻는질문카테고리</h3>
             <form id="frmKind" th:action="@{/customerCenter/faq.html}">
               <div class="btn-group mb-5 pl-13 " role="group" aria-label="Basic radio toggle button group">
+                
                 <input value="" type="radio" class="btn-check" name="kind" id="btnradio1" autocomplete="off" checked="checked">
                 <label class="btn btn-outline-success" for="btnradio1">전체</label>
               
@@ -110,6 +111,7 @@
                 
                 <input value="취소/교환/반품" type="radio" class="btn-check" name="kind" id="btnradio6" autocomplete="off">
                 <label class="btn btn-outline-success" for="btnradio6">취소/교환/반품</label>
+                
               </div>
             </form>
           </div>
@@ -117,12 +119,11 @@
         
         
           <div class="subcontent pl-12 py-3" >
-            <div id="kindCount" th:text="|게시글 갯수: ${kindCount}|"></div>
             <div id="totalRecord" th:text="|게시글 갯수: ${totalRecord}|"></div>
    
             <div class="pl-37">페이지보기
               <select id="recordPerPage">
-                <option th:value="10" selected="selected">10개</option>
+                <option th:value="10">10개</option>
                 <option th:value="20">20개</option>
                 <option th:value="30">30개</option>
               </select> 
@@ -192,16 +193,20 @@
 </body>
 <script th:inline="javascript">
 
-$(function(){
+
     // recordPerPage의 변경
     $('#recordPerPage').on('change', function(){
       location.href = '/customerCenter/change/record.do?recordPerPage=' + $(this).val();  // session에 recorePerPage 올리기
     });
+    
     // 세션에 저장된 recordPerPage값으로 <select> 태그의 값을 세팅
     var recordPerPage = /*[[${session.recordPerPage}]]*/ '';
+    
     recordPerPage = recordPerPage == '' ? '10' : recordPerPage;
     $('#recordPerPage').val(recordPerPage);
-  })
+    
+    
+    
 function fnNewWrite() {
     location.href='/customerCenter/write.html';
   }
