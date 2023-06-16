@@ -71,30 +71,7 @@
       <artifactId>commons-io</artifactId>
       <version>2.8.0</version>
     </dependency>
-<<<<<<< HEAD
-    <!-- 업로드 -->
-    <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.5</version>
-        </dependency>
-		  <!-- 썸네일 -->
-        <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
-            <version>0.4.13</version>
-        </dependency>
-    
-        <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
-    <dependency>
-      <groupId>net.coobird</groupId>
-      <artifactId>thumbnailator</artifactId>
-      <version>0.4.13</version>
-    </dependency>
-  
-=======
+
     
     <!-- 업로드 -->
     <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
@@ -112,7 +89,7 @@
 	    <version>0.4.13</version>
 	</dependency>
 	  
->>>>>>> bd96e692dd789ede50afecae19ad16e2093c42f6
+
       <!-- Random String : 인증코드용 -->
     <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
     <dependency>

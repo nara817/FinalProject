@@ -9,11 +9,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class FileConfig {
 
 	@Bean
-<<<<<<< HEAD
-	public MultipartResolver multipartResolver() {  // Bean 타입은 MultipartResolver로 설정해야 한다.(인터페이스 타입)
-=======
+
 	public MultipartResolver multipartResolver() {  // Bean 타입은 MultipartResolver로 설정해야 한다.
->>>>>>> bd96e692dd789ede50afecae19ad16e2093c42f6
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 		multipartResolver.setDefaultEncoding("UTF-8");
 		multipartResolver.setMaxUploadSize(1024 * 1024 * 100);       // 전체 첨부 파일의 크기 100MB

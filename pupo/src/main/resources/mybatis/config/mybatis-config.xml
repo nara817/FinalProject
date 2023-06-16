@@ -27,18 +27,7 @@
 		<typeAlias alias="SummernoteQnaImageDTO" 	type="com.gdu.pupo.domain.SummernoteQnaImageDTO" />
 		
 		<!-- yu / RegularProduct / Coupon -->
-<<<<<<< HEAD
-    <typeAlias alias="CouponDTO"             type="com.gdu.pupo.domain.CouponDTO" />
-    <typeAlias alias="CouponUserDTO"          type="com.gdu.pupo.domain.CouponUserDTO" />
-    <typeAlias alias="RegularShipDTO"          type="com.gdu.pupo.domain.RegularShipDTO" />
-    <typeAlias alias="RegularDetailImgDTO"       type="com.gdu.pupo.domain.RegularDetailImgDTO" />
-    <typeAlias alias="RegularMainImgDTO"       type="com.gdu.pupo.domain.RegularMainImgDTO" />
-    <typeAlias alias="RegularProductDTO"       type="com.gdu.pupo.domain.RegularProductDTO" />
-    <typeAlias alias="RegularPurchaseDTO"       type="com.gdu.pupo.domain.RegularPurchaseDTO" />
-    <typeAlias alias="RegularReviewDTO"       type="com.gdu.pupo.domain.RegularReviewDTO" />
-    <typeAlias alias="UserGradeDTO"          type="com.gdu.pupo.domain.UserGradeDTO" />
-    <typeAlias alias="RegularCategoryDTO"          type="com.gdu.pupo.domain.RegularCategoryDTO" />
-=======
+
 
       <typeAlias alias="CouponDTO"             type="com.gdu.pupo.domain.CouponDTO" />
       <typeAlias alias="CouponUserDTO"          type="com.gdu.pupo.domain.CouponUserDTO" />
@@ -50,7 +39,7 @@
       <typeAlias alias="RegularReviewDTO"       type="com.gdu.pupo.domain.RegularReviewDTO" />
       <typeAlias alias="UserGradeDTO"          type="com.gdu.pupo.domain.UserGradeDTO" />
       <typeAlias alias="RegularCategoryDTO"          type="com.gdu.pupo.domain.RegularCategoryDTO" />
->>>>>>> bd96e692dd789ede50afecae19ad16e2093c42f6
+
 		
 		<!-- park / Item / Cart -->
 		<typeAlias alias="ItemDTO" 			type="com.gdu.pupo.domain.ItemDTO" />
