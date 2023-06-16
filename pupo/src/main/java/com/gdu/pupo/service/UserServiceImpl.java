@@ -3,6 +3,7 @@ package com.gdu.pupo.service;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -86,7 +87,6 @@ public class UserServiceImpl implements UserService {
 
 		// 비밀번호 SHA-256 암호화
 		pw = securityUtil.getSha256(pw);
-
 		// 이름 XSS 처리
 		name = securityUtil.preventXSS(name);
 
@@ -161,7 +161,11 @@ public class UserServiceImpl implements UserService {
 		String pw = request.getParameter("pw");
 
 		// 비밀번호 SHA-256 암호화
+<<<<<<< HEAD
 		// pw = securityUtil.getSha256(pw);
+=======
+		//pw = securityUtil.getSha256(pw);
+>>>>>>> 7aab5b0e80c7777a9c0df851f770a053a701ef9c
 
 		// UserDTO 만들기
 		UserDTO userDTO = new UserDTO();
@@ -180,7 +184,6 @@ public class UserServiceImpl implements UserService {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginId", id);
 			session.setAttribute("sellerChk", loginUserDTO.getSellerCheck()); // 구분 값 가져오기
-			
 
 			int updateResult = userMapper.updateUserAccess(id);
 			if (updateResult == 0) {
@@ -477,7 +480,7 @@ public class UserServiceImpl implements UserService {
 					}
 	
 					out.println("<script>");
-					out.println("location.href='" + request + "/user/sendTemporaryPassword.form';");
+					out.println("location.href='" + request + "/user/sendTemporaryPassword.html';");
 					out.println("</script>");
 					out.flush();
 					out.close();
@@ -538,4 +541,5 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	 }
+
 }

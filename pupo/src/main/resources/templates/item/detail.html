@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
+<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+
+<body>
+	<div>
+	  <form method="post" th:action="@{addCart}">
+		  <div><a th:hidden="${item.itemNo}"></a></div>
+		  <div>상품명 : <a th:text="${item.itemName}"></a></div>
+		  <div>카테고리 : <a th:text="${item.itemCategory}"></a></div>
+		  <div>상품 설명 : <a th:text="${item.itemComment}"></a></div>
+		  <div>가격 : <a th:text="${item.price}"></a></div>
+		  <div>재고 : <a th:text="${item.stock}"></a></div>
+	    
+	    <div class="cartStock">
+				<span>구입 수량</span>
+				<button type="button" class="minus">-</button>
+				<input type="number" class="numBox" min="1" max="${item.stock}" value="1" readonly="readonly"/>
+				<button type="button" class="plus">+</button>
+	 
+	    </div>
+	    
+	    <button class="addCart_btn">장바구니</button>
+	    
+		  <div>사진 : </div>
+		  <div>상세 : </div>
+	  </form>
+	</div>
+</body>
+
+<script th:inline="javascript">
+  $(document).ready(function() {
+    $(".plus").click(function() {
+      var num = $(".numBox").val();
+      var plusNum = Number(num) + 1;
+      if (plusNum > /*[[${item.stock}]]*/ 1) {
+        $(".numBox").val(num);
+      } else {
+        $(".numBox").val(plusNum);
+      }
+    });
+
+    $(".minus").click(function() {
+      var num = $(".numBox").val();
+      var minusNum = Number(num) - 1;
+
+      if (minusNum <= 0) {
+        $(".numBox").val(num);
+      } else {
+        $(".numBox").val(minusNum);
+      }
+    });
+  });
+  
+  $(".addCart_btn").click(function(){
+	   var itemNo = $("#itemNo").val();
+	   var stock = $(".numBox").val();
+	      
+	   var data = {
+	     itemNo : itemNo,
+	     stock : stock
+	     };
+	   
+	   $.ajax({
+	    url : "item/detail/addCart",
+	    type : "post",
+	    data : data,
+	    success : function(result){
+	     alert("카트 담기 성공");
+	     $(".numBox").val("1");
+	    },
+	    error : function(){
+	     alert("카트 담기 실패");
+	    }
+	   });
+	  });
+  
+</script>
+
+</html>

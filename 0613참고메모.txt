@@ -1,3 +1,4 @@
+---------------------------------------------------
 2023-06-08
 ---------------------------------------------------
 로그인, 회원가입 확인 , db 회원정보 저장 확인
@@ -47,3 +48,20 @@ login sellercheck 세션 저장 추가
 3) index.html
 sellercheck 구분에 따른 페이지 보여주기 수정
 
+---------------------------------------------------
+2023-06-13
+---------------------------------------------------
+FileConfig 추가
+
+logback 추가
+/ MyLogbackLayout 추가
+log4jdbc.log4j2.properties 추가
+logback.xml 추가
+
+header.html 수정
+
+main\resources\static bootstrap-5.0.2 폴더 추가
+
+PupoApplication.java 추가
+ServletInitializer.java 추가
+---------------------------------------------------
