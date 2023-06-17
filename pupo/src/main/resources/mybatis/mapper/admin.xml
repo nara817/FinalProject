@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.pupo.mapper.AdminMapper">
+
+<!-- 회원 조회 -->
+  <select id="selectUserByUserListDTO" resultType="UserDTO">
+	SELECT USER_NO
+		, ID
+		, PW
+		, NAME
+		, GENDER
+		, EMAIL
+		, MOBILE
+		, BIRTHYEAR
+		, BIRTHDATE
+		, POSTCODE
+		, ROAD_ADDRESS
+		, JIBUN_ADDRESS
+		, DETAIL_ADDRESS
+		, EXTRA_ADDRESS
+		, AGREECODE
+		, DATE_FORMAT(JOINED_AT, '%Y-%m-%d %H:%i:%s') AS JOINED_AT
+		, PW_MODIFIED_AT
+		, AUTOLOGIN_ID
+		, AUTOLOGIN_EXPIRED_AT
+		, SELLER_CHECK
+		, POINT
+		, GRADE
+	FROM USER_T;
+  </select>
+  
+<!-- 회원 count -->
+	<select id="selectUserCount" resultType="int">
+	  SELECT COUNT(SELLER_CHECK)
+	  FROM USER_T
+	  WHERE SELLER_CHECK = 0
+
+	</select>
+	<select id="selectSellerCount" resultType="int">
+	  SELECT COUNT(SELLER_CHECK)
+	  FROM USER_T
+  	  WHERE SELLER_CHECK = 1
+	</select>
+	<!-- 회원 가입일 정렬 아직안함 -->
+	
+    <select id="getListCount" resultType="int">
+	    SELECT COUNT(*)
+	      FROM USER_T
+  	</select>
+  
+	<!-- 페이지네이션 -->
+	<select id="getlistUsingPagination" parameterType="Map" resultType="UserDTO">
+	SELECT A.RN, A.USER_NO, A.ID, A.PW, A.NAME, A.GENDER, A.EMAIL, A.MOBILE, A.BIRTHYEAR, A.BIRTHDATE, A.POSTCODE, A.ROAD_ADDRESS, A.JIBUN_ADDRESS, A.DETAIL_ADDRESS, A.EXTRA_ADDRESS, A.AGREECODE, A.JOINED_AT, A.PW_MODIFIED_AT, A.AUTOLOGIN_ID, A.AUTOLOGIN_EXPIRED_AT, A.SELLER_CHECK, A.POINT, A.GRADE
+	FROM (
+	    SELECT ROW_NUMBER() OVER(ORDER BY USER_NO ASC) AS RN, U.*
+	    FROM USER_T U
+	) A
+	WHERE A.RN BETWEEN #{begin} AND #{end};
+ 	</select>
+
+</mapper>

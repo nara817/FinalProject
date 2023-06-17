@@ -12,8 +12,9 @@ public class PageUtil {
 	private int totalRecord;       // 전체 레코드 개수(DB에서 구해온다)
 	private int recordPerPage;     // 한 페이지에 표시할 레코드 개수(파라미터로 받아온다)
 	private int begin;             // 한 페이지에 표시할 레코드의 시작 번호(계산한다)
+	private int end;               // 한 페이지에 표시할 레코드의 종료 번호(계산한다)
 	
-	private int pagePerBlock = 5;  // 한 블록에 표시할 페이지의 개수(임의로 정한다)
+	private int pagePerBlock = 10;  // 한 블록에 표시할 페이지의 개수(임의로 정한다)
 	private int totalPage;         // 전체 페이지 개수(계산한다)
 	private int beginPage;         // 한 블록에 표시할 페이지의 시작 번호(계산한다)
 	private int endPage;           // 한 블록에 표시할 페이지의 종료 번호(계산한다)
@@ -27,6 +28,7 @@ public class PageUtil {
 		
 		// begin 계산
 		begin = (page - 1) * recordPerPage;
+		end = begin + recordPerPage - 1;
 				
 		// totalPage 계산
 		totalPage = totalRecord / recordPerPage;
@@ -54,9 +56,9 @@ public class PageUtil {
 		// path에 ?가 포함되어 있으면 이미 파라미터가 포함된 경로이므로 &를 붙여서 page 파라미터를 추가한다.
 		
 		if(path.contains("?")) {
-			path += "&";  // path = "/app09/employees/pagination.do?order=ASC&"
+			path += "&";  // path = "/pupo/admin/adminUserList.html?order=ASC&"
 		} else {
-			path += "?";  // path = "/app09/employees/pagination.do?"
+			path += "?";  // path = "/pupo/admin/adminUserList.html?"
 		}
 		
 		StringBuilder sb = new StringBuilder();

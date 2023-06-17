@@ -14,7 +14,11 @@
       width: 100%;
     }
     th, td {
+<<<<<<< HEAD
       text-align: left;
+=======
+      text-align: center;
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
       padding: 2px;
       border-bottom: 1px solid #444444;
     }
@@ -40,7 +44,20 @@
     }
     .fa-user {
       margin-right: 10px;
+<<<<<<< HEAD
     }    
+=======
+    }
+    
+    .home {
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: initial; /* 기본 링크 색상 유지 */
+  }
+
+  .home:hover {
+    color: green; /* 마우스를 가져다 대면 초록색으로 변경 */
+  }   
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   </style>
   <script>
 /*     function sortTable {
@@ -76,18 +93,51 @@
       table.replaceChild(tbody, table.ElementsByTagName("tbody")[0]);
     }
  */
+<<<<<<< HEAD
 
 
   </script>
 </head>
 <body>
   <h1><i class="fa-solid fa-user"></i>회원관리</h1>
+=======
+	// 정렬
+	 $(function(){
+		    // recordPerPage의 변경
+		    $('#recordPerPage').on('change', function(){
+		      location.href = '/employees/change/record?recordPerPage=' + $(this).val();
+		    })
+		  })
+// 메인페이지로가기 이벤트
+	  function showText() {
+	    document.getElementById("hoverText").style.display = "inline";
+	  }
+
+	  function hideText() {
+	    document.getElementById("hoverText").style.display = "none";
+	  }
+ 
+  </script>
+</head>
+<body>
+	<h3>
+	  <a class="home"  th:href="@{/admin/adminMain.html}" onmouseover="showText()" onmouseout="hideText()">
+	    <i class="fa-solid fa-house"></i>
+	    <span id="hoverText" style="display: none;">메인페이지로 가기</span>
+	  </a>
+	</h3>
+	
+  <h1><i class="fa-solid fa-user"></i>회원관리</h1>
+  
+  
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="검색">
     <button onclick="searchTable">검색</button>
   </div>
   <div>
     <label for="role">정렬:</label>
+<<<<<<< HEAD
     <select id="role" onchange="sortTable">
       <option value="all">전체</option>
       <option value="user">사용자</option>
@@ -96,6 +146,17 @@
     </select>
   </div>
 
+=======
+    <select class="role_select" id="role" name="role">
+      <option value="all">전체</option>
+      <option value="user">사용자</option>
+      <option value="admin">관리자</option>
+      <option value="seller">판매자</option>
+    <option value="all">전체</option>
+    </select>
+  </div>
+	
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   <table id="memberTable">
     <tr>
       <th>회원번호</th>
@@ -112,6 +173,7 @@
       <th>가입일</th>
     </tr>
     <!-- 여기에 회원 데이터를 동적으로 추가할 예정입니다 -->
+<<<<<<< HEAD
     <tr>
       <td th:text="${user.userNo}"></td>
       <td th:text="${user.sellerCheck}"></td>
@@ -124,11 +186,32 @@
 		</td>
 <!--       <td th:text="${user.grade}"></td>
 
+=======
+    <tr th:each="user : ${user}">
+      <td th:text="${user.userNo}"></td>
+      <!-- <td th:text="${user.sellerCheck}"></td> -->
+<td>
+  <span th:text="${user.sellerCheck == 0 ? '사용자' : (user.sellerCheck == 1 ? '판매자' : (user.sellerCheck == 2 ? '관리자' : ''))}"></span>
+</td>
+
+
+
+      
+      <!-- 판매자 가입시, 승인하지 않을 경우 판매불가상태, 관리자 승인시 판매가능 -->
+	<td th:if="${session.loginId != null}">
+		<select name="승인" th:if="${session.sellerChk == 1}">
+			<option value="User">판매가능</option>
+			<option value="Admin">판매불가</option>
+		</select>
+	</td>
+      <td th:text="${user.grade}"></td>
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
       <td th:text="${user.id}"></td>
       <td th:text="${user.name}"></td>
       <td th:text="${user.gender}"></td>
       <td th:text="${user.mobile}"></td>
       <td th:text="${user.email}"></td>
+<<<<<<< HEAD
       <td th:text="${user.roadAddress}"></td> /* roadAddress */
       <td th:text="${user.detailAddress}"></td> /* detailAddress */
       <td th:text="${user.joinedAt}"></td>
@@ -139,5 +222,23 @@
     // DB에서 회원 데이터를 가져와서 동적으로 테이블에 추가하는 로직을 작성해야 합니다.
     // 여기에 해당 로직을 작성하면 됩니다.
   </script>
+=======
+      <td th:text="${user.roadAddress}"></td>
+      <td th:text="${user.detailAddress}"></td>
+      <!-- <td th:text="${user.joinedAt}"></td> -->
+      <td th:text="${#dates.format(user.joinedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      
+    </tr>
+
+		<tr>
+			<td th:utext="${pagination}"></td>
+		</tr>
+
+	</table>
+  <script>
+			// DB에서 회원 데이터를 가져와서 동적으로 테이블에 추가하는 로직을 작성해야 합니다.
+			// 여기에 해당 로직을 작성하면 됩니다.
+		</script>
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
 </body>
 </html>

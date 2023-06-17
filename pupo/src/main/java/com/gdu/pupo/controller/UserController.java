@@ -27,16 +27,22 @@ public class UserController {
 
   // field
   private final UserService userService;
-  
+    
   // 이용약관-회원가입
+<<<<<<< HEAD
   //@GetMapping("/agree.form")
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   @GetMapping("/agree.html")
   public String agreeForm() {
     return "user/agree";
   }
   
   // 회원가입
+<<<<<<< HEAD
   //@GetMapping("/join.form")
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   @GetMapping("/join.html")
   public String joinForm(@RequestParam(value="location", required=false) String location  // 파라미터 location이 전달되지 않으면 빈 문자열("")이 String location에 저장된다.
                        , @RequestParam(value="event", required=false) String event        // 파라미터 event가 전달되지 않으면 빈 문자열("")이 String event에 저장된다.
@@ -74,7 +80,10 @@ public class UserController {
   }
   
   // 로그인
+<<<<<<< HEAD
   //@GetMapping("/login.form")
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   @GetMapping("/login.html")
   public String loginForm(@RequestHeader("referer") String url, Model model) {
     // 요청 헤더 referer : 로그인 화면으로 이동하기 직전의 주소를 저장하는 헤더 값
@@ -101,7 +110,10 @@ public class UserController {
   }
   
   // 휴면
+<<<<<<< HEAD
   //@GetMapping("/wakeup.form")
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   @GetMapping("/wakeup.html")
   public String wakeup() {
     return "user/wakeup";
@@ -123,13 +135,16 @@ public class UserController {
   }
    
   // 회원정보 수정
+<<<<<<< HEAD
   //@GetMapping("/modifyInfo.form")
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   @GetMapping("/modifyInfo.html")
   public String modifyForm(HttpSession session, Model model) {
       // 로그인이 되어 있는지 확인
       if (session.getAttribute("loginId") == null) {
           // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
-          return "redirect:/user/login.form";
+          return "redirect:/user/login.html";
       }
       // 세션에서 사용자의 ID를 가져옴
       String id = (String) session.getAttribute("loginId");
@@ -169,7 +184,10 @@ public class UserController {
   }
 
 	  //아이디 찾기
+<<<<<<< HEAD
 	  //@GetMapping("/findId.form")  // 아이디 찾기 화면으로 이동
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
 	  @GetMapping("/findId.html")  // 아이디 찾기 화면으로 이동
 	  public String findIdForm() {
 	    return "user/findId";
@@ -183,8 +201,12 @@ public class UserController {
 	}
 	   
    // 비밀번호 찾기
+<<<<<<< HEAD
   //@GetMapping("/findPw.form")  // 비밀번호 찾기 화면으로 이동
   @GetMapping("/findPw.html")  // 비밀번호 찾기 화면으로 이동
+=======
+	@GetMapping("/findPw.html")  // 비밀번호 찾기 화면으로 이동
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
   public String findPwForm() {
     return "user/findPw";
   }
@@ -206,14 +228,20 @@ public class UserController {
 //	        return "user/findPw"; // 일치하는 회원 정보가 없음 화면으로 이동하도록 수정해야 함
 //	    }
 	}
+<<<<<<< HEAD
 	  //@GetMapping("/sendTemporaryPassword.form")  
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
 	  @GetMapping("/sendTemporaryPassword.html")  
 	  public String sendTemporaryPasswordForm() {
 	    return "user/sendTemporaryPassword";
 	  }
 
 	   // 비밀번호  변경
+<<<<<<< HEAD
 	  //@GetMapping("/modifyPw.form")  // 비밀번호  변경 화면으로 이동
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
 	  @GetMapping("/modifyPw.html")  // 비밀번호  변경 화면으로 이동
 	  public String modifyPwForm() {
 	    return "user/modifyPw";
@@ -224,5 +252,15 @@ public class UserController {
 	  public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
 		  userService.modifyPw(request, response);
 	  }
+<<<<<<< HEAD
+=======
+	  
+	  // 사용자-쿠폰 페이지 이동
+	  @GetMapping("/coupon.html")
+	  public String coupon(HttpServletRequest request, Model model) {
+		    return "user/coupon";
+	  }
+	  
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
 }
 	
