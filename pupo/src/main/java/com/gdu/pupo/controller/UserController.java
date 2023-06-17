@@ -29,13 +29,15 @@ public class UserController {
   private final UserService userService;
   
   // 이용약관-회원가입
-  @GetMapping("/agree.form")
+  //@GetMapping("/agree.form")
+  @GetMapping("/agree.html")
   public String agreeForm() {
     return "user/agree";
   }
   
   // 회원가입
-  @GetMapping("/join.form")
+  //@GetMapping("/join.form")
+  @GetMapping("/join.html")
   public String joinForm(@RequestParam(value="location", required=false) String location  // 파라미터 location이 전달되지 않으면 빈 문자열("")이 String location에 저장된다.
                        , @RequestParam(value="event", required=false) String event        // 파라미터 event가 전달되지 않으면 빈 문자열("")이 String event에 저장된다.
                        , Model model) {
@@ -72,7 +74,8 @@ public class UserController {
   }
   
   // 로그인
-  @GetMapping("/login.form")
+  //@GetMapping("/login.form")
+  @GetMapping("/login.html")
   public String loginForm(@RequestHeader("referer") String url, Model model) {
     // 요청 헤더 referer : 로그인 화면으로 이동하기 직전의 주소를 저장하는 헤더 값
     model.addAttribute("url", url);
@@ -98,7 +101,8 @@ public class UserController {
   }
   
   // 휴면
-  @GetMapping("/wakeup.form")
+  //@GetMapping("/wakeup.form")
+  @GetMapping("/wakeup.html")
   public String wakeup() {
     return "user/wakeup";
   }
@@ -119,7 +123,8 @@ public class UserController {
   }
    
   // 회원정보 수정
-  @GetMapping("/modifyInfo.form")
+  //@GetMapping("/modifyInfo.form")
+  @GetMapping("/modifyInfo.html")
   public String modifyForm(HttpSession session, Model model) {
       // 로그인이 되어 있는지 확인
       if (session.getAttribute("loginId") == null) {
@@ -164,7 +169,8 @@ public class UserController {
   }
 
 	  //아이디 찾기
-	  @GetMapping("/findId.form")  // 아이디 찾기 화면으로 이동
+	  //@GetMapping("/findId.form")  // 아이디 찾기 화면으로 이동
+	  @GetMapping("/findId.html")  // 아이디 찾기 화면으로 이동
 	  public String findIdForm() {
 	    return "user/findId";
 	  }
@@ -177,7 +183,8 @@ public class UserController {
 	}
 	   
    // 비밀번호 찾기
-  @GetMapping("/findPw.form")  // 비밀번호 찾기 화면으로 이동
+  //@GetMapping("/findPw.form")  // 비밀번호 찾기 화면으로 이동
+  @GetMapping("/findPw.html")  // 비밀번호 찾기 화면으로 이동
   public String findPwForm() {
     return "user/findPw";
   }
@@ -199,13 +206,15 @@ public class UserController {
 //	        return "user/findPw"; // 일치하는 회원 정보가 없음 화면으로 이동하도록 수정해야 함
 //	    }
 	}
-	  @GetMapping("/sendTemporaryPassword.form")  
+	  //@GetMapping("/sendTemporaryPassword.form")  
+	  @GetMapping("/sendTemporaryPassword.html")  
 	  public String sendTemporaryPasswordForm() {
 	    return "user/sendTemporaryPassword";
 	  }
 
 	   // 비밀번호  변경
-	  @GetMapping("/modifyPw.form")  // 비밀번호  변경 화면으로 이동
+	  //@GetMapping("/modifyPw.form")  // 비밀번호  변경 화면으로 이동
+	  @GetMapping("/modifyPw.html")  // 비밀번호  변경 화면으로 이동
 	  public String modifyPwForm() {
 	    return "user/modifyPw";
 	  }
@@ -215,22 +224,5 @@ public class UserController {
 	  public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
 		  userService.modifyPw(request, response);
 	  }
-  /* 비밀번호 변경
-  @GetMapping("updatePwdForm")
-  public void updatePwdForm(int no, Model model) throws Exception {
-    Map<String, Object> params = new HashMap<String, Object>();
-    params.put("type", "app");
-    params.put("userNo", no);
-    model.addAttribute("user", userService.get(params));
-  }*/
-
-	// 비밀번호 변경
-	
-  /*@PostMapping("updatePwd")
-  public String updatePwd(UserDTO user, int mobile, String password) throws Exception {
-    userService.updatePwd(mobile, password);
-    return "redirect:./" + user.getmobile();
-  }*/
-  
 }
 	
