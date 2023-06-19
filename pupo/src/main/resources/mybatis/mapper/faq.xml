@@ -72,9 +72,6 @@
   </delete>
 
 
-<!-- pagination -->
-
-
   <select id="getFaqCount" parameterType="Map" resultType="int">
     SELECT COUNT(*)
       FROM FAQ
@@ -83,39 +80,34 @@
         FAQ_CATEGORY = #{kind}
       </if>
       <if test="query != null and query != ''">
-        FAQ_TITLE LIKE CONCAT('%', #{query}, '%') OR FAQ_CONTENT LIKE CONCAT('%', #{query}, '%'))
+        FAQ_TITLE LIKE CONCAT('%', #{query}, '%') OR FAQ_CONTENT LIKE CONCAT('%', #{query}, '%')
       </if>
     </where>
   </select>
 
 <select id="getFaqList" parameterType="Map" resultMap="FaqMap">
-	SELECT FAQ_NO, SELLER_CHECK, ID, FAQ_CATEGORY, FAQ_TITLE, FAQ_CONTENT, FAQ_CREATED_AT, FAQ_MODIFIED_AT, FAQ_HIT
-	  FROM FAQ
-	  <where>
-	    <if test="kind != null and kind != ''">
-	      FAQ_CATEGORY = #{kind}
-	    </if>
-	    <if test="query != null and query != ''">
-	      FAQ_TITLE LIKE CONCAT('%', #{query}, '%') OR FAQ_CONTENT LIKE CONCAT('%', #{query}, '%'))
-	    </if>
-	  </where>
-	 ORDER BY FAQ_NO DESC
-	  LIMIT #{begin}, #{recordPerPage}
-	</select>
+  SELECT FAQ_NO, SELLER_CHECK, ID, FAQ_CATEGORY, FAQ_TITLE, FAQ_CONTENT, FAQ_CREATED_AT, FAQ_MODIFIED_AT, FAQ_HIT
+    FROM FAQ
+    <where>
+      <if test="kind != null and kind != ''">
+        FAQ_CATEGORY = #{kind}
+      </if>
+      <if test="query != null and query != ''">
+        FAQ_TITLE LIKE CONCAT('%', #{query}, '%') OR FAQ_CONTENT LIKE CONCAT('%', #{query}, '%')
+      </if>
+    </where>
+   ORDER BY FAQ_NO DESC
+    LIMIT #{begin}, #{recordPerPage}
+  </select>
 
 
 <select id="getFaqCategoryCount" parameterType="String" resultType="int">
-	SELECT COUNT(FAQ_NO)
-	FROM FAQ
-	WHERE FAQ_CATEGORY = #{kind}
+  SELECT COUNT(FAQ_NO)
+  FROM FAQ
+  WHERE FAQ_CATEGORY = #{kind}
  </select>
 
-  <select id="getAutoComplete" parameterType="Map" resultMap="FaqMap">
-  SELECT DISTINCT ${searchColumn}
-  FROM FAQ
-  WHERE ${searchColumn} LIKE CONCAT(#{query}, '%')
-  
-</select>
+
   
 
 </mapper>
