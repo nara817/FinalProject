@@ -3,7 +3,6 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
-    #product > .order > form {}
 
     #product > .order > form > table {
         width: 100%;
@@ -32,7 +31,6 @@
         font-weight: bold;
     }
 
-    #product > .order > form > table tr > td > input {}
 
     #product > .order > form > table td > article {
         padding: 6px;
@@ -65,7 +63,6 @@
         margin-top: 16px;
     }
 
-    #product > .order > form > .delivery {}
 
     #product > .order > form > .final {
         float: right;
@@ -251,19 +248,15 @@
                         <table>
                             <tr>
                                 <td>상품금액</td>
-                                <td>27,000</td>
+                                <td th:text="${#numbers.formatInteger(regularDetail.regularSellPrice, 3, 'COMMA')}">27,000</td>
                             </tr>
                             <tr>
                                 <td>할인금액</td>
-                                <td>-1,000</td>
-                            </tr>
-                            <tr>
-                                <td>배송비</td>
-                                <td>0</td>
+                                <td>5%</td>
                             </tr>
                             <tr>
                                 <td>전체주문금액</td>
-                                <td>25,000</td>
+                                <td name="regPurchaseLastPrice" th:text="${#numbers.formatInteger(regularDetail.regularSellPrice - (regularDetail.regularSellPrice * 0.05), 3, 'COMMA')}" th:value="${#numbers.formatInteger(regularDetail.regularSellPrice - (regularDetail.regularSellPrice * 0.05), 3, 'COMMA')}">25,000</td>
                             </tr>
                         </table>
                         <input type="button" onclick="fnRegPay()" id="btnRegPay" value="구독결제">
@@ -277,34 +270,34 @@
                         <table> 
                             <tr>
                                 <td>주문자</td>
-                                <td><input type="text" name="name" th:value="${loginId.name}"></td>
+                                <td><input type="text" name="name" id="name" th:value="${loginId.name}"></td>
                             </tr>
                             <tr>
                                 <td>휴대폰</td>
                                 <td>
-                                    <input type="text" name="mobile" th:value="${loginId.mobile}">
+                                    <input type="text" name="mobile" id="mobile" th:value="${loginId.mobile}">
                                 </td>
                             </tr>
                             <tr>
                                 <td>우편번호</td>
                                 <td>
-                                  <input type="text" onclick="execDaumPostcode()" name="postcode" id="postcode" placeholder="우편번호" readonly="readonly">
+                                  <input type="text" onclick="execDaumPostcode()" name="postcode" id="postcode" placeholder="우편번호" th:value="${loginId.postcode}" readonly="readonly">
                                   <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
                                 </td>
                             </tr>
                             <tr>
                                 <td>도로명, 지번주소</td>
                                 <td>
-                                  <input type="text" name="roadAddress" id="roadAddress" placeholder="도로명주소">
-                                  <input type="hidden" name="jibunAddress" id="jibunAddress" placeholder="지번주소">
+                                  <input type="text" name="roadAddress" id="roadAddress" th:value="${loginId.roadAddress}" placeholder="도로명주소">
+                                  <input type="hidden" name="jibunAddress" id="jibunAddress" th:value="${loginId.jibunAddress}" placeholder="지번주소">
                                   <span id="guide" style="color:#999;display:none"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>상세주소</td>
                                 <td>
-                                  <input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소">
-                                  <input type="text" name="extraAddress" id="extraAddress" placeholder="참고항목">
+                                  <input type="text" name="detailAddress" id="detailAddress" th:value="${loginId.detailAddress}" placeholder="상세주소">
+                                  <input type="text" name="extraAddress" id="extraAddress" th:value="${loginId.extraAddress}" placeholder="참고항목">
                                 </td>
                             </tr>
                         </table>
@@ -378,10 +371,7 @@
       });
   }
   
-  // 수량 변경 할 시 value에 반영
-  function fnRegularCount(value){
-	  $('#regularCount').val(value);
-  }
+
   </script>
   <script>
     // 본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -439,5 +429,33 @@
       }
     }).open();
   }
+    
+    // 수량 변경 할 시 value에 반영
+    function fnRegularCount(value){
+      $('#regularCount').val(value);
+    } 
+    
+    // 새로운 배송 정보 입력하기
+    function fnNewDelivery(){
+    	$('#name').val('');
+    	$('#mobile').val('');
+      $('#postcode').val('');    	
+      $('#roadAddress').val('');    	
+      $('#jibunAddress').val('');    	
+      $('#detailAddress').val('');    	
+      $('#extraAddress').val('');    	
+    }
+    // 회원정보 배송 클릭 시 회원정보에 정보로 다시 넣어주기.
+    function fnOldDelivery(){
+    	$('#name').val('[[${loginId.name}]]');
+    	$('#mobile').val('[[${loginId.mobile}]]');
+      $('#postcode').val('[[${loginId.postcode}]]');    	
+      $('#roadAddress').val('[[${loginId.roadAddress}]]');    	
+      $('#jibunAddress').val('[[${loginId.jibunAddress}]]');    	
+      $('#detailAddress').val('[[${loginId.detailAddress}]]');    	
+      $('#extraAddress').val('[[${loginId.extraAddress}]]');    	
+    }
+    
+    
 </script>  
 </html>
