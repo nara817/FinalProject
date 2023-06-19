@@ -161,13 +161,8 @@ public class UserServiceImpl implements UserService {
 		String pw = request.getParameter("pw");
 
 		// 비밀번호 SHA-256 암호화
-<<<<<<< HEAD
-		//비밀번호 암호화 처리 임시로 끔/관리자 테스트중
+		// 임시 로그인을 위한 주석처리
 		//pw = securityUtil.getSha256(pw);
-		
-=======
-		//pw = securityUtil.getSha256(pw);
->>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
 
 		// UserDTO 만들기
 		UserDTO userDTO = new UserDTO();

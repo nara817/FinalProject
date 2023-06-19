@@ -110,49 +110,5 @@
   });
   
 </script>
-<<<<<<< HEAD
-</head>
-<body>
-  <div class="wrapper fadeInDown">
-    <div id="formContent">
-    
-      <div class="loginBox_input">
-         <div class="loginBoxTitle" id="loginBox_input">Login Page</div>
-
-         
-         <form id="frmLogin" method="post" th:action="@{/user/login.do}">
-         
-          <input type="hidden" name="url" th:value="${url}">
-          
-          <input type="text" name="id" id="id" class="fadeIn second" placeholder="아이디">
-          <input type="password" name="pw" id="pw" class="fadeIn third" placeholder="비밀번호">
-     
-            <div class="buttons">
-              <button id="login-button" class="fadeIn fourth">로그인</button>
-            </div>
-            
-            <label>
-              <input type="checkbox" id="chkRememberId">
-              아이디 기억
-            </label>
-            <label>
-              <input type="checkbox" id="auto-login">
-              자동 로그인
-            </label>
-          </form>
-
-  <div id="formFooter">
-    <a class="underlineHover" th:href="@{/user/findId.html}">아이디 찾기</a> | 
-    <a class="underlineHover" th:href="@{/user/findPw.html}">비밀번호 찾기</a> |
-    <a class="underlineHover" th:href="@{/user/agree.html}">회원가입</a>
-   </div>
-   
-      </div>
-      
-    </div>
-  </div>
-
-=======
->>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
 </body>
 </html>
