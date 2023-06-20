@@ -1,26 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="/js/lib/jquery-3.6.4.min.js"></script>
-<script>
-
-  $(document).ready(function(){
-    fn_findPw2();
-  });
-
-  function fn_findPw2(){
-
-      $('#frmFindPw').on('submit', function(event){
-        
-      });
-  }
-
-</script>
-</head>
-<body>
-  
+<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+<div th:replace="~{/layout/header::gnbFrag}"></div>
+<body class="goto-here">
+  <div class="overlay"></div>
+    <div class="container">
+    <!-- 여기서부터적기 -->
   <h1>비밀번호 찾기</h1>
   
   <hr>
@@ -54,5 +39,23 @@
       
     </form>
   </div>
+   <!-- 여기까지적기 -->
+    </div>
+<div th:replace="~{/layout/header::gnbScript}"></div> 
+<script th:inline="javascript">
+
+
+  $(document).ready(function(){
+    fn_findPw2();
+  });
+
+  function fn_findPw2(){
+
+      $('#frmFindPw').on('submit', function(event){
+        
+      });
+  }
+
+</script>
   </body>
 </html>

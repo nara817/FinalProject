@@ -1,6 +1,5 @@
 package com.gdu.pupo.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gdu.pupo.domain.CouponDTO;
 import com.gdu.pupo.domain.UserDTO;
 import com.gdu.pupo.service.UserService;
 
@@ -74,7 +72,7 @@ public class UserController {
   }
   
   // 로그인
-  @GetMapping("/login.form")
+  @GetMapping("/login.html")
   public String loginForm(@RequestHeader("referer") String url, Model model) {
     // 요청 헤더 referer : 로그인 화면으로 이동하기 직전의 주소를 저장하는 헤더 값
     model.addAttribute("url", url);
@@ -179,7 +177,7 @@ public class UserController {
 	}
 	   
    // 비밀번호 찾기
-  @GetMapping("/findPw.html")  // 비밀번호 찾기 화면으로 이동
+	@GetMapping("/findPw.html")  // 비밀번호 찾기 화면으로 이동
   public String findPwForm() {
     return "user/findPw";
   }

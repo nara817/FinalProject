@@ -10,112 +10,201 @@
 <head th:fragment="headFrag(title)">
   <meta charset="UTF-8">
   <title th:text="${title}"></title>
-  <script th:src="@{/js/lib/jquery-3.6.4.min.js}"></script>
-  <script th:src="@{/bootstrap-5.0.2/js/bootstrap.min.js}"></script>
-  <link rel="stylesheet" th:href="@{/css/style.css(ver=1.0)}">
-  <link rel="stylesheet" th:href="@{/bootstrap-5.0.2/css/bootstrap.min.css(ver=1.0)}">
+   <!-- 부트스트랩테마 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+    <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+
+    
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/gdu.css}">
+    <!-- 부트스트랩테마 끝-->
+
+    <!-- 원래 파일 -->
+    <script th:src="@{/js/lib/jquery-3.6.4.min.js}"></script>
+    <script th:src="@{/bootstrap-5.0.2/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css(ver=1.0)}">
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2/css/bootstrap.min.css(ver=1.0)}">
+      
+    
 </head>
+<body  class="goto-here">
 
-
-<body>
   <!--/*
     div 태그를 조각(fragment)으로 만든다.
       - 조각이름 : gnbFrag
   */-->
   <div th:fragment="gnbFrag">
-    <div class="header">
-    <!-- 로그인 안했을때 네비바  -->
+ 
+ <div class="goto-here">
+  <nav class="navbar navbar-expand-lg navbar-white bg-white" id="ftco-navbar">
+      <div class="container">
+      <a  th:href="@{/}" style="font-size: 35px"><strong class="cartt">PullPowerSalad</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu "></span> Menu
+        </button>
+<!-- 로그인 안했을때 네비바  -->
     <h3 style="display:none;">로그인 안했을때 네비바</h3>
-      <div th:if="${#strings.isEmpty(session.loginId)}" >
-        <nav class="navbar navbar-expand-lg navbar-light" style="margin-left: 85rem;">
-          <div class="collapse navbar-collapse" id="navbarNavDropdown" >
-            <ul class="navbar-nav justify-content-end">
-              <li class="nav-item active">
-                <a class="text-reset nav-link" th:href="@{/user/login.form}">로그인</a>
-              </li>
-              <li class="nav-item">
-                <a class="text-reset nav-link" th:href="@{/user/agree.form}">회원가입</a>
-              </li>
-            </ul>
+     <div th:if="${#strings.isEmpty(session.loginId)}" >
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item "><a th:href="@{/user/login.html}" class="aa nav-link">로그인</a></li>
+            <li class="nav-item"><a th:href="@{/user/agree.html}" class="aa nav-link">회원가입</a></li>
             <div class="dropdown nav-item">
-              <a th:href="@{/customerCenter/centerHome.html}" class="text-reset nav-link dropdown-toggle" >고객센터</a>
+              <a th:href="@{/customerCenter/centerHome.html}" class="aa nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" >고객센터</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" th:href="@{/customerCenter/notice.html}">공지사항</a>
-                <a class="dropdown-item" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a>
-                <a class="dropdown-item" th:href="@{/customerCenter/qna.html}">1:1 문의</a>
-                <a class="dropdown-item" th:href="@{/customerCenter/faq.html}">뭐하지..?리얼후기?</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/notice.html}">공지사항</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/qna.html}">1:1 문의</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/faq.html}">뭐하지..?리얼후기?</a>
               </div>
             </div>
-          </div>
-        </nav>
-          <nav class="navbar navbar-light bg-light">
-         <div class="container-fluid" >
-           <a class="navbar-brand" th:href="@{/}">
-             <img th:src="@{/image/pupoimg.jpg}" alt="" width="200" height="50" class="d-inline-block align-text-top">
-           </a>
-         </div>
-       </nav>
+            <li class="nav-item"><a href="cart.html" class="nav-link cartt"><span class="icon-shopping_cart"></span>[0]</a></li>
+          </ul>
+        </div>
       </div>
-    <!-- 로그인 했을때 네비바  -->
+      
+      
+      
+        <!-- 로그인 했을때 네비바  -->
     <h3 style="display:none;">로그인 했을때 네비바</h3>
     <div th:unless="${#strings.isEmpty(session.loginId)}" >
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="collapse navbar-collapse" id="navbarNavDropdown" style="justify-content: flex-end">
-          <ul class="navbar-nav justify-content-end">
-            <li class="nav-item active">
-              <div class="text-reset nav-link" 
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+             <li class="nav-item">
+              <div class="text-dark nav-link" 
               style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none"
               th:text="|${session.loginId} 님 반갑습니다|">
               </div>
             </li>
-            <li class="nav-item">
-              <a class="text-reset nav-link" th:href="@{/user/logout.do}">로그아웃</a>
-            </li>
+            <li class="nav-item"><a  th:href="@{/user/logout.do}" class="aa nav-link">로그아웃</a></li>
             <li class="nav-item">
               <th:block th:if="${session.loginId  != null and session.sellerChk == 0}">
-                <a class="text-reset nav-link" th:href="@{/user/mypage.do}">마이페이지</a>
+                <a class="aa nav-link" th:href="@{/user/mypage.do}">마이페이지</a>
               </th:block>
-            </li>
-            <li class="nav-item">
+               <li class="nav-item">
               <th:block th:if="${session.loginId != null and session.sellerChk == 1}">
-                <a class="text-reset nav-link" th:href="@{/user/mypage.do}">판매자페이지</a>
+                <a class="aa nav-link" th:href="@{/user/mypage.do}">판매자페이지</a>
               </th:block>
             </li>
             <li class="nav-item">
               <th:block th:if="${session.loginId != null and session.sellerChk == 2}">
-                <a class="text-reset nav-link" th:href="@{/admin/adminMain.do}">관리자페이지</a>
+                <a class="aa nav-link" th:href="@{/admin/adminMain.html}">관리자페이지</a>
               </th:block>
             </li>
-          </ul>
-          <div class="dropdown nav-item">
-            <a  th:href="@{/customerCenter/centerHome.html}" class="text-reset nav-link dropdown-toggle" >고객센터</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" th:href="@{/customerCenter/notice.html}">공지사항</a>
-              <a class="dropdown-item" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a>
-              <a class="dropdown-item" th:href="@{/customerCenter/qna.html}">1:1 문의</a>
-              <a class="dropdown-item" th:href="@{/customerCenter/faq.html}">뭐하지..?리얼후기?</a>
+            </li>
+            <div class="dropdown nav-item">
+              <a th:href="@{/customerCenter/centerHome.html}" class="aa nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" >고객센터</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item customer" th:href="@{/customerCenter/notice.html}">공지사항</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/qna.html}">1:1 문의</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/faq.html}">뭐하지..?리얼후기?</a>
+              </div>
             </div>
-          </div> 
+            <li class="nav-item"><a href="cart.html" class="nav-link cartt"><span class="icon-shopping_cart"></span>[0]</a></li>
+          </ul>
         </div>
-      </nav>
-       <nav class="navbar navbar-light bg-light">
-         <div class="container-fluid">
-           <a class="navbar-brand" th:href="@{/}">
-             <img th:src="@{/image/pupoimg.jpg}" alt="" width="200" height="50" class="d-inline-block align-text-top">
-           </a>
-         </div>
-       </nav>
-       
+        </div>
+      </div>   
+    </nav>
+    
+    
+    <nav class="navbar ftco_navbar ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+              <div class="nav nav-fill col row-cols-5">
+              <div class="nav-item" role="presentation">
+              <a class="nav-link active row" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+             <span class="oi oi-menu cartt"></span>
+            </a>
+            </div>
+            <div class="nav-item row">
+              <a class="nav-link cartt" th:href="@{regular/regularMain.html}">정기구독</a>
+            </div>
+            <div class="nav-item row"  >
+              <a class="nav-link cartt" th:href="@{item/list.html}">단품구매</a>
+            </div>
+            <div class="nav-item row" >
+              <a class="nav-link cartt" th:href="@{/admin/eventCoupon.html}">이벤트</a>
+            </div>
+            <div class="nav-item row"  >
+              <a class="nav-link cartt" href="#">뭐넣지</a>
+            </div>
+          </div>
+   </div>
+  <div class="container">
+  <div class="collapse ftco-navbar-light " id="collapseExample">
+ <div class="container d-flex  justify-content-around">
+              <div class=" col row-cols-5">
+            <div class=" nav-item row">
+              <a class="nav-link" href="#">아이템1</a>
+            </div>
+            <div class=" nav-item row">
+              <a class="nav-link" href="#">아이템2</a>
+            </div>
+            <div class="nav-item row"  >
+              <a class="nav-link" href="#">아이템3</a>
+            </div>
+            <div class="nav-item row" >
+              <a class="nav-link" href="#">아이템4</a>
+            </div>
+            <div class="nav-item row"  >
+              <a class="nav-link" href="#">아이템5</a>
+            </div>
+          </div>
+             
+   </div>
+</div>
+</div>
+    </nav>
     </div>
-    <!-- 타이틀 -->  
-    <hr>
-      <div id="title"class="text-center">
-        <h1>
-          <a class="display-2 text-dark" th:href="@{/}" style="text-decoration-line: none;">배너이미지</a>
-        </h1>
-      </div>
-    <hr>
-    </div>  
+    <!-- END nav -->
+ 
+ 
+ 
+ 
+ 
+ 
   </div>
+  
+  <div th:fragment="gnbScript">
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+  
+  <script th:src="@{/js/jquery.min.js}"></script>
+  <script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+  <script th:src="@{/js/popper.min.js}"></script>
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+  <script th:src="@{/js/jquery.easing.1.3.js}"></script>
+  <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+  <script th:src="@{/js/jquery.stellar.min.js}"></script>
+  <script th:src="@{/js/owl.carousel.min.js}"></script>
+  <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+  <script th:src="@{/js/aos.js}"></script>
+  <script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+  <script th:src="@{/js/bootstrap-datepicker.js}"></script>
+  <script th:src="@{/js/scrollax.min.js}"></script>
+  <script th:src="@{/js/google-map.js}"></script>
+  <script th:src="@{/js/main.js}"></script>
+  
+   <script th:src="@{/js/lib/jquery-3.6.4.min.js}"></script>
+  
+  </div>
+  
+  
 </body>
 </html>

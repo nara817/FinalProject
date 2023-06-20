@@ -1,10 +1,43 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>MooVOD : 아이디 찾기</title>
-<script src="/js/lib/jquery-3.6.4.min.js"></script>
+<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+<div th:replace="~{/layout/header::gnbFrag}"></div>
+<body class="goto-here">
+  <div class="overlay"></div>
+    <div class="container d-flex justify-content-center">
+    <!-- 여기서부터적기 -->
+  <div>
+    <h1>아이디 찾기</h1>
+    <div>
+      <label for="name">*이름</label>
+      <input type="text" name="name" id="name" required="required">
+    </div>
+    <div>
+      <label for="email">*이메일</label>
+      <input type="text" name="email" id="email" required="required">
+    </div>
+    <div>
+      <input type="button" th:value="아이디찾기" id="btnFindId" >
+    </div>
+    <div>
+      <a th:href="@{/user/login.form}">로그인</a> |
+      <a th:href="@{/user/findPw.form}">비밀번호 찾기</a> |
+      <a th:href="@{/user/agree.form}">회원가입</a>
+    </div>
+  </div>
+  <hr>
+  <div id="findResult" th:if="@{/resData.findUser != null}">
+    <th:block th:text="'회원님의 아이디는 ' + @{/resData.findUser.id.substring(0, 3)} + '*****' + '입니다.<br>(가입일 : ' + @{/#dates.format(resData.findUser.joinedAt, 'yyyy년 MM월 dd일 a hh:mm:ss')} + ')'"></th:block>
+  </div>
+  <div id="findResult" th:if="@{/resData.findUser == null}">
+    <th:block th:text="'일치하는 회원이 없습니다. 입력 정보를 확인하세요.'"></th:block>
+  </div>
+  
+  <!-- 여기까지적기 -->
+    </div>
+<div th:replace="~{/layout/header::gnbScript}"></div> 
 <script th:inline="javascript">
+
   function fnFindId() {
     $('#btnFindId').on('click', function(){
       $.ajax({
@@ -33,33 +66,5 @@
     fnFindId();
   });
 </script>
-</head>
-<body>
-  <div>
-    <h1>아이디 찾기</h1>
-    <div>
-      <label for="name">*이름</label>
-      <input type="text" name="name" id="name" required="required">
-    </div>
-    <div>
-      <label for="email">*이메일</label>
-      <input type="text" name="email" id="email" required="required">
-    </div>
-    <div>
-      <input type="button" th:value="아이디찾기" id="btnFindId" >
-    </div>
-    <div>
-      <a th:href="@{/user/login.form}">로그인</a> |
-      <a th:href="@{/user/findPw.form}">비밀번호 찾기</a> |
-      <a th:href="@{/user/agree.form}">회원가입</a>
-    </div>
-  </div>
-  <hr>
-  <div id="findResult" th:if="@{/resData.findUser != null}">
-    <th:block th:text="'회원님의 아이디는 ' + @{/resData.findUser.id.substring(0, 3)} + '*****' + '입니다.<br>(가입일 : ' + @{/#dates.format(resData.findUser.joinedAt, 'yyyy년 MM월 dd일 a hh:mm:ss')} + ')'"></th:block>
-  </div>
-  <div id="findResult" th:if="@{/resData.findUser == null}">
-    <th:block th:text="'일치하는 회원이 없습니다. 입력 정보를 확인하세요.'"></th:block>
-  </div>
 </body>
 </html>

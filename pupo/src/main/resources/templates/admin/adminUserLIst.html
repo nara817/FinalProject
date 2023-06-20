@@ -1,188 +1,195 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<!-- 아이콘 -->
-<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-<meta charset="UTF-8">
- <title>관리자: 회원관리</title>
+  <!-- 아이콘 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+  <title>관리자: 메인페이지</title>
   <style>
-    table {
-      border-collapse: collapse;
-      border-top: 1px solid #444444;
-      border-bottom: 1px solid #444444;
+    .quick {
+      display: inline-block;
+      height: 150px;
       width: 100%;
     }
-    th, td {
-      text-align: center;
-      padding: 2px;
-      border-bottom: 1px solid #444444;
-    }
-    th {
-      background-color: #CBFF75;
-    }
-    tr:not(:first-child):not(:last-child) {
-      border-top: none;
-      border-bottom: none;
-      background-color: transparent;
-    }
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-    div {
-      text-align: right;
+
+    .quick_box {
+      background-color: white;
+      width: 250px;
+      height: 120px;
+      display: inline-block;
+      padding: 10px;
+      margin-top: 10px;
       margin-bottom: 10px;
+      margin-left: 20px;
+      margin-right: 60px;
+      border-radius: 10px;
+      box-shadow: 4px 8px 16px 4px rgba(0, 0, 0, 0.2);
     }
-    tr:first-child th,
-    tr:first-child td {
-      /* Apply background color to the first row only */
-      background-color: #CBFF75;
+
+    .quick_wrap {
+      width: 250px;
+      position: relative;
     }
+
+    .quick_wrap2 {
+      width: 250px;
+      position: relative;
+      margin-top: 30px;
+    }
+
+    .quick_l {
+      height: 25px;
+      display: inline-block;
+      position: absolute;
+      right: 20px;
+      margin-top: 10px;
+      color: black;
+    }
+
+    .quick_2 {
+      height: 25px;
+      display: inline-block;
+      position: absolute;
+      right: 20px;
+      margin-top: 15px;
+      color: black;
+    }
+
+    .quick_a {
+      height: 50px;
+      width: 80px;
+      display: inline-block;
+      margin-top: 15px;
+      margin-left: 176px;
+      color: black;
+    }
+
+    .aa {
+      font-size: 15px;
+    }
+
+    .aa2 {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .aa3 {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .aaa {
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border-left: none;
+      border-right: none;
+    }
+
+    td {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
     .fa-user {
       margin-right: 10px;
     }
-    
-    .home {
-    text-decoration: none; /* 링크의 밑줄 제거 */
-    color: initial; /* 기본 링크 색상 유지 */
-  }
-
-  .home:hover {
-    color: green; /* 마우스를 가져다 대면 초록색으로 변경 */
-  }   
   </style>
-  <script>
-/*     function sortTable {
-      var selectBox = document.ElementById("role");
-      var selectedValue = selectBox.value.toLowerCase;
-
-      var table = document.ElementById("memberTable");
-      var rows = table.ElementsByTagName("tr");
-      var data = [];
-
-      for (var i = 1; i < rows.length - 1; i++) {
-        var cells = rows[i].ElementsByTagName("td");
-        var role = cells[1].innerText.toLowerCase;
-
-        if (selectedValue === "all" || role === selectedValue) {
-          data.push({
-            row: rows[i].outerHTML,
-            role: role
-          });
-        }
-      }
-
-      data.sort(function(a, b) {
-        return a.role.localeCompare(b.role);
-      });
-
-      var tbody = document.createElement("tbody");
-
-      for (var i = 0; i < data.length; i++) {
-        tbody.innerHTML += data[i].row;
-      }
-
-      table.replaceChild(tbody, table.ElementsByTagName("tbody")[0]);
-    }
- */
-	// 정렬
-	 $(function(){
-		    // recordPerPage의 변경
-		    $('#recordPerPage').on('change', function(){
-		      location.href = '/employees/change/record?recordPerPage=' + $(this).val();
-		    })
-		  })
-// 메인페이지로가기 이벤트
-	  function showText() {
-	    document.getElementById("hoverText").style.display = "inline";
-	  }
-
-	  function hideText() {
-	    document.getElementById("hoverText").style.display = "none";
-	  }
- 
-  </script>
 </head>
+
 <body>
-	<h3>
-	  <a class="home"  th:href="@{/admin/adminMain.do}" onmouseover="showText()" onmouseout="hideText()">
-	    <i class="fa-solid fa-house"></i>
-	    <span id="hoverText" style="display: none;">메인페이지로 가기</span>
-	  </a>
-	</h3>
-	
-  <h1><i class="fa-solid fa-user"></i>회원관리</h1>
+  <h3>
+    <a class="home"  th:href="@{/}" onmouseover="showText()" onmouseout="hideText()">
+      <i class="fa-solid fa-house"></i>
+      <span id="hoverText" style="display: none;">홈페이지로 가기</span>
+    </a>
+  </h3>
+  <h1><i class="fa-regular fa-user"></i>관리자 메인 페이지</h1>
   
-  
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="검색">
-    <button onclick="searchTable">검색</button>
-  </div>
-  <div>
-    <label for="role">정렬:</label>
-    <select class="role_select" id="role" name="role">
-      <option value="all">전체</option>
-      <option value="user">사용자</option>
-      <option value="admin">관리자</option>
-      <option value="seller">판매자</option>
-    <option value="all">전체</option>
-    </select>
-  </div>
-	
-  <table id="memberTable">
+  <table border="1">
+    <tr th:onclick="|location.href='@{/admin/adminUserList.html}'|">
+      <td>
+        <div class="quick_box">
+          <div class="quick_wrap">
+            <i class="fa fa-user-plus fa-4x" aria-hidden="true"></i>
+            <div class="quick_l">
+              <label class="aa" >가입 회원 수</label>
+            </div>
+            <div class="quick_a">
+              <label class="aaa" id="userCount" th:text="${userCount + ' 명'}"></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick_box">
+          <div class="quick_wrap">
+            <i class="fa fa-user-plus fa-4x" aria-hidden="true"></i>
+            <div class="quick_l">
+              <label class="aa" th:onclick="|location.href='@{/admin/adminUserList.html}'|">가입 판매자 수</label>
+            </div>
+            <div class="quick_a">
+            
+              <label class="aaa" id="sellerCount" th:text="${sellerCount + ' 명'}"></label>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+
     <tr>
-      <th>회원번호</th>
-      <th>구분</th>
-      <th>승인</th>
-      <th>등급</th>
-      <th>ID</th>
-      <th>이름</th>
-      <th>성별</th>
-      <th>휴대폰</th>
-      <th>이메일</th>
-      <th>주소</th><!-- /* roadAddress */ -->
-      <th>상세주소</th><!-- /* detailAddress */ -->
-      <th>가입일</th>
-    </tr>
-    <!-- 여기에 회원 데이터를 동적으로 추가할 예정입니다 -->
-    <tr th:each="user : ${user}">
-      <td th:text="${user.userNo}"></td>
-      <!-- <td th:text="${user.sellerCheck}"></td> -->
-<td>
-  <span th:text="${user.sellerCheck == 0 ? '사용자' : (user.sellerCheck == 1 ? '판매자' : (user.sellerCheck == 2 ? '관리자' : ''))}"></span>
-</td>
-
-
-
-      
-      <!-- 판매자 가입시, 승인하지 않을 경우 판매불가상태, 관리자 승인시 판매가능 -->
-	<td th:if="${session.loginId != null}">
-		<select name="승인" th:if="${session.sellerChk == 1}">
-			<option value="User">판매가능</option>
-			<option value="Admin">판매불가</option>
-		</select>
-	</td>
-      <td th:text="${user.grade}"></td>
-      <td th:text="${user.id}"></td>
-      <td th:text="${user.name}"></td>
-      <td th:text="${user.gender}"></td>
-      <td th:text="${user.mobile}"></td>
-      <td th:text="${user.email}"></td>
-      <td th:text="${user.roadAddress}"></td>
-      <td th:text="${user.detailAddress}"></td>
-      <!-- <td th:text="${user.joinedAt}"></td> -->
-      <td th:text="${#dates.format(user.joinedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-      
+      <td>
+        <div class="quick_box">
+          <div class="quick_wrap">
+            <i class="fa fa-file-text fa-4x" aria-hidden="true"></i>
+            <div class="quick_l">
+              <label class="aa">고객 문의</label>
+            </div>
+            <div class="quick_a">
+              <label class="aaa">건</label>
+            </div>
+          </div>
+        </div>
+      </td>
     </tr>
 
-		<tr>
-			<td th:utext="${pagination}"></td>
-		</tr>
+    <tr>
+      <td>
+        <div class="quick_box" th:onclick="'adminUserList.html'">
+          <div class="quick_wrap2">
+            <i class="fa fa-store fa-4x" aria-hidden="true"></i>
+            <div class="quick_2">
+              <label class="aa2">상품 등록</label>
+            </div>
+          </div>
+        </div>
 
-	</table>
-  <script>
-			// DB에서 회원 데이터를 가져와서 동적으로 테이블에 추가하는 로직을 작성해야 합니다.
-			// 여기에 해당 로직을 작성하면 됩니다.
-		</script>
+
+		
+        <div class="quick_box" th:onclick="|location.href='@{/admin/addCoupon.html}'|">
+          <div class="quick_wrap2">
+            <i class="fa fa-tag fa-4x" aria-hidden="true"></i>
+            <div class="quick_2">
+              <label class="aa3">쿠폰 등록</label>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+  </table>
+  
+  
+    <script th:inline="javascript">
+    function goAdminUserList() {
+      location.href = 'adminUserList.html';
+    }
+
+
+    </script>
 </body>
 </html>

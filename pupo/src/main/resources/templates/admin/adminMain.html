@@ -5,7 +5,7 @@
   <!-- 아이콘 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-  <title>관리자: 메인페이지</title>
+    <title>관리자: 메인페이지</title>
   <style>
     .quick {
       display: inline-block;
@@ -103,6 +103,12 @@
 </head>
 
 <body>
+  <h3>
+    <a class="home"  th:href="@{/}" onmouseover="showText()" onmouseout="hideText()">
+      <i class="fa-solid fa-house"></i>
+      <span id="hoverText" style="display: none;">홈페이지로 가기</span>
+    </a>
+  </h3>
   <h1><i class="fa-regular fa-user"></i>관리자 메인 페이지</h1>
   
   <table border="1">
@@ -164,7 +170,7 @@
 
 
 		
-        <div class="quick_box" th:onclick="|location.href='@{/admin/couponList.html}'|">
+        <div class="quick_box" th:onclick="|location.href='@{/admin/addCoupon.html}'|">
           <div class="quick_wrap2">
             <i class="fa fa-tag fa-4x" aria-hidden="true"></i>
             <div class="quick_2">
@@ -176,7 +182,76 @@
     </tr>
 
   </table>
-  
+              <nav>
+                <h5 class="sidebar-header">Navigation</h5>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="nav-dropdown">
+                        <a href="#" title="Tables">
+                            <i class="fa  fa-fw fa-gift"></i> 상품관리
+                        </a>
+                        <ul class="nav-sub">
+                            <li>
+                                <a href="/product/prd_add" title="Data Tables">상품 등록</a>
+                            </li>
+                            <li>
+                                <a href="/product/prd_add" title="Data Tables">상품 조회</a>
+                            </li>
+                        </ul>
+                    </li>
+	                    <li class="nav-dropdown">
+	                        <a href="#" title="Tables">
+	                            <i class="fa  fa-fw fa-shopping-cart"></i> 주문관리
+	                        </a>
+	                        <ul class="nav-sub">
+	                            <li>
+	                                <a href="/order/list" title="Data Tables">주문 내역</a>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    <li class="nav-dropdown">
+	                        <a href="#" title="Tables">
+	                            <i class="fa  fa-fw fa-shopping-cart"></i> 재고관리
+	                        </a>
+	                        <ul class="nav-sub">
+	                            <li>
+	                                <a href="/seller/prdList" title="Data Tables">재고 내역</a>
+	                            </li>
+	                        </ul>
+	                    </li>
+                    <li class="nav-dropdown">
+                        <a href="#" title="Tables">
+                            <i class="fa  fa-fw fa-user"></i> 고객관리
+                        </a>
+                        <ul class="nav-sub">
+                            <li>
+                                <a href="/member/list" title="Data Tables">회원 관리</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-dropdown">
+                        <a href="#" title="Tables">
+                            <i class="fa  fa-fw fa-list"></i> 게시판관리
+                        </a>
+                        <ul class="nav-sub">
+                            <li>
+                                <a href="/notice/nlist" title="Data Tables">공지사항</a>
+                            </li>
+                            <li>
+                                <a href="/event/elist" title="Data Tables">이벤트</a>
+                            </li>
+                            <li>
+                                <a href="/faq/flist" title="Data Tables">자주묻는질문</a>
+                            </li>
+                            <li>
+                                <a href="/qna/qlist" title="Data Tables">Q&A</a>
+                            </li>
+                            <li>
+                                <a href="/review/reviewList" title="Data Tables">고객후기</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
   
     <script th:inline="javascript">
     function goAdminUserList() {

@@ -1,10 +1,55 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="/js/lib/jquery-3.6.4.min.js"></script>
-<script>
+<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+<div th:replace="~{/layout/header::gnbFrag}"></div>
+<body class="goto-here">
+  <div class="overlay"></div>
+    <div class="container d-flex justify-content-center">
+    <!-- 여기서부터적기 -->
+  <div class="wrapper fadeInDown">
+  <div id="formContent">
+  
+    <div class="loginBox_input">
+       <div class="loginBoxTitle" id="loginBox_input">Login Page</div>
+
+       
+       <form id="frmLogin" method="post" th:action="@{/user/login.do}">
+       
+        <input type="hidden" name="url" th:value="${url}">
+        
+        <input type="text" name="id" id="id" class="fadeIn second" placeholder="아이디">
+        <input type="password" name="pw" id="pw" class="fadeIn third" placeholder="비밀번호">
+   
+          <div class="buttons">
+            <button id="login-button" class="fadeIn fourth">로그인</button>
+          </div>
+          
+          <label>
+            <input type="checkbox" id="chkRememberId">
+            아이디 기억
+          </label>
+          <label>
+            <input type="checkbox" id="auto-login">
+            자동 로그인
+          </label>
+        </form>
+
+<div id="formFooter">
+  <a class="underlineHover" th:href="@{/user/findId.html}" >아이디 찾기</a> 
+  <a class="underlineHover" th:href="@{/user/findPw.html}" >비밀번호 찾기</a>
+  <a class="underlineHover" th:href="@{/user/agree.html}" >회원가입</a>
+  <a class="underlineHover" th:href="@{/}">홈</a>
+ </div>
+ 
+    </div>
+    
+  </div>
+</div>   
+
+        <!-- 여기까지적기 -->
+    </div>
+<div th:replace="~{/layout/header::gnbScript}"></div> 
+<script th:inline="javascript">
 
   // 로그인하기
   function fnLogin(){
@@ -51,46 +96,5 @@
   });
   
 </script>
-</head>
-<body>
-  <div class="wrapper fadeInDown">
-    <div id="formContent">
-    
-      <div class="loginBox_input">
-         <div class="loginBoxTitle" id="loginBox_input">Login Page</div>
-
-         
-         <form id="frmLogin" method="post" th:action="@{/user/login.do}">
-         
-          <input type="hidden" name="url" th:value="${url}">
-          
-          <input type="text" name="id" id="id" class="fadeIn second" placeholder="아이디">
-          <input type="password" name="pw" id="pw" class="fadeIn third" placeholder="비밀번호">
-     
-            <div class="buttons">
-              <button id="login-button" class="fadeIn fourth">로그인</button>
-            </div>
-            
-            <label>
-              <input type="checkbox" id="chkRememberId">
-              아이디 기억
-            </label>
-            <label>
-              <input type="checkbox" id="auto-login">
-              자동 로그인
-            </label>
-          </form>
-
-  <div id="formFooter">
-    <a class="underlineHover" th:href="@{/user/findId.form}">아이디 찾기</a> | 
-    <a class="underlineHover" th:href="@{/user/findPw.form}">비밀번호 찾기</a> |
-    <a class="underlineHover" th:href="@{/user/agree.form}">회원가입</a>
-   </div>
-   
-      </div>
-      
-    </div>
-  </div>
-
 </body>
 </html>

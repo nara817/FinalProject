@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>MooVOD : 임시 비밀번호발송</title>
+<title>임시 비밀번호발송</title>
 <script src="/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 
@@ -17,8 +17,9 @@
     <span>임시 비밀번호가 이메일로 발송되었습니다.</span>
 
       <div>
-        <a th:href="@{/user/login.form}">로그인</a>
-        <a th:href="@{/contextPath}/user/modifyPw.form}">비밀번호변경</a>
+        <a th:href="@{/user/login.html}">로그인</a>
+        <a th:href="@{/user/modifyPw.html}">비밀번호변경</a>
+        <a th:href="@{/}">홈</a>
       </div>
       
     </form>
