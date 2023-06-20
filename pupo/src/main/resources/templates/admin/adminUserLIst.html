@@ -5,7 +5,7 @@
 <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
 <meta charset="UTF-8">
- <title>관리자: 회원관리</title>
+ <title>관리자: 조회</title>
   <style>
     table {
       border-collapse: collapse;
@@ -52,6 +52,7 @@
   }   
   </style>
   <script>
+
 /*     function sortTable {
       var selectBox = document.ElementById("role");
       var selectedValue = selectBox.value.toLowerCase;
@@ -86,12 +87,12 @@
     }
  */
 	// 정렬
-	 $(function(){
+	 $(function(){ 
 		    // recordPerPage의 변경
 		    $('#recordPerPage').on('change', function(){
 		      location.href = '/employees/change/record?recordPerPage=' + $(this).val();
-		    })
-		  })
+		    });
+		  });
 // 메인페이지로가기 이벤트
 	  function showText() {
 	    document.getElementById("hoverText").style.display = "inline";
@@ -100,7 +101,7 @@
 	  function hideText() {
 	    document.getElementById("hoverText").style.display = "none";
 	  }
- 
+
   </script>
 </head>
 <body>
@@ -133,7 +134,6 @@
     <tr>
       <th>회원번호</th>
       <th>구분</th>
-<!--       <th>승인</th> -->
       <th>등급</th>
       <th>ID</th>
       <th>이름</th>
@@ -143,35 +143,40 @@
       <th>주소</th><!-- /* roadAddress */ -->
       <th>상세주소</th><!-- /* detailAddress */ -->
       <th>가입일</th>
+      <th>구독여부</th>
     </tr>
     <!-- 여기에 회원 데이터를 동적으로 추가할 예정입니다 -->
     <tr th:each="user : ${user}">
-      <td th:text="${user.userNo}"></td>
+      <td th:text="${user.userDTO.userNo}"></td>
       <!-- <td th:text="${user.sellerCheck}"></td> -->
 <td>
-  <span th:text="${user.sellerCheck == 0 ? '사용자' : (user.sellerCheck == 1 ? '판매자' : (user.sellerCheck == 2 ? '관리자' : ''))}"></span>
+  <span th:text="${user.userDTO.sellerCheck == 0 ? '사용자' : (user.userDTO.sellerCheck == 1 ? '판매자' : (user.userDTO.sellerCheck == 2 ? '관리자' : ''))}"></span>
 </td>
 
 
 
       
-      <!-- 판매자 가입시, 승인하지 않을 경우 판매불가상태, 관리자 승인시 판매가능
+      <!-- 판매자 가입시, 승인하지 않을 경우 판매불가상태, 관리자 승인시 판매가능 
 	<td th:if="${session.loginId != null}">
 		<select name="승인" th:if="${session.sellerChk == 1}">
 			<option value="User">판매가능</option>
 			<option value="Admin">판매불가</option>
 		</select>
-	</td> -->
-      <td th:text="${user.grade}"></td>
-      <td th:text="${user.id}"></td>
-      <td th:text="${user.name}"></td>
-      <td th:text="${user.gender}"></td>
-      <td th:text="${user.mobile}"></td>
-      <td th:text="${user.email}"></td>
-      <td th:text="${user.roadAddress}"></td>
-      <td th:text="${user.detailAddress}"></td>
-      <!-- <td th:text="${user.joinedAt}"></td> -->
-      <td th:text="${#dates.format(user.joinedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+	</td>
+		-->
+      <td th:text="${user.userDTO.grade}"></td>
+      <td th:text="${user.userDTO.id}"></td>
+      <td th:text="${user.userDTO.name}"></td>
+      <td th:text="${user.userDTO.gender}"></td>
+      <td th:text="${user.userDTO.mobile}"></td>
+      <td th:text="${user.userDTO.email}"></td>
+      <td th:text="${user.userDTO.roadAddress}"></td>
+      <td th:text="${user.userDTO.detailAddress}"></td>
+<!--       <td th:text="${user.userDTO.joinedAt}"></td> -->
+      <td th:text="${#dates.format(user.userDTO.joinedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+<!--       <td th:text="${user.regPayStatus == 1 ? '구독' : (user.regPayStatus == 2 ? '취소')"></td> -->
+      <td th:text="${user.regPayStatus == 0 ? '일반' : (user.regPayStatus == 1 ? '구독' : (user.regPayStatus == 2 ? '취소' : ''))}"></td>
+<!--       <td th:text="${user.regPayStatus}"></td> -->
       
     </tr>
 

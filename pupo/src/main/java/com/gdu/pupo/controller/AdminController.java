@@ -90,4 +90,34 @@ public class AdminController {
 		couponService.getEventCoupon(request, response);
 		
 	}
+	
+	// 테스트 페이지 / 관리자 확인중
+	@GetMapping("/headerAdmin.html")
+	public String welcome() {
+		return "admin/headerAdmin";
+	}
+	
+	// 테스트 페이지 / 관리자 확인중
+	@GetMapping("/indexAdmin.html")
+	public String test() {
+		return "admin/indexAdmin";
+	}
+
+	// 상품리스트 페이지 이동
+	@GetMapping("/regularList.html")
+	public String regularList(HttpServletRequest request, Model model) {
+		// List<UserDTO> user = adminService.userList();
+		// model.addAttribute("user", user);
+		adminService.getRegularListPagination(request, model);
+
+		return "admin/regularList";
+	}
+	
+	// 관리자-이벤트 페이지 / 쿠폰발급
+//	@PostMapping("/regularList.do")
+//	public void getregularList(HttpServletRequest request, HttpServletResponse response) {
+//		adminService.getregularList(request, response);
+//		
+//	}
 }
+

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- 아이콘 -->
+<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+<meta charset="UTF-8">
+<title>관리자: 상품조회</title>
+<style>
+    table {
+      border-collapse: collapse;
+      border-top: 1px solid #444444;
+      border-bottom: 1px solid #444444;
+      width: 100%;
+    }
+    th, td {
+      text-align: center;
+      padding: 2px;
+      border-bottom: 1px solid #444444;
+    }
+    th {
+      background-color: #CBFF75;
+    }
+    tr:not(:first-child):not(:last-child) {
+      border-top: none;
+      border-bottom: none;
+      background-color: transparent;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    div {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    tr:first-child th,
+    tr:first-child td {
+      /* Apply background color to the first row only */
+      background-color: #CBFF75;
+    }
+    .fa-user {
+      margin-right: 10px;
+    }
+    
+    .home {
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: initial; /* 기본 링크 색상 유지 */
+  }
+
+  .home:hover {
+    color: green; /* 마우스를 가져다 대면 초록색으로 변경 */
+  }   
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // 정렬
+    $(function(){ 
+      // recordPerPage의 변경
+      $('#recordPerPage').on('change', function(){
+        location.href = '/employees/change/record?recordPerPage=' + $(this).val();
+      });
+      
+      
+    });
+    
+    function checkRowCheckbox(input) {
+    	alert(input);
+        var rowId = input.parentNode.parentNode;
+    	alert(rowId);
+        alert(document.getElementById(rowId).querySelector('input[type="checkbox"]'));
+        var checkbox = document.getElementById(rowId).querySelector('input[type="checkbox"]');
+        alert(checkbox);
+        checkbox.checked = true;
+    }
+    
+    // 메인페이지로가기 이벤트
+    function showText() {
+      document.getElementById("hoverText").style.display = "inline";
+    }
+
+    function hideText() {
+      document.getElementById("hoverText").style.display = "none";
+    }
+
+    // 체크박스 전체 선택/해제
+    function toggleAllCheckboxes() {
+      var checkboxes = document.querySelectorAll('input[name="productIds"]');
+      var selectAllCheckbox = document.getElementById('selectAllCheckbox');
+
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = selectAllCheckbox.checked;
+      }
+    }
+  </script>
+</head>
+<body>
+  <h3>
+    <a class="home"  th:href="@{/admin/adminMain.html}" onmouseover="showText()" onmouseout="hideText()">
+      <i class="fa-solid fa-house"></i>
+      <span id="hoverText" style="display: none;">메인페이지로 가기</span>
+    </a>
+  </h3>
+  
+  <h1><i class="fa-solid fa-user"></i>상품관리</h1>
+  
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="검색">
+    <button onclick="searchTable()">검색</button>
+  </div>
+  <div>
+    <label for="role">정렬:</label>
+    <select class="role_select" id="role" name="role">
+      <option value="all">전체</option>
+      <option value="user">사용자</option>
+      <option value="admin">관리자</option>
+      <option value="seller">판매자</option>
+      <option value="all">전체</option>
+    </select>
+  </div>
+  
+  <form id="deleteForm" method="post" action="/admin/deleteProducts">
+    <table id="regularProductTable">
+      <tr>
+        <th><input type="checkbox" id="selectAllCheckbox" onchange="toggleAllCheckboxes()"></th>
+        <th>상품번호</th>
+        <th>상품명</th>
+        <th>판매가</th>
+        <th>원가</th>
+        <th>진열여부</th>
+        <th>상태</th>
+        <th>카테고리</th>
+        <th>비고</th>
+        <th>재고</th>
+      </tr>
+      <!-- 여기에 회원 데이터를 동적으로 추가할 예정입니다 -->
+      <tr th:each="regularProduct : ${regularProduct}">
+        <td><input type="checkbox" name="productIds" value="${regularProduct.regularNo}"></td>
+        <td th:text="${regularProduct.regularNo}"></td>
+        <td th:text="${regularProduct.regularName}"></td>
+        <td th:text="${regularProduct.regularSellPrice}"></td>
+        <td th:text="${regularProduct.regularOriginPrice}"></td>
+        <td th:text="${regularProduct.regularDisplay == 1 ? '여' : (regularProduct.regularDisplay == 2 ? '부' : '')}"></td>
+        <td th:text="${regularProduct.regularState}"></td>
+<!--         <td th:text="${regularProduct.regularCategory}"></td> -->
+        <td th:text="${regularProduct.regularCategory == 1 ? '샐러드' : (regularProduct.regularCategory == 2 ? '닭가슴살' : '')}"></td>
+        <td th:text="${regularProduct.regularSimpleDetail}"></td>
+        
+        <td>
+        <button type ="button" onclick="fnCalCount('p',this);">+</button>
+        <input type="text" id="pop_out" name="pop_out" th:value="${regularProduct.regularStock}" style="text-align:center" onchange="checkRowCheckbox(this)"/>
+        <button type="button" onclick="fnCalCount('m', this);">-</button>
+    	</td>
+      </tr>  
+  <tr>
+    <td th:utext="${pagination}"></td>
+  </tr>
+    </table>
+    <button type="submit">삭제</button>
+  </form>
+  
+  <script>
+  /* 재고수정 버튼  */
+  function fnCalCount(type, ths){
+	    var $input = $(ths).parents("td").find("input[name='pop_out']");
+	    var tCount = Number($input.val());
+	    var tEqCount = Number($(ths).parents("tr").find("td.bseq_ea").html());
+	    
+	    if(type=='p'){
+	        if(tCount < tEqCount) $input.val(Number(tCount)+1);
+	        
+	    }else{
+	        if(tCount >0) $input.val(Number(tCount)-1);    
+	        }
+	}
+  </script>
+</body>
+</html>

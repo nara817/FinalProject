@@ -20,36 +20,28 @@
 <!--/* 자바스크립트 내부에서 Variable Expression은 [[${}]]로 나타낸다. */-->
 
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
-<!-- <style>
-.accordion-collapse {
-  height: 0;
-  
-  /* 변화가 시작되는 쪽에다가 transition 적용해준다 0 -> 300px 
-  왜? 닫기 버튼을 누를 때 변화가 티남 */
-  transition: all 1s;
-  
-  
-}
-
-.active {
-  display: block;
-  /* 높이를 정해줘야지만 transition이 적용됨 */
-  height: 200px;
-}
-</style> -->
 <head th:replace="~{/layout/header::headFrag('고객센터')}"></head>
 <body>
   <!--/* /layout/header.html의 gnbFrag조각으로 div 태그를 바꾼다. */-->
   <div th:replace="~{/layout/header::gnbFrag}"></div>
   
-  <main>
-    <header>
-      <span class="text-muted pl-7" th:text="|HOME > 고객센터 >|"></span>
-      <span class="text-dark" th:text="|자주묻는질문|"></span>
-      <h1 class="text-center font-weight-bold pt-5">자주 묻는 질문</h1>
+   <body class="goto-here">
+   <section class="ftco-section">
+      <div class="container">
+  
+   <header> 
+  <nav aria-label="breadcrumb" class="bg-white">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">HOME</a></li>
+    <li class="breadcrumb-item"><a href="#">고객센터</a></li>
+    <li class="breadcrumb-item active" aria-current="page">자주 묻는 질문</li>
+  </ol>
+</nav>
+<h1 class="text-center font-weight-bold pt-5">자주 묻는 질문</h1>
     </header>
 
-    <section class="pt-5 pl-7">
+
+
       <div style="float: left; width: 15%;">
         <aside  class="align-items-center" >
           <h3 style="display:none;">서브메뉴</h3>
@@ -74,13 +66,12 @@
         </aside>
       </div>
       <div>
-        <div class="body px-4 px-lg-5" style="float: left; width: 65%;">
+        <div style="float: left; width: 65%;" >
           <div class="pd-r-68" >
-            <div class="col-6">
-              <form id="frm1" th:action="@{/customerCenter/faq.html}">
+            <div class="col-md-6 d-flex align-items-center">
+              <form class="subscribe-form" id="frm1" th:action="@{/customerCenter/faq.html}">
                 <select name="searchColumn" id="searchColumn" class="blind">
                   <option value="">모든검색</option>
-                  <option value="FAQ_CATEGORY">카테고리</option>
                 </select>
                 <div class="input-group mb-3">
                   <input class="form-control" list="auto_complete" type="text" name="query" id="query" placeholder="검색어를 입력하세요" aria-describedby="button-addon2">
@@ -89,6 +80,14 @@
                 </div>
               </form>
             </div>
+            <div class="col-md-6 d-flex align-items-center">
+            <form action="#" class="subscribe-form">
+              <div class="form-group d-flex">
+                <input type="text" class="form-control" placeholder="검색어를 입력하세요">
+                <input type="submit" th:value="조회" class="submit px-3">
+              </div>
+            </form>
+          </div>
         
             <h3 class="blind">자주묻는질문카테고리</h3>
             <form id="frmKind" th:action="@{/customerCenter/faq.html}">
@@ -123,7 +122,7 @@
    
             <div class="pl-37">페이지보기
               <select id="recordPerPage">
-                <option th:value="10">10개</option>
+                <option th:value="10" selected>10개</option>
                 <option th:value="20">20개</option>
                 <option th:value="30">30개</option>
               </select> 
@@ -188,8 +187,8 @@
           </th:block>
         </div>
       </div>
+      </div>
     </section>
-  </main>
 </body>
 <script th:inline="javascript">
 
@@ -251,4 +250,6 @@ window.onload = () => {
 	  });
 	};
 </script>
+<div th:replace="~{/layout/header::gnbScript}"></div> 
+  </body>
 </html>
