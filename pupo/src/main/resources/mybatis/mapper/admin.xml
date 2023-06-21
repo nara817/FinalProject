@@ -52,22 +52,22 @@
 	      FROM USER_T
   	</select>
   
-	<!-- 페이지네이션 -->
+	<!-- 회원 조회 페이지네이션 -->
 	<select id="getlistUsingPagination" parameterType="Map" resultType="RegularPurchaseDTO">
 SELECT
 	A.RN,
-	A.USER_NO	 				AS 'userDTO.userNo',
-	A.ID		 				AS 'userDTO.id',
-	A.PW						AS 'userDTO.pw',
+	A.USER_NO	 			           	AS 'userDTO.userNo',
+	A.ID		 				            AS 'userDTO.id',
+	A.PW						            AS 'userDTO.pw',
 	A.NAME                      AS 'userDTO.name',
 	A.GENDER                    AS 'userDTO.gender',
-	A.EMAIL						AS 'userDTO.email',
+	A.EMAIL						          AS 'userDTO.email',
 	A.MOBILE                    AS 'userDTO.mobile',
 	A.BIRTHYEAR                 AS 'userDTO.birthyear',
 	A.BIRTHDATE                 AS 'userDTO.birthdate',
 	A.POSTCODE                  AS 'userDTO.postcode',
 	A.ROAD_ADDRESS              AS 'userDTO.roadAddress',
-	A.JIBUN_ADDRESS				AS 'userDTO.jibunAddress',
+	A.JIBUN_ADDRESS				      AS 'userDTO.jibunAddress',
 	A.DETAIL_ADDRESS            AS 'userDTO.detailAddress',
 	A.EXTRA_ADDRESS             AS 'userDTO.extraAddress',
 	A.AGREECODE                 AS 'userDTO.agreecode',
@@ -94,7 +94,8 @@ ORDER BY A.RN ASC;
 	    SELECT COUNT(*)
 	      FROM REGULAR_PRODUCT_T 
   	</select>
-  	
+ 
+  <!-- 구독상품 페이지네이션 -->
 	<select id="getRegularListPagination" parameterType="Map" resultType="RegularProductDTO">
 SELECT
 	A.RN,     

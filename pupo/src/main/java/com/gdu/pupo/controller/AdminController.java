@@ -91,7 +91,7 @@ public class AdminController {
 		
 	}
 	
-	// 테스트 페이지 / 관리자 확인중
+	// 테스트 페이지 / 관리자 확인중 (메인)
 	@GetMapping("/headerAdmin.html")
 	public String welcome() {
 		return "admin/headerAdmin";

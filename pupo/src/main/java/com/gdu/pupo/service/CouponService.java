@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.gdu.pupo.domain.CouponDTO;
 
-@Service
 public interface CouponService {
 
 	// 쿠폰 등록

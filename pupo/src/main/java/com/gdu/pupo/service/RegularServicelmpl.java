@@ -6,6 +6,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +15,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +37,8 @@ import com.gdu.pupo.domain.RegularDetailImgDTO;
 import com.gdu.pupo.domain.RegularMainImgDTO;
 import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.domain.RegularPurchaseDTO;
+import com.gdu.pupo.domain.RegularShipDTO;
+import com.gdu.pupo.domain.UserDTO;
 import com.gdu.pupo.mapper.RegularMapper;
 import com.gdu.pupo.util.MyFileUtil;
 import com.gdu.pupo.util.PageUtil;
@@ -49,13 +55,17 @@ public class RegularServicelmpl implements RegularService {
   private final MyFileUtil myFileUtil;
   private final PageUtil pageUtil;
   
+
+  // 카테고리 추가
   @Override
-  public void addRegCategory(HttpServletRequest request) {
+  public void addRegCategory(HttpServletRequest request) { 
     String regularCategoryName = request.getParameter("regularCategoryName");
     RegularCategoryDTO regularCategoryDTO = new RegularCategoryDTO();
     regularCategoryDTO.setRegularCategoryName(regularCategoryName);
     regularMapper.addRegCategory(regularCategoryDTO);
   }
+  
+  // 카테고리 전체 리스트
   @Override
   public void getRegCategory(Model model) {
     List<RegularCategoryDTO> list = regularMapper.getRegCategoryList();
@@ -63,6 +73,8 @@ public class RegularServicelmpl implements RegularService {
     model.addAttribute("category", list);
   }
   
+  
+  // 상품 등록
   @Transactional
   @Override
   public int addRegular(MultipartHttpServletRequest multipartRequest) { // 상품등록 
@@ -238,6 +250,8 @@ public class RegularServicelmpl implements RegularService {
     return addResult;
  }
   
+  
+  // 전체 상품 리스트
   @Override
   public void regularList(HttpServletRequest request, Model model) {
    
@@ -272,144 +286,5 @@ public class RegularServicelmpl implements RegularService {
     model.addAttribute("regularMainImgList", regularMainImgList);
   }
   
-  @Override
-  public ResponseEntity<byte[]> regularMainDisplay(int regularNo) {
-    RegularMainImgDTO regularMainImgDTO = regularMapper.getRegularMainImgByNo(regularNo);
-    ResponseEntity<byte[]> image = null;  
-    
-    try {
-      File thumbnail = new File(regularMainImgDTO.getRegMainImgName(), regularMainImgDTO.getRegFilesystemName());
-      image = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(thumbnail), HttpStatus.OK);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return image;
-  }
   
-  @Override
-  public RegularProductDTO regularDetail(int regularNo, Model model) {
-    RegularProductDTO regularProductDTO = regularMapper.getRegularByNo(regularNo);
-    return regularProductDTO;
-  }
-  
-  @Override
-  public ResponseEntity<byte[]> regularDetailDisplay(int regularNo) {
-    RegularDetailImgDTO regularDetailImgDTO = regularMapper.getRegularImgByNo(regularNo);
-    ResponseEntity<byte[]> image = null;  
-    
-    try {
-      File thumbnail = new File(regularDetailImgDTO.getRegDetailImgName(), regularDetailImgDTO.getRegFilesystemName());
-      image = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(thumbnail), HttpStatus.OK);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return image;
-  }
-  
-  @Override
-  public RegularPurchaseDTO regularPurchase(HttpServletRequest request, Model model) {
-    String regCustomerUid = request.getParameter("regCustomerUid");
-    String id = request.getParameter("loginId");
-    int regularNo = Integer.parseInt(request.getParameter("regularNo"));
-    int regPurchasePrice = Integer.parseInt(request.getParameter("regPurchasePrice"));
-    int regShipNo = 1; // 이부분은 주문 완료 될 때 배송 정보들 입력 되면서 배송번호 불러와야함
-    int regPurchaseLastPrice = regPurchasePrice; // 최종가격, 이때 정가일수 있고 할인가일수있고.
-    int regProductCount = 1; // 실제 주문 페이지에서 보내주기
-    String regPg = request.getParameter("regPg");
-    int regDeliverDay = 1; // 실제 주문 페이지에서 1,2 선택 해서 보내주기
-    
-    
-    RegularPurchaseDTO regularPurchaseDTO = new RegularPurchaseDTO();
-    regularPurchaseDTO.setId(id);
-    regularPurchaseDTO.setRegCustomerUid(regCustomerUid);
-    regularPurchaseDTO.setRegDeliveryDay(regDeliverDay);
-    regularPurchaseDTO.setRegDeliveryStatus(regDeliverDay);
-    regularPurchaseDTO.setRegProductCount(regProductCount);
-    regularPurchaseDTO.setRegPurchasePrice(regPurchasePrice);
-    regularPurchaseDTO.setRegPg(regPg);
-    regularPurchaseDTO.setRegShipNo(regShipNo);
-    regularPurchaseDTO.setRegularNo(regularNo);
-    regularPurchaseDTO.setRegPurchaseLastPrice(regPurchaseLastPrice);
-    int addResult = regularMapper.addRegPurchase(regularPurchaseDTO);
-    
-    // 
-    int regPurchaseNo = regularPurchaseDTO.getRegPurchaseNo();
-    return regularMapper.getRegularPurchaseByNo(regPurchaseNo);
-  }
-  
-  @Override
-  public String getToken() { // 아임포트 토큰 받아오기
-    RestTemplate restTemplate = new RestTemplate();
-    
-    //서버로 요청할 Header
-     HttpHeaders headers = new HttpHeaders();
-     headers.setContentType(MediaType.APPLICATION_JSON);
-    
-     Map<String, Object> map = new HashMap<>();
-     map.put("imp_key", "");
-     map.put("imp_secret", "");
-      
-     Gson var = new Gson();
-     String json=var.toJson(map);
-    //서버로 요청할 Body
-     
-    HttpEntity<String> entity = new HttpEntity<>(json,headers);
-    System.out.println(restTemplate.postForObject("https://api.iamport.kr/users/getToken", entity, String.class));
-    return restTemplate.postForObject("https://api.iamport.kr/users/getToken", entity, String.class);
-    }
-  
-  @Override
-    public String regAgainPay() {
-      String token = getToken();
-      Gson str = new Gson();
-      token = token.substring(token.indexOf("response") + 10);
-      token = token.substring(0, token.length() - 1);
-  
-      GetTokenVO vo = str.fromJson(token, GetTokenVO.class);
-  
-      String access_token = vo.getAccess_token();
-      System.out.println(access_token);
-  
-      RestTemplate restTemplate = new RestTemplate();
-  
-      HttpHeaders headers = new HttpHeaders();
-      headers.setContentType(MediaType.APPLICATION_JSON);
-      headers.setBearerAuth(access_token);
-      
-      // 정기구독 인 주문들만 출력
-      List<RegularPurchaseDTO> purchaseList = regularMapper.regularPayList();
-      
-      // 현재 날짜 얻어오기
-      LocalDate currentDate = LocalDate.now();
-      LocalDateTime merchant = LocalDateTime.now();
-      
-      
-      
-      // 결제 주기
-      for(RegularPurchaseDTO purchase : purchaseList) {
-        // Date.util -> LocalDate로 변경
-        Date regLastPayAt = purchase.getRegLastPayAt();
-        Instant instant = regLastPayAt.toInstant();
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-        LocalDate regLastPayDate = localDateTime.toLocalDate();
-        // 다음 결제일 계산 1달 뒤임
-        LocalDate regNextPayDate =  regLastPayDate.plusMonths(1);
-        if(currentDate.equals(regNextPayDate) || currentDate.isAfter(regNextPayDate)){
-          Map<String, Object> map = new HashMap<>();
-          map.put("customer_uid", purchase.getRegCustomerUid());
-          map.put("merchant_uid", "pupo_" + merchant);
-          map.put("amount", purchase.getRegPurchaseLastPrice());
-          map.put("name", "풀파워 샐러드 정기결제");
-          
-          Gson var = new Gson();
-          String json = var.toJson(map);
-         
-          HttpEntity<String> entity = new HttpEntity<>(json, headers);
-          
-          restTemplate.postForObject("https://api.iamport.kr/subscribe/payments/again", entity, String.class);
-          regularMapper.regularPayUpdate(purchase.getRegPurchaseNo());
-        }
-      }
-      return null;
-  }
 }

@@ -18,7 +18,13 @@ public class SellerController {
   private final AdminService adminService;
     
   // 판매자-메인 이동
-  @GetMapping("/sellerMain.html")
+//  @GetMapping("/sellerMain.html")
+//  public String sellerMain(Model model) {
+//	  model.addAttribute("userCount", adminService.userCount());
+//	  model.addAttribute("sellerCount", adminService.sellerCount());
+//	  return "seller/sellerMain";
+//  }
+  @GetMapping("/adminMain.html")
   public String sellerMain(Model model) {
 	  model.addAttribute("userCount", adminService.userCount());
 	  model.addAttribute("sellerCount", adminService.sellerCount());
