@@ -1,5 +1,7 @@
 package com.gdu.pupo.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -110,7 +113,6 @@ public class RegularController {
   @GetMapping("/regularMyOrder.html")
   public String regularMyOrder(HttpServletRequest request, Model model, HttpSession session) {
     model.addAttribute("orderList", regularService.regularMyOrder(request, session, model));
-    regularService.regAgainPay();
    return "/regular/regularMyOrder"; 
   }
   
@@ -126,6 +128,36 @@ public class RegularController {
   public String regAgain(@RequestParam("regPurchaseNo") int regPurchaseNo) {
     regularService.regAgain(regPurchaseNo);
     return "redirect:/regular/regularMyOrder.html";
+  }
+  
+  // 나의 구독 디테일
+  @GetMapping("/regularPayDetail.html")
+  public String regularPayDetail(@RequestParam("regPurchaseNo") int regPurchaseNo, Model model) {
+    model.addAttribute("regPurchase", regularService.regularPurchasInfo(regPurchaseNo, model));
+    return "/regular/regularPayDetail";
+  }
+  // 배송정보 변경 페이지 이동
+  @PostMapping("/regChangeDelivery.html")
+  public String regChangeDelivery(HttpServletRequest request, Model model) {
+    int regPurchaseNo = Integer.parseInt(request.getParameter("regPurchaseNo"));
+    int regShipNo = Integer.parseInt(request.getParameter("regShipNo"));
+    model.addAttribute("regPurchaseNo", regPurchaseNo);
+    model.addAttribute("regShipNo", regShipNo);
+    return "/regular/regularChangeDelivery";
+  }
+  
+  // 배송정보 변경 저장
+  @ResponseBody
+  @PostMapping(value="/regDeliverySave.do", produces="application/json")
+  public Map<String, Object> regDeliverySave(HttpServletRequest request) {
+    return regularService.regDeliverySave(request);
+  }
+  
+  // 리뷰 작성 여부 체크
+  @ResponseBody
+  @PostMapping(value="/checkReview.do", produces="application/json")
+  public Map<String, Object> regCheckReview(HttpServletRequest request) {
+    return regularService.regCheckReview(request);
   }
   
 }

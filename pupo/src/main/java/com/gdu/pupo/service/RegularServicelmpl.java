@@ -37,6 +37,7 @@ import com.gdu.pupo.domain.RegularDetailImgDTO;
 import com.gdu.pupo.domain.RegularMainImgDTO;
 import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.domain.RegularPurchaseDTO;
+import com.gdu.pupo.domain.RegularReviewDTO;
 import com.gdu.pupo.domain.RegularShipDTO;
 import com.gdu.pupo.domain.UserDTO;
 import com.gdu.pupo.mapper.RegularMapper;
@@ -554,6 +555,17 @@ public class RegularServicelmpl implements RegularService {
     return regMyOrderList;
   }
   
+  // 리뷰 리스트 가져오기 -> 마이페이지에서 리뷰 작성 여부 확인해서 리뷰작성, 리뷰수정, 삭제 버튼 나오게 할 예정
+  @Override
+  public Map<String, Object> regCheckReview(HttpServletRequest request) {
+    Map<String, Object> map = new HashMap<>();
+    int regPurchaseNo = Integer.parseInt(request.getParameter("regPurchaseNo"));
+    int check = regularMapper.regCheckReview(regPurchaseNo);
+    map.put("check", check);
+    return map;
+  }
+  
+  
   // 구독 취소 예약
   @Override
   public int regCancel(int regPurchaseNo) {
@@ -567,6 +579,37 @@ public class RegularServicelmpl implements RegularService {
   public int regAgain(int regPurchaseNo) {
     int updateResult = regularMapper.updateRegAgain(regPurchaseNo);
     return updateResult;
+  }
+  
+  // 배송정보 저장 에이작스로 반환
+  @Override
+  public Map<String, Object> regDeliverySave(HttpServletRequest request) {
+    RegularShipDTO regularShipDTO = new RegularShipDTO();
+    // 변경할 배송정보 넘버
+    int regShipNo = Integer.parseInt(request.getParameter("regShipNo"));
+    // 배송정보 저장
+    String regReceiverName = request.getParameter("name");
+    String regReceiverMobile = request.getParameter("mobile");
+    String regShipPostcode = request.getParameter("postcode");
+    String regShipRoadAddress = request.getParameter("roadAddress");
+    String regShipJibunAddress = request.getParameter("jibunAddress");
+    String regShipDetailAddress = request.getParameter("detailAddress");
+    String regShipExtraAddress = request.getParameter("extraAddress");
+    
+    // 배송정보 DTO에 저장
+    regularShipDTO.setRegShipNo(regShipNo);
+    regularShipDTO.setRegReceiverMobile(regReceiverMobile);
+    regularShipDTO.setRegReceiverName(regReceiverName);
+    regularShipDTO.setRegShipDetailAddress(regShipDetailAddress);
+    regularShipDTO.setRegShipExtraAddress(regShipExtraAddress);
+    regularShipDTO.setRegShipJibunAddress(regShipJibunAddress);
+    regularShipDTO.setRegShipPostcode(regShipPostcode);
+    regularShipDTO.setRegShipRoadAddress(regShipRoadAddress);
+    
+    int saveResult = regularMapper.regSaveDelivery(regularShipDTO);
+    Map<String, Object> map = new HashMap<>();
+    map.put("saveResult", saveResult);
+    return map;
   }
   
 }

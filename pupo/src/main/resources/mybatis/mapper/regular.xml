@@ -356,4 +356,24 @@
      WHERE REG_PURCHASE_NO = #{regPurchaseNo}
   </update>
   
+  <!-- 배송정보 변경 저장 -->
+   <update id="regSaveDelivery" parameterType="RegularShipDTO">
+    UPDATE REGULAR_SHIP_T 
+       SET REG_RECEIVER_NAME = #{regReceiverName}
+		     , REG_RECEIVER_MOBILE = #{regReceiverMobile}
+		     , REG_SHIP_POSTCODE = #{regShipPostcode}
+		     , REG_SHIP_ROAD_ADDRESS = #{regShipRoadAddress}
+		     , REG_SHIP_JIBUN_ADDRESS = #{regShipJibunAddress}
+		     , REG_SHIP_DETAIL_ADDRESS = #{regShipDetailAddress}
+		     , REG_SHIP_EXTRA_ADDRESS = #{regShipExtraAddress}
+     WHERE REG_SHIP_NO = #{regShipNo}
+   </update>
+  
+  <!-- 리뷰 작성 여부 확인 -->
+  <select id="regCheckReview" parameterType="int" resultType="int">
+    SELECT COUNT(*)
+      FROM REGULAR_REVIEW_T
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo}
+  </select>
+  
 </mapper>

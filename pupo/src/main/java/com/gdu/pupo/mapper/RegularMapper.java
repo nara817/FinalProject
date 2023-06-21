@@ -10,6 +10,7 @@ import com.gdu.pupo.domain.RegularDetailImgDTO;
 import com.gdu.pupo.domain.RegularMainImgDTO;
 import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.domain.RegularPurchaseDTO;
+import com.gdu.pupo.domain.RegularReviewDTO;
 import com.gdu.pupo.domain.RegularShipDTO;
 
 @Mapper
@@ -33,9 +34,11 @@ public interface RegularMapper {
   public List<RegularPurchaseDTO> regularPayList(); // 정기구독 상태가 1인 주문정보
   public int regularPayUpdate(int regPurchaseNo); // 정기구독 자동결제 후 결제된 횟수 증가 및 마지막 결제 업데이트
   public List<RegularPurchaseDTO> getRegularMyOrder(Map<String, Object> map); // 로그인 한 아이디 구독 리스트
-  public int getRegularMyOrderCount(String id); // 아이디 전체 구매수
+  public int regCheckReview(int regPurchaseNo); // 리뷰 여부 체크
+  public int getRegularMyOrderCount(String id); // 아이디 전체 구매 수 (페이지네이션에 필요)
   public int updateRegCancel(int regPurchaseNo); // 구독 취소 할 경우 구독 취소 예약
   public int updateRegAgain(int regPurchaseNo); // 구독 취소 예약 상태 재구독 변경
   public List<RegularPurchaseDTO> regularCancelList(); // 정기구독 상태가 1인 주문정보
   public int updateRegCancelDone(int regPurchaseNo); // 구독취소예약 취소일 되면 자동취소
+  public int regSaveDelivery(RegularShipDTO regularShipDTO); // 배송정보 저장
 }

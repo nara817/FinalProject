@@ -1,22 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<!--/*
-  1. Variable Expressions           : ${...} (값을 나타낼 때 사용한다.)
-  2. Selection Variable Expressions : *{...} (객체의 특정 필드 값을 나타낼 때 사용한다.)
-  3. Message Expressions
-  4. Link URL Expressions           : @{...} (경로 작성할 때 사용한다.)
-  5. Fragment Expressions           : ~{...} (조각을 사용할 때 사용한다.)
-*/-->
-
-<!--/*
-  ${name}             : request attribute      model.addAttribute("name", "킹콩")
-                                               redirectAttributes.addFlashAttribute("name", "킹콩")
-  ${param.name}       : request parameter      /board/detail.do?name=킹콩
-  ${session.name}     : session attribute      session.setAttribute("name", "킹콩")
-  ${application.name} : application attribute  servletContext.setAttribute("name", "킹콩")
-*/-->
-
 <style>
         #product > .complete > article {
             margin-top: 16px;
@@ -254,7 +238,7 @@
                     </article>
                     <!-- 배송정보 -->
                     <article class="delivery">
-                        <h1>배송정보</h1>
+                        <h1>배송정보</h1><input type="button" onclick="fnChangeDelivery()" value="배송정보변경">
                         <table border="0">
                             <tr>
                                 <td>수취인</td>
@@ -275,6 +259,10 @@
                             </tr>
                         </table>
                     </article>
+                    <form id="frm" name="frm" method="post">
+                      <input type="hidden" name="regPurchaseNo" th:value="${regPurchase.regPurchaseNo}">
+                      <input type="hidden" name="regShipNo" th:value="${regPurchase.regularShipDTO.regShipNo}">
+                    </form>
             </section>
           </main>
         </div>
@@ -297,6 +285,23 @@
     	location.href="/regular/regularList.do";
     }
     
+    function fnChangeDelivery(){
+    	
+  
+    	if(confirm('배송정보를 변경 하시겠습니까? 배송정보는 다음 배송일 부터 반영 됩니다.')){
+    	    var url = "/regular/regChangeDelivery.html";
+    	    var windowPopUp = "frm";
+    	    var features = "scrollbars=yes,width=1000,height=800,location=no, resizable=yes";
+    	    var newWindow = window.open(url, windowPopUp, features);
+    	    $('#frm').attr('action', url);
+    	    $('#frm').attr('target', windowPopUp);
+    	    $('#frm').submit();
+    	    location.reload();
+    	};
+    }
+    
+ // 1.빈창 팝업 생성
+
   </script>
 
 </html>

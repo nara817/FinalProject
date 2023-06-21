@@ -1,6 +1,7 @@
 package com.gdu.pupo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.domain.RegularPurchaseDTO;
+import com.gdu.pupo.domain.RegularReviewDTO;
 
 public interface RegularService {
 
@@ -24,8 +26,10 @@ public interface RegularService {
   public int regularPurchase(HttpServletRequest request, Model model); // 구매완료 후 구매 저장
   public String getToken(); // 아임포트 토큰가져오기
   public String regAgainPay(); // 자동결제
-  public RegularPurchaseDTO regularPurchasInfo(int regPurchaseNo, Model model);
+  public RegularPurchaseDTO regularPurchasInfo(int regPurchaseNo, Model model); // 주문정보
   public List<RegularPurchaseDTO> regularMyOrder(HttpServletRequest request, HttpSession session, Model model); // 로그인 아이디 마이 오더 리스트 불러오기
+  public Map<String, Object> regCheckReview(HttpServletRequest request); // 리뷰 여부 확인 체크 에이작스 반환
   public int regCancel(int regPurchaseNo); // 구독 취소 예약
   public int regAgain(int regPurchaseNo); // 구독취소예약 상태 재구독 변경
+  public Map<String, Object> regDeliverySave(HttpServletRequest request); // 배송정보 변경 저장
 }

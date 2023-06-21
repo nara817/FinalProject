@@ -36,6 +36,42 @@ th {
 }
 
 
+#myform fieldset{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+#myform fieldset legend{
+    text-align: right;
+}
+#myform input[type=radio]{
+    display: none;
+}
+#myform label{
+    font-size: 3em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+#myform label:hover{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#myform label:hover ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#myform input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#reviewContents {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+
 </style>  
   <body> 
     <section class="ftco-section ftco-cart">
@@ -74,7 +110,7 @@ th {
                          <label>주문번호:&nbsp;</label><span th:id="'regPurchaseNo' + ${vs.index}" th:text="${list.regPurchaseNo}"></span></td> 
                        </tr>
                        <tr>                         
-                         <td class="imgTd" rowspan="3"><img th:src="@{/regular/regularMainDisplay.do(regularNo=${list.regularProductDTO.regularNo})}"></td>
+                         <td class="imgTd" rowspan="3"><a th:href="@{/regular/regularPayDetail.html(regPurchaseNo=${list.regPurchaseNo})}"><img th:src="@{/regular/regularMainDisplay.do(regularNo=${list.regularProductDTO.regularNo})}"></a></td>
                          <td><label>총 구독가격:&nbsp;</label><span th:text="${#numbers.formatInteger(list.regPurchaseLastPrice, 3, 'COMMA') } + 원"></span></td> 
                          <td rowspan="3" style="text-align: center">배송요청일<br><span th:text="${list.regDeliveryDay}"></span><br></td>
                          <th:block th:if="${list.regCancel == 1} and ${list.regPayStatus == 1}">
@@ -95,7 +131,9 @@ th {
                            <td rowspan="3" style="text-align: center"><label></label><br><br></td>
                            <td rowspan="3" style="text-align: center"><label>구독 종료</label><br><br>
                            </td>
-                         </th:block>  
+                         </th:block> 
+                         <td rowspan="3"></td> 
+                         <td th:id="'reviewButton' + ${vs.index}" rowspan="3">리뷰작성</td>
                        </tr>  
                        <tr>
                          <td><label>구독상품명:&nbsp;</label><span th:text="| ${list.regularProductDTO.regularName}|"></span></td>    
@@ -110,10 +148,58 @@ th {
           </div>
       </div>
      </div>
+     
+  <form class="mb-3" name="myform" id="myform" method="post">
+    <fieldset>
+      <span class="text-bold">별점을 선택해주세요</span>
+      <input type="radio" name="reviewStar" value="5" id="rate1"><label
+        for="rate1">★</label>
+      <input type="radio" name="reviewStar" value="4" id="rate2"><label
+        for="rate2">★</label>
+      <input type="radio" name="reviewStar" value="3" id="rate3"><label
+        for="rate3">★</label>
+      <input type="radio" name="reviewStar" value="2" id="rate4"><label
+        for="rate4">★</label>
+      <input type="radio" name="reviewStar" value="1" id="rate5"><label
+        for="rate5">★</label>
+    </fieldset>
+    <div>
+      <textarea class="col-auto form-control" type="text" id="reviewContents"
+            placeholder="좋은 수강평을 남겨주시면 Cocolo에 큰 힘이 됩니다! 포인트 5000p도 지급!!"></textarea>
+    </div>
+  </form>   
     </section>
     <div class="d-flex justify-content-center" th:utext="${pagination}"></div>
   </body>
   <script>
+    $(document).ready(function(){
+        // 페이지가 로드될 때 모든 주문에 대해 Ajax 요청을 실행합니다.
+        $('span[id^="regPurchaseNo"]').each(function(index){
+            var purchaseNo = $(this).text();
+            $.ajax({
+                url: '/regular/checkReview.do',  // 리뷰 존재 여부를 확인하는 서버 엔드포인트
+                type: 'post',
+                data: {
+                    'regPurchaseNo': purchaseNo
+                },
+                dataType: 'json',
+                success: function(resData) {
+                    if (resData.check) {  // 리뷰가 이미 존재하는 경우
+                        $('#reviewButton' + index).html(
+                            '<input type="button" value="리뷰 수정" onclick="fnUpdateReview(\'' + purchaseNo + '\')">' +
+                            '<input type="button" value="리뷰 삭제" onclick="fnDeleteReview(\'' + purchaseNo + '\')">'
+                        );
+                    } else {  // 리뷰가 존재하지 않는 경우
+                        $('#reviewButton' + index).html(
+                            '<input type="button" value="리뷰 작성" onclick="fnWriteReview(\'' + purchaseNo + '\')">'
+                        );
+                    }
+                },
+            });
+        });
+    });
+  
+  
     function fnRegCancel(purchaseNo) {
     if(confirm("구독취소를 하시겠습니까?")){
         $('#regOrder').find('input[name="regPurchaseNo"]').val(purchaseNo);
