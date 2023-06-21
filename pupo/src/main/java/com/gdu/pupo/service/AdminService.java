@@ -1,5 +1,8 @@
 package com.gdu.pupo.service;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,5 +20,7 @@ public interface AdminService {
 	// 페이지네이션
 	public void getlistUsingPagination(HttpServletRequest request, Model model);
 	public void getRegularListPagination(HttpServletRequest request, Model model);
-
+	
+	public Map<String, Object> delProduct(int regularNo);
+	
 }

@@ -15,6 +15,7 @@ public class RegularProductDTO {
   private int regularDisplay;
   private int regularStock;
   private int regularCategory;
+  private String regularCategoryName;
   private int regularState;
   private String regularSimpleDetail;
 }

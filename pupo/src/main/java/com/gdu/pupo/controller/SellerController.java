@@ -31,6 +31,10 @@ public class SellerController {
 	  return "seller/sellerMain";
   }
   
-  
+//	// 테스트 페이지 / 판매자 확인중
+//	@GetMapping("/indexSeller.html")
+//	public String indexSeller() {
+//		return "seller/indexSeller";
+//	}
   
 }

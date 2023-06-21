@@ -1,6 +1,7 @@
 package com.gdu.pupo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.pupo.domain.CouponDTO;
 import com.gdu.pupo.service.AdminService;
@@ -112,6 +115,19 @@ public class AdminController {
 
 		return "admin/regularList";
 	}
+
+  	// 아이디 찾기
+	@ResponseBody
+	@PostMapping(value="/delProduct.do", produces="application/json")  // 아이디 찾기
+	public Map<String, Object> delProduct(@RequestParam("regularNo") int regularNo) {
+	  return adminService.delProduct(regularNo);
+	}
+	
+	// 관리자-이벤트 페이지 / 쿠폰발급
+//	@PostMapping("/regularForm.do")
+//	public void getregularForm(HttpServletRequest request, HttpServletResponse response) {
+////		couponService.getEventCoupon(request, response);
+//	}
 	
 	// 관리자-이벤트 페이지 / 쿠폰발급
 //	@PostMapping("/regularList.do")

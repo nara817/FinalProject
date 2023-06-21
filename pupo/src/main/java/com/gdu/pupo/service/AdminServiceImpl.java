@@ -15,6 +15,7 @@ import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.domain.RegularPurchaseDTO;
 import com.gdu.pupo.domain.UserDTO;
 import com.gdu.pupo.mapper.AdminMapper;
+import com.gdu.pupo.mapper.RegularMapper;
 import com.gdu.pupo.util.PageUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	// field
 	private final AdminMapper adminMapper;
+	private final RegularMapper regularMapper;
 	private final PageUtil pageUtil;
 	
 	
@@ -130,6 +132,7 @@ public class AdminServiceImpl implements AdminService {
 //		map.put("column", column);
 		// begin ~ end 사이의 목록 가져오기
 		List<RegularProductDTO> regularProduct = adminMapper.getRegularListPagination(map);
+	    
 		// pagination.jsp로 전달할(forward)할 정보 저장하기
 		model.addAttribute("regularProduct", regularProduct);
 		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/admin/regularList.html?column=" + column + "&order=" + order));
@@ -140,7 +143,15 @@ public class AdminServiceImpl implements AdminService {
 		}
 		model.addAttribute("page", page);
 	}
-	
+
+	 @Override 
+	 public Map<String, Object> delProduct(int regularNo) { 
+		 	 Map<String,Object> map = new HashMap<String, Object>(); 
+		 	 RegularProductDTO regularProductDTO = new RegularProductDTO();
+		 	 regularProductDTO.setRegularNo(regularNo);
+			 map.put("delYn",adminMapper.deleteRegularProduct(regularProductDTO));
+			 return map; 
+		 }
 }
 	
 	

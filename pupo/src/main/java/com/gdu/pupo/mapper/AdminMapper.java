@@ -26,4 +26,5 @@ public interface AdminMapper {
 	public int getListCount();
 	public int getListCountRegular();
 	public List<RegularProductDTO> getRegularListPagination(Map<String, Object> map);
+	public int deleteRegularProduct(RegularProductDTO regularProductDTO);
 }

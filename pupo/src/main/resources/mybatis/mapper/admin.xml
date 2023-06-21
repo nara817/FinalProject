@@ -106,6 +106,7 @@ SELECT
     A.REGULAR_DISPLAY,
     A.REGULAR_STOCK,
     A.REGULAR_CATEGORY,
+    B.REGULAR_CATEGORY_NAME,
     A.REGULAR_STATE,
     A.REGULAR_SIMPLE_DETAIL
 FROM (
@@ -113,8 +114,20 @@ FROM (
       ROW_NUMBER() OVER(ORDER BY REGULAR_NO ASC) AS RN,
       U.*
     FROM REGULAR_PRODUCT_T U
-) A
+) A LEFT JOIN REGULAR_CATEGORY_T B
+ON A.REGULAR_CATEGORY = B.REGULAR_CATEGORY
 WHERE A.RN BETWEEN #{begin} AND #{end}
 ORDER BY A.RN ASC;
  	</select>
+ 	
+ 	<!-- 정기상품 삭제 -->
+ 	<delete id="deleteRegularProduct" parameterType="RegularProductDTO">
+DELETE
+  FROM REGULAR_PRODUCT_T
+ WHERE REGULAR_NO = #{regularNo};
+  
+ 	
+ 	</delete>
+ 	
+ 	
 </mapper>

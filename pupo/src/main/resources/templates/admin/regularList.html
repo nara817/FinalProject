@@ -59,19 +59,8 @@
       $('#recordPerPage').on('change', function(){
         location.href = '/employees/change/record?recordPerPage=' + $(this).val();
       });
-      
-      
     });
     
-    function checkRowCheckbox(input) {
-      alert(input);
-        var rowId = input.parentNode.parentNode;
-      alert(rowId);
-        alert(document.getElementById(rowId).querySelector('input[type="checkbox"]'));
-        var checkbox = document.getElementById(rowId).querySelector('input[type="checkbox"]');
-        alert(checkbox);
-        checkbox.checked = true;
-    }
     
     // 메인페이지로가기 이벤트
     function showText() {
@@ -100,11 +89,43 @@
       }
       return 'Unknown Category';
     }
+    
+    // 상품 삭제
+    function regularDelete(button) {
+      event.preventDefault(); // 기본 동작 중지
+	  var regularDelete = confirm("정말로 삭제하시겠습니까?");
+	  if (regularDelete) {
+	    // 삭제 작업 수행
+	    var row = button.parentNode.parentNode;
+	    var regularNo = row.querySelector("td:nth-child(2)").innerText; //상품번호
+	    
+		   
+		      $.ajax({
+		          type: 'post',
+		          url: '/admin/delProduct.do',
+		          data: {
+	        	  	regularNo: regularNo
+		          },
+		          dataType: 'json',
+		          success: function(resData) {
+		            if(resData.delYn == 1) {
+		              alert(regularNo+"번 상품이 삭제되었습니다.");
+		              location.reload(); 
+		            } else {
+		              alert(regularNo+"번 상품 삭제에 실패하였습니다.");
+		            }
+		          }
+		        });
+	  }
+	}
+    // 상품 수정
+    // 상품등록 페이지로 이동, 화면에서 수정 후 수정완료 되는건..?어렵나?
+
   </script>
 </head>
 <body>
   <h3>
-    <a class="home"  th:href="@{/admin/adminMain.html}" onmouseover="showText()" onmouseout="hideText()">
+    <a class="home" th:href="@{/admin/adminMain.html}" onmouseover="showText()" onmouseout="hideText()">
       <i class="fa-solid fa-house"></i>
       <span id="hoverText" style="display: none;">메인페이지로 가기</span>
     </a>
@@ -112,10 +133,6 @@
   
   <h1><i class="fa-solid fa-user"></i>상품관리</h1>
   
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="검색">
-    <button onclick="searchTable()">검색</button>
-  </div>
   <div>
     <label for="role">정렬:</label>
     <select class="role_select" id="role" name="role">
@@ -127,40 +144,45 @@
     </select>
   </div>
   
-  <form id="deleteForm" method="post" action="/admin/deleteProducts">
-    <table id="regularProductTable">
+  <form id="regularForm" method="post">
+    <table id="regularDeleteTable">
       <tr>
         <th><input type="checkbox" id="selectAllCheckbox" onchange="toggleAllCheckboxes()"></th>
-<!--         <th>카테고리</th> -->
         <th>상품번호</th>
+        <th>카테고리</th>
         <th>상품명</th>
         <th>판매가</th>
         <th>원가</th>
         <th>진열여부</th>
         <th>상태</th>
         <th>비고</th>
+        <th>수정</th>
+        <th>삭제</th>
       </tr>
       <!-- 여기에 회원 데이터를 동적으로 추가할 예정입니다 -->
       <tr th:each="regularProduct : ${regularProduct}">
         <td><input type="checkbox" name="productIds" value="${regularProduct.regularNo}"></td>
-        <!-- <td th:text="${regularProduct.regularCategory == 1 ? '샐러드' : (regularProduct.regularCategory == 2 ? '닭가슴살' : '')}"></td> -->
-        <!-- <td th:text="${regularProduct.regularCategoryName}"></td>   -->
-<!-- <!--         <td th:text="${findcategoryname(regularproduct.regularcategory, category)}"></td>  --> -->
         <td th:text="${regularProduct.regularNo}"></td>
+        <td th:text="${regularProduct.regularCategoryName}"></td>
         <td th:text="${regularProduct.regularName}"></td>
         <td th:text="${regularProduct.regularSellPrice}"></td>
         <td th:text="${regularProduct.regularOriginPrice}"></td>
         <td th:text="${regularProduct.regularDisplay == 1 ? '여' : (regularProduct.regularDisplay == 2 ? '부' : '')}"></td>
-        <td th:text="${regularProduct.regularState}"></td>
+        <td th:text="${regularProduct.regularState == 1 ? '신상' : (regularProduct.regularState == 2 ? '베스트' : (regularProduct.regularState == 3 ? '노말' : ''))}"></td>
         <td th:text="${regularProduct.regularSimpleDetail}"></td>
+        <td>
+          <button onclick="editProduct()">수정</button>
+        </td>
+        <td>
+          <button onclick="regularDelete(this)">삭제</button>
+        </td>
       </tr>  
-  <tr>
-    <td th:utext="${pagination}"></td>
-  </tr>
+      <tr>
+        <td th:utext="${pagination}"></td>
+      </tr>
     </table>
-    <button type="submit">삭제</button>
+    
   </form>
-  
   <script>
 
   </script>
