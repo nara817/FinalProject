@@ -5,9 +5,6 @@
 
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
 <head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
-
-<body>
-  <div th:replace="~{/layout/header::gnbFrag}"></div>
     <style>
         #product > .view > article {
             width: 100%;
@@ -340,130 +337,183 @@
             font-weight: bold;
         }
     </style>
+
+<body>
+  <div th:replace="~{/layout/header::gnbFrag}"></div>
 </head>
 <body>
-        <main id="product">
-            <section class="view">
-                <article class="info">
-                    <div class="image">
-                         <img th:src="@{/regular/regularMainDisplay.do(regularNo=${regularDetail.regularNo})}">
-                    </div>
-                    <div class="summary">
-                        <nav>
-                            <h3 th:text="${regularDetail.regularName}"></h3>
-                            <p th:text="${regularDetail.regularSimpleDetail}"></p>
-                            <h5 class="rating star4">
-                                <a href="#">상품평보기</a>
-                            </h5>
-                        </nav>
-                        <nav>
-                            <div class="dis_price">
-                                <ins th:text="${#numbers.formatInteger(regularDetail.regularSellPrice, 3, 'COMMA') }"></ins>
-                            </div>
-                        </nav>
-                        <nav>
-                            <span class="delivery">무료배송</span>
-                            <span class="arrival">매주 월/수/금 또는 화/목/토</span>
-                            <span class="desc">본 상품은 국내배송만 가능합니다.</span>
-                        </nav>
-                        <nav>
-                            <span class="origin">원산지-상세설명 참조</span>
-                        </nav>
-                      <form method="post" th:action="@{/regular/regularPayPage.do}">
-                        <div th:text="${regularDetail.regularName}"></div>
-                          <input type="hidden" name="regularNo" th:value="${regularDetail.regularNo}" >
-                          <input type="hidden" name="regularSellPrice" th:value="${regularDetail.regularSellPrice}" readOnly>
-                          <input type="hidden" name="loginId" th:value="${session.loginId}">
-                          <div class="button">
-                          <input type="submit" class="order" value="정기결제">
+       <section class="ftco-section ftco-cart">
+          <div class="container">
+            <main id="product">
+                <section class="view">
+                    <article class="info">
+                        <div class="image">
+                             <img th:src="@{/regular/regularMainDisplay.do(regularNo=${regularDetail.regularNo})}">
                         </div>
-                      </form>
-                    </div>
-                </article>
-                <article class="detail">
-                    <nav><h1>상품정보</h1></nav>
-                 <img th:src="@{/regular/regularDetailDisplay.do(regularNo=${regularDetail.regularNo})}">
-                </article>
-                <article class="review">
-                    <nav><h1>상품리뷰</h1></nav>
-                    <ul>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo****** 2018-07-10</span>
+                        <div class="summary">
+                            <nav>
+                                <h3 th:text="${regularDetail.regularName}"></h3>
+                                <p th:text="${regularDetail.regularSimpleDetail}"></p>
+                                <h5 class="rating star4">
+                                    <a href="#">상품평보기</a>
+                                </h5>
+                            </nav>
+                            <nav>
+                                <div class="dis_price">
+                                    <ins th:text="${#numbers.formatInteger(regularDetail.regularSellPrice, 3, 'COMMA') }"></ins>
+                                </div>
+                            </nav>
+                            <nav>
+                                <span class="delivery">무료배송</span>
+                                <span class="arrival">매주 월/수/금 또는 화/목/토</span>
+
+                                <span class="desc">본 상품은 국내배송만 가능합니다.</span>
+                            </nav>
+                            <nav>
+                                <span class="origin">원산지-상세설명 참조</span>
+                            </nav>
+                          <form method="post" th:action="@{/regular/regularPayPage.do}">
+                            <div th:text="${regularDetail.regularName}"></div>
+                              <input type="hidden" name="regularNo" th:value="${regularDetail.regularNo}" >
+                              <input type="hidden" name="regularSellPrice" th:value="${regularDetail.regularSellPrice}" readOnly>
+                              <input type="hidden" name="loginId" th:value="${session.loginId}">
+                              <div>
+                                <label for="1"><input id="1" name="regDeliveryDay" type="radio" value="월수금" checked>월/수/금</label>
+                                <label for="2"><input id="2" name="regDeliveryDay" type="radio" value="화목토">화/목/토</label>
+                              </div>
+                              <input type="button" onclick="fnDown()" value="-">
+                              <input type="text" name="regCount" id="regCount" value="1" readOnly style="border: none; background-color: transparent; outline: none; box-shadow: none; width: 15px;  text-align: center; ">
+                              <input type="button" onclick="fnUp()" value="+">
+                              <input type="text" name="totalPrice" id="totalPrice" th:value="${#numbers.formatInteger(regularDetail.regularSellPrice, 3, 'COMMA')}" style="border: none; background-color: transparent; outline: none; box-shadow: none; width: 100px;  text-align: center; ">
+                              <div class="button">
+
+                              <input type="submit" class="order" value="정기결제">
                             </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo****** 2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo****** 2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo****** 2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo****** 2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                    </ul>
-                    <div class="paging">
-                        <span class="prev">
-                            <a href="#">< 이전</a>
-                        </span>
-                        <span class="num">
-                            <a href="#" class="on">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#">6</a>
-                            <a href="#">7</a>
-                        </span>
-                        <span class="next">
-                            <a href="#">다음 ></a>
-                        </span>
-                    </div>
-                </article>
-            </section>
-        </main>
-        <button type="button" id="top">상단이동</button>
+                          </form>
+                        </div>
+                    </article>
+                    <article class="detail">
+                        <nav><h1>상품정보</h1></nav>
+                        <div div class="d-flex justify-content-center">
+                         <img th:src="@{/regular/regularDetailDisplay.do(regularNo=${regularDetail.regularNo})}">
+                        </div>
+                    </article>
+                    <article class="review">
+                        <nav><h1>상품리뷰</h1></nav>
+                        <ul>
+                            <li>
+                                <div>
+                                    <h5 class="rating star4">상품평</h5>
+                                    <span>seo****** 2018-07-10</span>
+                                </div>
+                                <h3>상품명1/BLUE/L</h3>
+                                <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                                </p>
+                            </li>
+                            <li>
+                                <div>
+                                    <h5 class="rating star4">상품평</h5>
+                                    <span>seo****** 2018-07-10</span>
+                                </div>
+                                <h3>상품명1/BLUE/L</h3>
+                                <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                                </p>
+                            </li>
+                            <li>
+                                <div>
+                                    <h5 class="rating star4">상품평</h5>
+                                    <span>seo****** 2018-07-10</span>
+                                </div>
+                                <h3>상품명1/BLUE/L</h3>
+                                <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                                </p>
+                            </li>
+                            <li>
+                                <div>
+                                    <h5 class="rating star4">상품평</h5>
+                                    <span>seo****** 2018-07-10</span>
+                                </div>
+                                <h3>상품명1/BLUE/L</h3>
+                                <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                                </p>
+                            </li>
+                            <li>
+                                <div>
+                                    <h5 class="rating star4">상품평</h5>
+                                    <span>seo****** 2018-07-10</span>
+                                </div>
+                                <h3>상품명1/BLUE/L</h3>
+                                <p> 가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                                </p>
+                            </li>
+                        </ul>
+                        <div class="paging">
+                            <span class="prev">
+                                <a href="#">이전</a>
+                            </span>
+                            <span class="num">
+                                <a href="#" class="on">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                                <a href="#">6</a>
+                                <a href="#">7</a>
+                            </span>
+                            <span class="next">
+                                <a href="#">다음 ></a>
+                            </span>
+                        </div>
+                    </article>
+                </section>
+            </main>
+            <button type="button" id="top">상단이동</button>
     </div>
+       </section>
+ </body>
+ <script>
+ function fnDown() {
+	  var currentValue = parseInt($('#regCount').val());
+	  if (currentValue > 1) {
+	    $('#regCount').val(currentValue - 1);
+	    updateTotalPrice(currentValue - 1);
+	  } else {
+	    alert('최소 구독 인원은 1명 입니다.');
+	  }
+	}
+
+	function fnUp() {
+	  var currentValue = parseInt($('#regCount').val());
+	  if (currentValue < 9) {
+	    $('#regCount').val(currentValue + 1);
+	    updateTotalPrice(currentValue + 1);
+	  } else {
+	    alert('최대 구독 인원은 9명 입니다.');
+	  }
+	}
+
+	function updateTotalPrice(count) {
+	  // 가격을 계산하고 업데이트하는 로직을 구현합니다.
+	  // 예시로 가격은 count에 따라 단순히 100을 곱한 값으로 계산되도록 하였습니다.
+	  var regPrice = '[[${regularDetail.regularSellPrice}]]'
+	  var price = count * regPrice;
+	  var price2 = price.toLocaleString()
+	  $('#totalPrice').val(price2);
+	}
+ 
+	
+	
+ </script>
+
 
 </html>

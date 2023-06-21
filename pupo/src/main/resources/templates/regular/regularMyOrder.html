@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+
+<!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
+<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+  <div th:replace="~{/layout/header::gnbFrag}"></div>
+  
+<style>
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 20px;
+        margin-top: 30px;
+  }
+table img {
+  height: 100px;
+}
+
+.imgTd {
+  width: 215px;
+}  
+
+/* 배치 */
+th, td {
+   padding: 8px;
+   text-align: left;
+   border-bottom: 1px solid #ddd;
+}
+
+th {
+   background-color: #8FA691; 
+   color: white;
+    height: 40px;
+   text-align: left;
+}
+
+
+</style>  
+  <body> 
+    <section class="ftco-section ftco-cart">
+     <div class="container">
+      <div class="regi_main">
+        <div class="mainContent">
+              <div class="title">
+                  <h3>구독 이용 정보</h3>
+             </div>
+             
+              <form id="frm1" method="get" action="/regular/regularMyOrder.html">
+                <input type="hidden" name="regPayStatus" value="1">
+              </form>
+              <form id="frm2" method="get" action="/regular/regularMyOrder.html">
+                <input type="hidden" name="cancel" value="1">
+              </form>
+              <form id="frm3" method="get" action="/regular/regularMyOrder.html">
+                <input type="hidden" name="regPayStatus" value="2">
+              </form>
+              <form id="frm4" method="get" action="/regular/regularMyOrder.html">
+              </form>
+             <div>
+              <input type="button" value="구독조회" onclick="$('#frm1').submit()">
+              <input type="button" value="구독취소예약조회" onclick="$('#frm2').submit()">
+              <input type="button" value="구독취소조회" onclick="$('#frm3').submit()">
+              <input type="button" value="전체조회" onclick="$('#frm4').submit()">
+             </div>
+             <form method="post" action="/regular/regCancel.do">
+               <table aria-setsize="500px">
+                  <tbody id="myPerchaseTable">       
+                    <th:block th:each="list,vs:${orderList}">     
+                       <tr>
+                         <td colspan="5">
+                         <label>주문일시:&nbsp;</label><span th:text="${#dates.format(list.regPurchaseAt, 'yyyy년 MM월 dd일 E요일 HH:mm')}"></span>
+                         &emsp;
+                         <label>주문번호:&nbsp;</label><span th:text="${list.regPurchaseNo}"></span></td> 
+                       </tr>
+                       <tr>                         
+                         <td class="imgTd" rowspan="3"><img th:src="@{/regular/regularMainDisplay.do(regularNo=${list.regularProductDTO.regularNo})}"></td>
+                         <td><label>총 구독가격:&nbsp;</label><span th:text="${#numbers.formatInteger(list.regPurchaseLastPrice, 3, 'COMMA') } + 원"></span></td> 
+                         <td rowspan="3" style="text-align: center">배송요청일<br><span th:text="${list.regDeliveryDay}"></span><br></td>
+                         <th:block th:if="${list.regCancel == 1} and ${list.regPayStatus == 1}">
+                           <td rowspan="3" style="text-align: center"><label>구독취소예정일</label><br><span th:text="${#dates.format(oneMonth[vs.index], 'yyyy년 MM월 dd일 E요일')}"></span><br></td>
+                           <td rowspan="3" style="text-align: center"><label>구독 종료</label><br><br>
+                            <input type="button" onclick="fnRegAgain()" value="재구독">
+                           </td>
+                         </th:block>  
+                         <th:block th:if="${list.regPayStatus == 1} and ${list.regCancel != 1}">
+                           <td rowspan="3" style="text-align: center"><label>다음결제일</label><br><span th:text="${#dates.format(oneMonth[vs.index], 'yyyy년 MM월 dd일 E요일')}"></span><br></td>
+                           <td rowspan="3" style="text-align: center"><label>구독중</label><br><br>
+                            <input type="button" onclick="fnRegCancel()" value="구독 취소">
+                           </td>
+                         </th:block>  
+                         <th:block th:if="${list.regPayStatus == 2}">
+                           <td rowspan="3" style="text-align: center"><label></label><br><br></td>
+                           <td rowspan="3" style="text-align: center"><label>구독 종료</label><br><br>
+                           </td>
+                         </th:block>  
+                       </tr>  
+                       <tr>
+                         <td><label>구독상품명:&nbsp;</label><span th:text="| ${list.regularProductDTO.regularName}|"></span></td>    
+                       </tr>
+                       <tr>
+                         <td><label>인원:&nbsp;</label><span th:text="| ${list.regProductCount} 명|"></span></td>
+                       </tr>    
+                    </th:block>      
+                  </tbody>
+               </table>
+             </form>
+          </div>
+      </div>
+     </div>
+    </section>
+    <div class="d-flex justify-content-center" th:utext="${pagination}"></div>
+  </body>
+  <script>
+    function fnRegCancel(){
+    	
+    }
+    function fnRegAgain(){
+    	
+    }
+  </script>
+
+</html>

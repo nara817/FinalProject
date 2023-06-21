@@ -11,18 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegularPurchaseDTO {
   private int regPurchaseNo;
-  private String id;
+  private UserDTO userDTO;
   private String regCustomerUid;
-  private int regShipNo;
-  private int regularNo;
+  private RegularShipDTO regularShipDTO;
+  private RegularProductDTO regularProductDTO;
   private int regPurchasePrice;
   private int regPurchaseLastPrice;
   private Date regPurchaseAt;
   private String regPg;
-  private int regDeliveryStatus;
+  private String regDeliveryStatus;
   private int regProductCount;
   private Date regPaymentAt;
-  private int regDeliveryDay;
+  private String regDeliveryDay;
   private int regPayStatus;
   private Date regLastPayAt;
+  private int regPayCount;
+  private int regCancel;
 }
