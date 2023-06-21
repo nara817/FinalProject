@@ -320,10 +320,40 @@
       ORDER BY RP.REG_LAST_PAY_AT DESC
       LIMIT #{begin}, #{recordPerPage}
   </select>
-    <select id="getRegularMyOrderCount" parameterType="String" resultType="int">
-    SELECT COUNT(*)
-    FROM REGULAR_PURCHASE_T
-    WHERE ID = #{id}
+  <!-- 마이 구독 전체 갯수 -->
+	<select id="getRegularMyOrderCount" parameterType="String" resultType="int">
+	  SELECT COUNT(*)
+	  FROM REGULAR_PURCHASE_T
+	  WHERE ID = #{id}
+	</select>
+	
+	<!-- 구독취소예약 -->
+  <update id="updateRegCancel" parameterType="int">
+    UPDATE REGULAR_PURCHASE_T
+       SET REG_CANCEL = 1
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo}
+  </update>
+  
+	<!-- 구독취소예약 -->
+  <update id="updateRegAgain" parameterType="int">
+    UPDATE REGULAR_PURCHASE_T
+       SET REG_CANCEL = NULL
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo}
+  </update>
+  
+  <!-- 구독취소예약 리스트 불러오기 -->
+  <select id="regularCancelList" resultType="regularPurchaseDTO">
+    SELECT REG_PURCHASE_NO, ID, REG_LAST_PAY_AT, REG_PAY_STATUS, REG_CANCEL
+      FROM REGULAR_PURCHASE_T
+     WHERE REG_PAY_STATUS = 1 AND REG_CANCEL = 1
   </select>
+  
+  <!-- 구독예약리스트 중 구독취소일 되면 자동 취소로 변경 -->
+  <update id="updateRegCancelDone" parameterType="int">
+    UPDATE REGULAR_PURCHASE_T
+       SET REG_PAY_STATUS = 2,
+           REG_LAST_PAY_AT = NOW()
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo}
+  </update>
   
 </mapper>

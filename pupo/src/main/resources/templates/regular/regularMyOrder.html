@@ -63,7 +63,7 @@ th {
               <input type="button" value="구독취소조회" onclick="$('#frm3').submit()">
               <input type="button" value="전체조회" onclick="$('#frm4').submit()">
              </div>
-             <form method="post" action="/regular/regCancel.do">
+             <form id="regOrder" method="post">
                <table aria-setsize="500px">
                   <tbody id="myPerchaseTable">       
                     <th:block th:each="list,vs:${orderList}">     
@@ -71,7 +71,7 @@ th {
                          <td colspan="5">
                          <label>주문일시:&nbsp;</label><span th:text="${#dates.format(list.regPurchaseAt, 'yyyy년 MM월 dd일 E요일 HH:mm')}"></span>
                          &emsp;
-                         <label>주문번호:&nbsp;</label><span th:text="${list.regPurchaseNo}"></span></td> 
+                         <label>주문번호:&nbsp;</label><span th:id="'regPurchaseNo' + ${vs.index}" th:text="${list.regPurchaseNo}"></span></td> 
                        </tr>
                        <tr>                         
                          <td class="imgTd" rowspan="3"><img th:src="@{/regular/regularMainDisplay.do(regularNo=${list.regularProductDTO.regularNo})}"></td>
@@ -80,13 +80,15 @@ th {
                          <th:block th:if="${list.regCancel == 1} and ${list.regPayStatus == 1}">
                            <td rowspan="3" style="text-align: center"><label>구독취소예정일</label><br><span th:text="${#dates.format(oneMonth[vs.index], 'yyyy년 MM월 dd일 E요일')}"></span><br></td>
                            <td rowspan="3" style="text-align: center"><label>구독 종료</label><br><br>
-                            <input type="button" onclick="fnRegAgain()" value="재구독">
+                            <input type="button" th:onclick="|fnRegAgain($('#regPurchaseNo' + ${vs.index}).text())|" value="재구독">
+                            <input type="hidden" name="regPurchaseNo">
                            </td>
                          </th:block>  
                          <th:block th:if="${list.regPayStatus == 1} and ${list.regCancel != 1}">
                            <td rowspan="3" style="text-align: center"><label>다음결제일</label><br><span th:text="${#dates.format(oneMonth[vs.index], 'yyyy년 MM월 dd일 E요일')}"></span><br></td>
                            <td rowspan="3" style="text-align: center"><label>구독중</label><br><br>
-                            <input type="button" onclick="fnRegCancel()" value="구독 취소">
+                            <input type="button" th:onclick="|fnRegCancel($('#regPurchaseNo' + ${vs.index}).text())|" value="구독 취소">
+                            <input type="hidden" name="regPurchaseNo">
                            </td>
                          </th:block>  
                          <th:block th:if="${list.regPayStatus == 2}">
@@ -112,12 +114,21 @@ th {
     <div class="d-flex justify-content-center" th:utext="${pagination}"></div>
   </body>
   <script>
-    function fnRegCancel(){
-    	
-    }
-    function fnRegAgain(){
-    	
-    }
+    function fnRegCancel(purchaseNo) {
+    if(confirm("구독취소를 하시겠습니까?")){
+        $('#regOrder').find('input[name="regPurchaseNo"]').val(purchaseNo);
+        $('#regOrder').attr('action', '/regular/regCancel.do');
+        $('#regOrder').submit();
+      }
+  	}
+  
+  	function fnRegAgain(purchaseNo) {
+  		if(confirm("다시 구독 하시겠습니까? 재구독시 기존 결제정보로 결제 됩니다.")){
+    	  $('#regOrder').find('input[name="regPurchaseNo"]').val(purchaseNo);
+    	  $('#regOrder').attr('action', '/regular/regAgain.do');
+    	  $('#regOrder').submit();
+  		}
+	}
   </script>
 
 </html>

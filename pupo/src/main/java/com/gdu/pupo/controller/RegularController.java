@@ -110,7 +110,22 @@ public class RegularController {
   @GetMapping("/regularMyOrder.html")
   public String regularMyOrder(HttpServletRequest request, Model model, HttpSession session) {
     model.addAttribute("orderList", regularService.regularMyOrder(request, session, model));
+    regularService.regAgainPay();
    return "/regular/regularMyOrder"; 
+  }
+  
+  // 구독취소예약
+  @PostMapping("/regCancel.do")
+  public String regCancel(@RequestParam("regPurchaseNo") int regPurchaseNo) {
+    regularService.regCancel(regPurchaseNo);
+    return "redirect:/regular/regularMyOrder.html";
+  }
+  
+  // 구독 취소 예약 상태 일 시 재구독
+  @PostMapping("/regAgain.do")
+  public String regAgain(@RequestParam("regPurchaseNo") int regPurchaseNo) {
+    regularService.regAgain(regPurchaseNo);
+    return "redirect:/regular/regularMyOrder.html";
   }
   
 }

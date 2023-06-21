@@ -26,4 +26,6 @@ public interface RegularService {
   public String regAgainPay(); // 자동결제
   public RegularPurchaseDTO regularPurchasInfo(int regPurchaseNo, Model model);
   public List<RegularPurchaseDTO> regularMyOrder(HttpServletRequest request, HttpSession session, Model model); // 로그인 아이디 마이 오더 리스트 불러오기
+  public int regCancel(int regPurchaseNo); // 구독 취소 예약
+  public int regAgain(int regPurchaseNo); // 구독취소예약 상태 재구독 변경
 }

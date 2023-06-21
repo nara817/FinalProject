@@ -430,7 +430,7 @@ public class RegularServicelmpl implements RegularService {
     return restTemplate.postForObject("https://api.iamport.kr/users/getToken", entity, String.class);
     }
   
-  // 최종결제시점 기준 1개월 후 자동 결제
+  // 최종결제시점 기준 1개월 후 자동 결제 및 구독취소예약 구독 종료로 만들기
   @Override
     public String regAgainPay() {
       String token = getToken();
@@ -448,6 +448,28 @@ public class RegularServicelmpl implements RegularService {
       HttpHeaders headers = new HttpHeaders();
       headers.setContentType(MediaType.APPLICATION_JSON);
       headers.setBearerAuth(access_token);
+      
+      
+      // 현재 날짜 가져오기 구독취소요청용
+      LocalDate currentDate1 = LocalDate.now();
+      
+      // 구독취소 요청 주문들 출력
+      List<RegularPurchaseDTO> cancelList = regularMapper.regularCancelList();
+      
+      // 구독취소 요청 한 주문들 마지막 결제일 기준 1달뒤 취소로 변경
+      for(RegularPurchaseDTO cancel : cancelList) {
+        // Date.util -> LocalDate로 변경
+        Date regLastPayAt = cancel.getRegLastPayAt();
+        Instant instant = regLastPayAt.toInstant();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalDate regLastPayDate = localDateTime.toLocalDate();
+        // 다음 결제일 계산 1달 뒤임
+        LocalDate regNextPayDate =  regLastPayDate.plusMonths(1); 
+        if(currentDate1.equals(regNextPayDate) || currentDate1.isAfter(regNextPayDate)) {
+          regularMapper.updateRegCancelDone(cancel.getRegPurchaseNo());
+        }
+      }
+      
       
       // 정기구독 인 주문들만 출력
       List<RegularPurchaseDTO> purchaseList = regularMapper.regularPayList();
@@ -530,6 +552,21 @@ public class RegularServicelmpl implements RegularService {
     }
     model.addAttribute("oneMonth", oneMonthList);
     return regMyOrderList;
+  }
+  
+  // 구독 취소 예약
+  @Override
+  public int regCancel(int regPurchaseNo) {
+    int updateResult = regularMapper.updateRegCancel(regPurchaseNo);
+    System.out.println("테스트" + updateResult);
+    return updateResult;
+  }
+  
+  // 구독 취소 예약 상태 재구독으로 변경
+  @Override
+  public int regAgain(int regPurchaseNo) {
+    int updateResult = regularMapper.updateRegAgain(regPurchaseNo);
+    return updateResult;
   }
   
 }
