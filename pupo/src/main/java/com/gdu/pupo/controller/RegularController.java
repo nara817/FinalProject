@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gdu.pupo.domain.RegularReviewDTO;
 import com.gdu.pupo.domain.UserDTO;
 import com.gdu.pupo.service.RegularService;
 import com.gdu.pupo.service.UserService;
@@ -160,4 +161,37 @@ public class RegularController {
     return regularService.regCheckReview(request);
   }
   
+  // 리뷰작성페이지이동
+  @PostMapping("/regWriteReview.html")
+  public String regWriteReviewPage(@RequestParam("regPurchaseNo") int regPurchaseNo, Model model){
+    model.addAttribute("regPurchaseNo", regPurchaseNo);
+    return "/regular/regularWriteReview";
+  }
+  
+  // 리뷰작성 저장
+  @PostMapping("/regWriteReview.do")
+  public String regWriteReview(RegularReviewDTO regularReviewDTO) {
+      regularService.regReviewWrite(regularReviewDTO);
+      return "/regular/regularWriteReviewClose.html"; // 이부분은 페이지 종료 및 기존 부모 페이지 ajax 재실행 위해서 이곳으로 리다이렉트
+  }
+  // 리뷰 수정페이지 이동
+  @PostMapping("/regModifyReview.html")
+  public String regModifyReviewPage(@RequestParam("regPurchaseNo") int regPurchaseNo, Model model) {
+    regularService.getRegModifyReview(regPurchaseNo, model);
+    return "/regular/regularModifyReview";
+  }
+  
+  // 리뷰 수정 저장
+  @PostMapping("/regModifyReview.do")
+  public String regModifyReview(RegularReviewDTO regularReviewDTO) {
+    regularService.regModifyReview(regularReviewDTO);
+    return "/regular/regularWriteReviewClose.html"; 
+  }
+  
+  // 리뷰 삭제
+  @ResponseBody
+  @PostMapping(value="/regDeleteReview.do", produces="application/json")
+  public Map<String, Object> regDeleteReview(HttpServletRequest request){
+    return regularService.regDeleteReview(request);
+  }
 }

@@ -41,4 +41,8 @@ public interface RegularMapper {
   public List<RegularPurchaseDTO> regularCancelList(); // 정기구독 상태가 1인 주문정보
   public int updateRegCancelDone(int regPurchaseNo); // 구독취소예약 취소일 되면 자동취소
   public int regSaveDelivery(RegularShipDTO regularShipDTO); // 배송정보 저장
+  public int regWriteReview(RegularReviewDTO regularReviewDTO); // 리뷰 저장
+  public RegularReviewDTO getRegModifyReview(int regPurchaseNo); // 저장된 리뷰 내역 가져오기
+  public int updateRegModifyReview(RegularReviewDTO regularReviewDTO); // 리뷰 수정 저장하기
+  public int regDeleteReview(int regPurchaseNo); // 리뷰 삭제 하기
 }

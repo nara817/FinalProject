@@ -612,4 +612,34 @@ public class RegularServicelmpl implements RegularService {
     return map;
   }
   
+  // 리뷰 작성
+  @Override
+  public void regReviewWrite(RegularReviewDTO regularReviewDTO) {
+    regularMapper.regWriteReview(regularReviewDTO);
+  }
+  
+  // 작성 리뷰내역 가져오기
+  @Override
+  public void getRegModifyReview(int regPurchaseNo, Model model) {
+    RegularReviewDTO regularReviewDTO = new RegularReviewDTO();
+    regularReviewDTO = regularMapper.getRegModifyReview(regPurchaseNo);
+    model.addAttribute("review", regularReviewDTO);
+  }
+  
+  // 리뷰 수정 저장
+  @Override
+  public void regModifyReview(RegularReviewDTO regularReviewDTO) {
+    System.out.println(regularReviewDTO.getRegReviewNo() + "이요");
+    regularMapper.updateRegModifyReview(regularReviewDTO);
+  }
+  
+  @Override
+  public Map<String, Object> regDeleteReview(HttpServletRequest request) {
+    Map<String, Object> map = new HashMap<>();
+    int regPurchaseNo = Integer.parseInt(request.getParameter("regPurchaseNo"));
+    int result = regularMapper.regDeleteReview(regPurchaseNo);
+    map.put("deleteResult", result);
+    return map;
+  }
+  
 }

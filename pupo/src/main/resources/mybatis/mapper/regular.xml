@@ -376,4 +376,33 @@
      WHERE REG_PURCHASE_NO = #{regPurchaseNo}
   </select>
   
+  <!-- 리뷰 작성 저장 -->
+  <insert id="regWriteReview" useGeneratedKeys="true" keyProperty="regReviewNo" parameterType="RegularReviewDTO">
+    INSERT INTO REGULAR_REVIEW_T (REG_PURCHASE_NO, REGULAR_NO, REG_REVIEW_DETAIL, REG_REVIEW_RATING, REG_REVIEW_CREATED_AT)
+                      VALUES (#{regPurchaseNo}, (SELECT REGULAR_NO FROM REGULAR_PURCHASE_T WHERE REG_PURCHASE_NO = #{regPurchaseNo}), #{regReviewDetail}, #{regReviewRating}, NOW())
+  </insert>
+  
+  <!-- 리뷰수정 클릭 한 내용 가져오기 -->
+  <select id="getRegModifyReview" parameterType="int" resultType="RegularReviewDTO">
+    SELECT REG_REVIEW_NO, REG_REVIEW_DETAIL, REG_REVIEW_RATING
+      FROM REGULAR_REVIEW_T
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo}
+  </select>
+ 
+ <!-- 리뷰수정저장하기 -->
+  <update id="updateRegModifyReview" parameterType="RegularReviewDTO">
+   UPDATE REGULAR_REVIEW_T 
+      SET REG_REVIEW_DETAIL = #{regReviewDetail}
+        , REG_REVIEW_MODIFYED_AT = NOW()
+        , REG_REVIEW_RATING = #{regReviewRating}
+    WHERE REG_REVIEW_NO = #{regReviewNo}
+  </update>  
+  
+  <!-- 리뷰삭제 -->
+  <delete id="regDeleteReview" parameterType="int">
+    DELETE
+      FROM REGULAR_REVIEW_T
+     WHERE REG_PURCHASE_NO = #{regPurchaseNo}
+  </delete>
+  
 </mapper>

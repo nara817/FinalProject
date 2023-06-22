@@ -32,4 +32,8 @@ public interface RegularService {
   public int regCancel(int regPurchaseNo); // 구독 취소 예약
   public int regAgain(int regPurchaseNo); // 구독취소예약 상태 재구독 변경
   public Map<String, Object> regDeliverySave(HttpServletRequest request); // 배송정보 변경 저장
+  public void regReviewWrite(RegularReviewDTO regularReviewDTO); // 리뷰 작성 저장
+  public void getRegModifyReview(int regPurchaseNo, Model model); // 리뷰 수정 페이지 이동 및 기존 작성 내역 가져오기
+  public void regModifyReview(RegularReviewDTO regularReviewDTO); // 리뷰 수정 저장
+  public Map<String, Object> regDeleteReview(HttpServletRequest request); // 리뷰 삭제
 }
