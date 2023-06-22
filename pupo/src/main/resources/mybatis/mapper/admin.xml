@@ -125,9 +125,47 @@ ORDER BY A.RN ASC;
 DELETE
   FROM REGULAR_PRODUCT_T
  WHERE REGULAR_NO = #{regularNo};
-  
- 	
  	</delete>
  	
- 	
+    <select id="selectRegularProduct" parameterType="int" resultType="RegularProductDTO">
+		SELECT   
+			A.REGULAR_NO,
+		    A.REGULAR_NAME,
+		    A.REGULAR_SELL_PRICE,
+		    A.REGULAR_ORIGIN_PRICE,
+		    A.REGULAR_DISPLAY,
+		    A.REGULAR_STOCK,
+		    A.REGULAR_CATEGORY,
+		    A.REGULAR_STATE,
+		    A.REGULAR_SIMPLE_DETAIL
+		   FROM REGULAR_PRODUCT_T A
+		   WHERE A.REGULAR_NO = #{regularNo};
+  	</select>
+  	
+  	<update id="editRegular" parameterType="regularProductDTO">
+	  UPDATE REGULAR_PRODUCT_T SET
+	    REGULAR_NAME = #{regularName},
+	    REGULAR_SELL_PRICE = #{regularSellPrice},
+	    REGULAR_ORIGIN_PRICE = #{regularOriginPrice},
+	    REGULAR_DISPLAY = #{regularDisplay},
+	    REGULAR_STOCK = #{regularStock},
+	    REGULAR_CATEGORY = #{regularCategory},
+	    REGULAR_STATE = #{regularState},
+	    REGULAR_SIMPLE_DETAIL = #{regularSimpleDetail}
+	  WHERE REGULAR_NO = #{regularNo}
+	</update>
+  	
+ 	<update id="editRegMainImg" parameterType="RegularMainImgDTO">
+	  UPDATE REGULAR_MAIN_IMG_T
+	  SET REG_MAIN_IMG_NAME = #{regMainImgName},
+	      REG_FILESYSTEMNAME = #{regFilesystemName}
+	  WHERE REGULAR_NO = #{regularNo}
+	</update>
+  
+ 	<update id="editRegImg" parameterType="RegularMainImgDTO">
+	  UPDATE REGULAR_DETAIL_IMG_T
+	  SET REG_DETAIL_IMG_NAME = #{regDetailImgName},
+	      REG_FILESYSTEMNAME = #{regFilesystemName}
+	  WHERE REGULAR_NO = #{regularNo}
+	</update>
 </mapper>

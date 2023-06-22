@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.pupo.domain.RegularDetailImgDTO;
+import com.gdu.pupo.domain.RegularMainImgDTO;
 import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.domain.RegularPurchaseDTO;
 
@@ -33,6 +34,13 @@ import com.gdu.pupo.domain.RegularPurchaseDTO;
 	
 	// RemoveWrongfileScheduler
 	public List<RegularDetailImgDTO> getAttachListInYesterday();
+	
+	
+	public RegularProductDTO selectRegularProduct(int regularNo);
+	public int editRegular(RegularProductDTO regularProductDTO);
+	public void editRegMainImg(RegularMainImgDTO regularMainImgDTO);
+	public void editRegImg(RegularDetailImgDTO regularDetailImgDTO);
+	
 	
 	
 

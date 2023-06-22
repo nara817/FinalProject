@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.pupo.domain.CouponDTO;
+import com.gdu.pupo.domain.RegularCategoryDTO;
+import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.service.AdminService;
 import com.gdu.pupo.service.CouponService;
 import com.gdu.pupo.service.RegularService;
@@ -113,16 +116,39 @@ public class AdminController {
 
   	// 구독상품 삭제
 	@ResponseBody
-	@PostMapping(value="/delProduct.do", produces="application/json")  // 아이디 찾기
+	@PostMapping(value="/delProduct.do", produces="application/json") 
 	public Map<String, Object> delProduct(@RequestParam("regularNo") int regularNo) {
 	  return adminService.delProduct(regularNo);
 	}
 	
-	//구독상품 수정	
-	@GetMapping("/regularAddPage.html") // 상품등록 페이지
-	public String regularAddPage(Model model) {
-		regularService.getRegCategory(model);
-		return "regular/regularAddPage";
-  }
+  	// 구독상품 수정페이지이동
+	@PostMapping(value="/regularEditPage.do", produces="text/html") // 수정: produces 값을 'text/html'로 변경
+	public String editProduct(@RequestParam("regularNo") int regularNo, Model model) {
+	  RegularProductDTO regularProductDTO = adminService.editProduct(regularNo);
+	  List<RegularCategoryDTO> regularCategoryDTO = adminService.getRegCategory();
+	  model.addAttribute("category", regularCategoryDTO);
+	  model.addAttribute("regularProductDTO", regularProductDTO);
+	  return "admin/regularEditPage";
+	}
+	
+	@PostMapping("/regularEdit.do") // 상품 수정
+	public String addRegular(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
+	  int addResult = adminService.editRegular(multipartRequest);
+	  redirectAttributes.addFlashAttribute("addResult", addResult);
+	  return "redirect:/admin/regularList.html";
+	}
+
+//  @PostMapping("/regularAdd.do") // 상품 등록
+//  public String addRegular(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
+//    int addResult = regularService.addRegular(multipartRequest);
+//    redirectAttributes.addFlashAttribute("addResult", addResult);
+//    return "redirect:/regular/regularMain.html";
+//  }
+//
+//  @PostMapping("/addCategory.do")
+//  public String addCategory(HttpServletRequest request) {
+//  regularService.addRegCategory(request);
+//  return "redirect:/regular/regularAddPage.html";
+//  }
 }
 
