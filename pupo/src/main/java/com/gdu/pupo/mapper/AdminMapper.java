@@ -3,20 +3,18 @@ package com.gdu.pupo.mapper;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.ui.Model;
 
+import com.gdu.pupo.domain.RegularDetailImgDTO;
 import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.domain.RegularPurchaseDTO;
-import com.gdu.pupo.domain.UserDTO;
 
 @Mapper
-public interface AdminMapper {
+//public interface AdminMapper {
+  public interface AdminMapper extends RegularMapper { // RegularMapper 상속
 	
 	// 회원 조회
-//	public List<UserDTO> selectUserByUserListDTO();
+	//public List<UserDTO> selectUserByUserListDTO();
 	
 	// 회원 count
 	//public List<Map<String, Object>> countUsersBySellerCheck();
@@ -26,5 +24,17 @@ public interface AdminMapper {
 	public int getListCount();
 	public int getListCountRegular();
 	public List<RegularProductDTO> getRegularListPagination(Map<String, Object> map);
+	
+	// 구독상품 삭제
 	public int deleteRegularProduct(RegularProductDTO regularProductDTO);
+	
+	// 구독상품 첨부 삭제(Attach)
+	public int removeAttach(int RegularNo);
+	
+	// RemoveWrongfileScheduler
+	public List<RegularDetailImgDTO> getAttachListInYesterday();
+	
+	
+
 }
+

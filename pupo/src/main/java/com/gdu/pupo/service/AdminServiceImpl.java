@@ -144,6 +144,7 @@ public class AdminServiceImpl implements AdminService {
 		model.addAttribute("page", page);
 	}
 
+	// 정기구독상품-삭제
 	 @Override 
 	 public Map<String, Object> delProduct(int regularNo) { 
 		 	 Map<String,Object> map = new HashMap<String, Object>(); 

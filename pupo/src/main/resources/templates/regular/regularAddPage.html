@@ -242,41 +242,41 @@
   
   // 상품분류 입력 창 열기
   function openCategoryPopup() {
-	    // 팝업 창 열기
-	    document.getElementById("categoryPopup").style.display = "block";
-	  }
+      // 팝업 창 열기
+      document.getElementById("categoryPopup").style.display = "block";
+    }
   $('#categoryInput').on('keydown', function(event) {
-	  if (event.keyCode === 13) {
-	    event.preventDefault(); // 기본 동작 중지
+    if (event.keyCode === 13) {
+      event.preventDefault(); // 기본 동작 중지
 
-	    saveCategory();
-	  }
-	});
+      saveCategory();
+    }
+  });
 
-	function saveCategory() {
-	  // 상품분류 저장 처리
-	  var newCategory = $('#categoryInput').val();
+  function saveCategory() {
+    // 상품분류 저장 처리
+    var newCategory = $('#categoryInput').val();
 
-	  // 중복 체크
-	  var options = $('#regularCategory').find("option");
-	  for (var i = 0; i < options.length; i++) {
-	    if ($(options[i]).text() === newCategory || newCategory === null || newCategory.trim() === '') {
-	      alert('중복된 카테고리 또는 공백 입니다. 다시 입력 해주세요.');
-	      return; // 서브밋 취소
-	    }
-	  }
+    // 중복 체크
+    var options = $('#regularCategory').find("option");
+    for (var i = 0; i < options.length; i++) {
+      if ($(options[i]).text() === newCategory || newCategory === null || newCategory.trim() === '') {
+        alert('중복된 카테고리 또는 공백 입니다. 다시 입력 해주세요.');
+        return; // 서브밋 취소
+      }
+    }
 
-	  $('#frmCategory').submit();
+    $('#frmCategory').submit();
 
-	  // 팝업 창 닫기
-	  document.getElementById("categoryPopup").style.display = "none";
-	}
-	  function closeCategoryPopup() {
-		    // 팝업 창 닫기
-		    document.getElementById("categoryPopup").style.display = "none";
-		  }
+    // 팝업 창 닫기
+    document.getElementById("categoryPopup").style.display = "none";
+  }
+    function closeCategoryPopup() {
+        // 팝업 창 닫기
+        document.getElementById("categoryPopup").style.display = "none";
+      }
   function fnList(){
-	  location.href="/regular/regularList.do";
+    location.href="/regular/regularList.do";
   }
     function checkExtension(fileType, fileSize) {
       var maxSize = 1024 * 1024 * 10;
@@ -323,7 +323,7 @@
     /* 정규식 */
     var regex = new RegExp("(.*?)\.(jpg|jpeg|png|gif|PNG|JPG)$");  
     $("#uploadBtn").on("click", function(e) {
-    	
+      
       /* 최종 업로드에 숫자에 콤마 삭제 */  
       function removeComma(str){
         n = str.replace(/,/g,"");
