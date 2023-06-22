@@ -48,7 +48,7 @@
     WHERE FAQ_NO = #{faqNo}
   </select>
 
-  <update id="up" parameterType="int">
+  <update id="faqHitUp" parameterType="int">
     UPDATE FAQ
     SET FAQ_HIT = FAQ_HIT + 1
     WHERE FAQ_NO = #{faqNo}

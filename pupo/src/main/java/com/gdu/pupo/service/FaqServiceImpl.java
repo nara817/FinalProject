@@ -79,16 +79,14 @@ public class FaqServiceImpl implements FaqService {
 
     // 페이지 유틸리티(PageUtil)를 계산합니다. (페이지네이션에 필요한 모든 정보 포함)
     pageUtil.setPageUtil(page, totalRecord, recordPerPage);
-    System.out.println(page + "page입니다");
-    System.out.println(totalRecord + "totalRecord입니다");
-    System.out.println(recordPerPage + "recordPerPage입니다");
+
     map.put("begin", pageUtil.getBegin());
     map.put("order", order);
     map.put("recordPerPage", recordPerPage);
     map.put("orderColumn", orderColumn);
     
     
-    System.out.println(pageUtil.getBegin() + "begin입니다");
+   
 
     // 지정된 범위(begin ~ end)의 목록을 가져옵니다.
   
@@ -105,7 +103,7 @@ public class FaqServiceImpl implements FaqService {
   }
   
   @Override
-  public void addFaq(HttpServletRequest request, HttpServletResponse response) {
+  public void faqAdd(HttpServletRequest request, HttpServletResponse response) {
     try {
       String category = request.getParameter("faqCategory");
       String title = request.getParameter("faqTitle");
@@ -148,13 +146,13 @@ public class FaqServiceImpl implements FaqService {
     if(strFaqNo != null && strFaqNo.isEmpty() == false) {
       faqNo = Integer.parseInt(strFaqNo);
     }
-      faqMapper.up(faqNo);
+      faqMapper.faqHitUp(faqNo);
      return faqMapper.selectFaqByNo(faqNo);
     
   }
   
   @Override
-  public void modifyFaq(HttpServletRequest request, HttpServletResponse response) {
+  public void faqModify(HttpServletRequest request, HttpServletResponse response) {
     String title = request.getParameter("faqTitle");
     String category = request.getParameter("faqCategory");
     String content = request.getParameter("faqContent");
@@ -179,7 +177,7 @@ public class FaqServiceImpl implements FaqService {
       out.println("<script>");
       if(modifyResult == 1) {
         out.println("alert('게시글이 수정되었습니다.')");
-        out.println("location.href='" + request.getContextPath() + "/customerCenter/edit.html?faqNo=" + faqNo + "'");
+        out.println("location.href='" + request.getContextPath() + "/customerCenter/faq.html'");
       } else {
         out.println("alert('게시글이 수정되지 않았습니다.')");
         out.println("history.back()");
@@ -195,7 +193,7 @@ public class FaqServiceImpl implements FaqService {
   }
   
   @Override
-  public void removeFaq(HttpServletRequest request, HttpServletResponse response) {
+  public void faqRemove(HttpServletRequest request, HttpServletResponse response) {
 
     int faqNo = Integer.parseInt(request.getParameter("faqNo"));
 

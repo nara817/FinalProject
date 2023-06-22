@@ -19,12 +19,15 @@
 		<typeAlias alias="LeaveUserDTO" 			type="com.gdu.pupo.domain.LeaveUserDTO" />
 		<typeAlias alias="UserAccessDTO" 			type="com.gdu.pupo.domain.UserAccessDTO" />
 		
-		<!-- jo / Faq / Qna / Notice -->
+		<!-- jo / Faq / Qna / Notice /Voc -->
 		<typeAlias alias="FaqDTO" 					type="com.gdu.pupo.domain.FaqDTO" />
 		<typeAlias alias="NoticeDTO" 				type="com.gdu.pupo.domain.NoticeDTO" />
 		<typeAlias alias="QnaDTO" 					type="com.gdu.pupo.domain.QnaDTO" />
-		<typeAlias alias="SummernoteNoticeImageDTO" type="com.gdu.pupo.domain.SummernoteNoticeImageDTO" />
-		<typeAlias alias="SummernoteQnaImageDTO" 	type="com.gdu.pupo.domain.SummernoteQnaImageDTO" />
+		<typeAlias alias="VocDTO" 					type="com.gdu.pupo.domain.VocDTO" />
+		<typeAlias alias="NoticeAttachDTO" 	type="com.gdu.pupo.domain.NoticeAttachDTO" />
+		<typeAlias alias="QnaAttachDTO" 		type="com.gdu.pupo.domain.QnaAttachDTO" />
+		<typeAlias alias="VocAttachDTO"     type="com.gdu.pupo.domain.VocAttachDTO" />
+		
 		
 		<!-- yu / RegularProduct / Coupon -->
       <typeAlias alias="CouponDTO"             type="com.gdu.pupo.domain.CouponDTO" />
