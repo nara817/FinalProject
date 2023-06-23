@@ -31,11 +31,6 @@ import com.gdu.pupo.domain.RegularPurchaseDTO;
 	
 	// 구독상품 첨부 삭제(Attach)
 	public int removeAttach(int RegularNo);
-	
-	// RemoveWrongfileScheduler
-	public List<RegularDetailImgDTO> getAttachListInYesterday();
-	
-	
 	public RegularProductDTO selectRegularProduct(int regularNo);
 	public int editRegular(RegularProductDTO regularProductDTO);
 	public void editRegMainImg(RegularMainImgDTO regularMainImgDTO);
