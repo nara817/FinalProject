@@ -2,6 +2,7 @@ package com.gdu.pupo.service;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -70,7 +71,6 @@ public class RegularServicelmpl implements RegularService {
   @Override
   public void getRegCategory(Model model) {
     List<RegularCategoryDTO> list = regularMapper.getRegCategoryList();
-    System.out.println(list + "입니다");
     model.addAttribute("category", list);
   }
   
@@ -256,21 +256,26 @@ public class RegularServicelmpl implements RegularService {
   @Override
   public void regularList(HttpServletRequest request, Model model) {
    
-    // 파라미터 column이 전달되지 않는 경우 column=""로 처리한다. (검색할 칼럼)
-    Optional<String> opt1 = Optional.ofNullable(request.getParameter("column"));
-    String column = opt1.orElse("");
+    // 파라미터 regularCategory가 전달되지 않는 경우 regularCategory=""로 처리한다. (카테고리)
+    Optional<String> opt1 = Optional.ofNullable(request.getParameter("regularCategory"));
+    int regularCategory = Integer.parseInt(opt1.orElse("0"));
     
     // 파라미터 query가 전달되지 않는 경우 query=""로 처리한다. (검색어)
     Optional<String> opt2 = Optional.ofNullable(request.getParameter("query"));
     String query = opt2.orElse("");
     
+    // 파라미터 query가 전달되지 않는 경우 query=""로 처리한다. (검색어)
+    Optional<String> opt4 = Optional.ofNullable(request.getParameter("regularState"));
+    int regularState = Integer.parseInt(opt4.orElse("0"));
+    
+    
     Optional<String> opt3 = Optional.ofNullable(request.getParameter("page"));
     int page = Integer.parseInt(opt3.orElse("1"));
-    // DB로 보낼 Map 만들기(column + query)    
+    // DB로 보낼 Map 만들기(regularCategory + query + regularState)    
     Map<String, Object> map = new HashMap<String, Object>();
-    map.put("column", column);
     map.put("query", query);
-    
+    map.put("regularCategory", regularCategory);
+    map.put("regularState", regularState);
     int getRegularCount = regularMapper.getRegularCount();
     
     int recordPerPage = 5;
@@ -283,7 +288,7 @@ public class RegularServicelmpl implements RegularService {
     List<RegularProductDTO> regularList = regularMapper.getRegularList(map);
     List<RegularMainImgDTO> regularMainImgList = regularMapper.getRegularMainImgList();
     model.addAttribute("regularList", regularList);
-    model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/regular/regularList.do?column=" + column + "&query=" + query));
+    model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/regular/regularList.do?query=" + query + "&regularState=" + regularState + "&regularCategory=" + regularCategory));
     model.addAttribute("regularMainImgList", regularMainImgList);
   }
   
@@ -308,6 +313,14 @@ public class RegularServicelmpl implements RegularService {
   @Override
   public RegularProductDTO regularDetail(int regularNo, Model model) {
     RegularProductDTO regularProductDTO = regularMapper.getRegularByNo(regularNo);
+    Double regAvgStar1 = regularMapper.regAvgStar(regularNo);
+    double regAvgStar = 0;
+
+    if (regAvgStar1 != null) {
+      DecimalFormat decimalFormat = new DecimalFormat("#.##");
+      regAvgStar = Double.parseDouble(decimalFormat.format(regAvgStar1));
+    }
+    model.addAttribute("regAvgStar", regAvgStar);
     return regularProductDTO;
   }
   
@@ -633,6 +646,7 @@ public class RegularServicelmpl implements RegularService {
     regularMapper.updateRegModifyReview(regularReviewDTO);
   }
   
+  // 리뷰 삭제
   @Override
   public Map<String, Object> regDeleteReview(HttpServletRequest request) {
     Map<String, Object> map = new HashMap<>();
@@ -642,4 +656,46 @@ public class RegularServicelmpl implements RegularService {
     return map;
   }
   
+  // 리뷰 리스트 가져오기
+  @Override
+  public List<RegularReviewDTO> regularReviewList(HttpServletRequest request, Model model, int regularNo) {
+    Optional<String> opt3 = Optional.ofNullable(request.getParameter("page"));
+    int page = Integer.parseInt(opt3.orElse("1"));
+    // DB로 보낼 Map 만들기(column + query)    
+    Map<String, Object> map = new HashMap<String, Object>();
+    
+    int regReviewCount = regularMapper.regReviewCount(regularNo);
+    
+    int recordPerPage = 5;
+    
+    pageUtil.setPageUtil(page, regReviewCount, recordPerPage);
+    map.put("regularNo", regularNo);
+    map.put("begin", pageUtil.getBegin());
+    map.put("recordPerPage", recordPerPage);
+    
+    
+    List<RegularReviewDTO> regReviewList = regularMapper.getRegularReviewList(map);
+    model.addAttribute("regReviewList", regReviewList);
+    model.addAttribute("regularNo",regularNo);
+    model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/regular/regularDetail.do?regularNo=" + regularNo));
+    
+    return null;
+  }
+  
+  // 리뷰 평균 ajax
+  @Override
+  public Map<String, Object> regAvgStar(HttpServletRequest request) {
+    Map<String, Object> map = new HashMap<>();
+    int regularNo = Integer.parseInt(request.getParameter("regularNo"));
+    Double regAvgStar1 = regularMapper.regAvgStar(regularNo);
+    double regAvgStar = 0.0;
+
+    if (regAvgStar1 != null) {
+      DecimalFormat decimalFormat = new DecimalFormat("#.##");
+      regAvgStar = Double.parseDouble(decimalFormat.format(regAvgStar1));
+    }
+
+    map.put("regAvgStar", regAvgStar);
+    return map;
+  }
 }

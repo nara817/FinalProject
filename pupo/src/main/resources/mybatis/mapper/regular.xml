@@ -111,15 +111,45 @@
 	  WHERE REGULAR_NO = #{regularNo}
   </select>
   
+  <!-- 클릭 상품 리뷰 리스트 -->
+	<select id="getRegularReviewList" parameterType="map" resultType="RegularReviewDTO">
+		SELECT REG_REVIEW_DETAIL,
+		       REG_REVIEW_RATING,
+		       REG_REVIEW_CREATED_AT,
+		       REG_REVIEW_MODIFYED_AT
+		FROM REGULAR_REVIEW_T
+		WHERE REGULAR_NO = #{regularNo}
+		ORDER BY
+		  CASE
+		    WHEN REG_REVIEW_MODIFYED_AT IS NOT NULL THEN REG_REVIEW_MODIFYED_AT
+		    ELSE REG_REVIEW_CREATED_AT
+		  END DESC
+		LIMIT #{begin}, #{recordPerPage}
+	</select>
+	
+	<!-- 클릭한 상품 리뷰 카운트 -->
+  <select id="regReviewCount" parameterType="int" resultType="int">
+    SELECT COUNT(*)
+      FROM REGULAR_REVIEW_T
+     WHERE REGULAR_NO = #{regularNo}
+  </select>
+	
+	
   <!-- 서치 리스트  -->
   <select id="getRegularList" parameterType="Map" resultType="RegularProductDTO">
     SELECT REGULAR_NO, REGULAR_NAME, REGULAR_SELL_PRICE, REGULAR_ORIGIN_PRICE, REGULAR_DISPLAY, REGULAR_STOCK, REGULAR_CATEGORY, REGULAR_STATE, REGULAR_SIMPLE_DETAIL 
     FROM REGULAR_PRODUCT_T
     <where>
-      REGULAR_DISPLAY = 1
-      <if test="column != '' and query != ''">
-        AND ${column} LIKE CONCAT('%', #{query}, '%')
-      </if>
+	    REGULAR_DISPLAY = 1
+	    <if test="query != '' and regularCategory == 0 and regularState == 0">
+	      AND REGULAR_NAME LIKE CONCAT('%', #{query}, '%')
+	    </if>
+	    <if test="query == '' and regularCategory != 0 and regularState == 0">
+	      AND REGULAR_CATEGORY = #{regularCategory}
+	    </if>
+	    <if test="query == '' and regularState != 0 and regularCategory == 0">
+	      AND REGULAR_STATE = #{regularState}
+	    </if>
     </where>    
     ORDER BY REGULAR_NO DESC
     LIMIT #{begin}, #{recordPerPage}
@@ -404,5 +434,12 @@
       FROM REGULAR_REVIEW_T
      WHERE REG_PURCHASE_NO = #{regPurchaseNo}
   </delete>
+  
+  <!-- 리뷰평점구하기 -->
+  <select id="regAvgStar" parameterType="int" resultType="java.lang.Double">
+    SELECT AVG(REG_REVIEW_RATING) AS AVG_RATING
+      FROM REGULAR_REVIEW_T
+     WHERE REGULAR_NO = #{regularNo}
+  </select>
   
 </mapper>

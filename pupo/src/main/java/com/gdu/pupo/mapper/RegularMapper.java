@@ -28,6 +28,8 @@ public interface RegularMapper {
   public RegularMainImgDTO getRegularMainImgByNo(int regularNo); // 메인이미지 가져오기
   public int getRegularCount(); // 상품 총 갯수
   public RegularProductDTO getRegularByNo(int regularNo); // 상세페이지
+  public List<RegularReviewDTO> getRegularReviewList(Map<String, Object> map); // 클릭한 상품 리뷰 리스트 불러오기
+  public int regReviewCount(int regularNo); // 리뷰 카운트
   public int addRegShip(RegularShipDTO regularShipDTO); // 주문완료 시 입력한 배송 정보 저장
   public int addRegPurchase(RegularPurchaseDTO regularPurchaseDTO); // 주문완료 주문정보 저장
   public RegularPurchaseDTO getRegularPayDone(int regPurchaseNo); // 주문완료 시 정보 보여주기
@@ -45,4 +47,5 @@ public interface RegularMapper {
   public RegularReviewDTO getRegModifyReview(int regPurchaseNo); // 저장된 리뷰 내역 가져오기
   public int updateRegModifyReview(RegularReviewDTO regularReviewDTO); // 리뷰 수정 저장하기
   public int regDeleteReview(int regPurchaseNo); // 리뷰 삭제 하기
+  public Double regAvgStar(int regularNo); // 리뷰 평점 평균 구하기
 }

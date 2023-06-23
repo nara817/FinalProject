@@ -1,179 +1,111 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-
 <head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
-<style>
-  * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .container {
-    display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-    justify-content: center; /* 가운데 정렬 */
-    gap: 10px; /* 간격 추가 */
-  }
-  
-  /* item에 hidden 처리하기. */
-  .item {
-    width: calc(25% - 7px);
-    aspect-ratio: 6/5;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-  }
-  
-  .item:after {
-    /* block & content */
-    display: block;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: 0;
+<link th:href="@{https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap}" rel="stylesheet">
+<link th:href="@{https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap}" rel="stylesheet">
+<link th:href="@{https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/animate.css}">
+<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+<link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+<link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+<link rel="stylesheet" th:href="@{/css/aos.css}">
+<link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+<link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+<link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+<link rel="stylesheet" th:href="@{/css/flaticon.css}">
+<link rel="stylesheet" th:href="@{/css/icomoon.css}">
+<link rel="stylesheet" th:href="@{/css/style2.css}" />
+<style>
+  .sidebar {
+    position: fixed;
+    top: 200px;
     left: 0;
-    z-index: 2;
-    opacity: 0;
-  }
-  
-  .imgBox {
-    width: 100%;
+    width: 15%; /* 사이드바 너비를 조절하려면 이 값을 변경하세요 */
     height: 100%;
-    position: absolute;
+    overflow-y: auto; /* 사이드바가 길어질 경우 스크롤 표시 */
+    z-index: 1000; /* 다른 요소 위에 나타나도록 z-index 설정 */
   }
-  
-  .imgBox img {
-    width: 100%;
-    height: 100%;
-    /* 사진이나 비디오의 규격 맞출 때 object-fit 이용하기. */
-    object-fit: cover;
-    z-index: 1;
-  }
-  
-  .textBox {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding: 20px;
-    z-index: 3;
-  }
-  
-  .textBox p {
-    color: white;
-    margin: 5px 0 0;
-  }
-  
-  .textBox__name {
-    font-size: 22px;
-    font-weight: 500;
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  
-  .textBox__price {
-    font-size: 16px;
-    font-weight: 400;
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  
-  /* 마우스 올렸을 때에 기능 추가하기. */
-  .item:hover:after {
-    opacity: 1;
-  }
-  
-  /* 기능 1 : 화면 살짝 불투명 + 화면 커지기. */
-  .item:hover .imgBox img {
-    transform: scale(1.1);
-    /* 블러 처리하기. */
-    filter: blur(3px);
-  }
-  
-  /* 기능 2 : 상품 정보 보이면서 위로 올라가기. */
-  .item:hover .textBox .textBox__name {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  
-  /* 기능 2 : 상품 정보 보이면서 위로 올라가기. */
-  .item:hover .textBox .textBox__price {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  
-  /* 자연스럽게 트랜지션 적용하기. */
-  .item:after,
-  .item .imgBox img,
-  .item .textBox__name,
-  .item .textBox__price {
-    transition: all 0.4s ease-in-out;
-  }
-  
-
-.first {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2;
-}
-
-    ul.menu {
-      list-style: none;
-      padding: 0;
-    }
-
-    ul.menu li a {
-      display: block;
-      color: #FFF; /* 글씨 색상을 흰색으로 설정 */
-      text-decoration: none;
-      padding: 10px;
-      transition: background-color 0.3s;
-    }
-
-    ul.menu li a:hover {
-      background-color: #689F38; /* 호버시 색상 변경 */
-    }
 
 </style>
+    
+
 <body>
   <div th:replace="~{/layout/header::gnbFrag}"></div>
-    <form id="frm1" th:action="@{/regular/regularList.do}">
-      <select name="column" id="column">  
-        <option value="REGULAR_NAME">상품명</option> 
-      </select>
-      <input list="auto_complete" type="text" name="query" id="query">
+  <form id="frm1" th:action="@{/regular/regularList.do}">
+    <div class="d-flex justify-content-end mr-5">
+      <input type="text" name="query" id="query" placeholder="구독명검색">
       <button>조회</button>
-    </form>
-    <div th:utext="${pagination}"></div>
+    </div>
+  </form>
 
-  
-  <div class="container">
-    <div th:each="regularList : ${regularList}" class="item">
-      <div class="imgBox" >
-        <div th:each="regularMainImgList : ${regularMainImgList}" th:if="${regularList.regularNo == regularMainImgList.regularNo}" >
-            <img th:src="@{/regular/regularMainDisplay.do(regularNo=${regularMainImgList.regularNo})}"  style="width: 100%; height: 100%;">
+    <section class="ftco-section">
+    <div class="sidebar">
+    <!-- 이 곳에 카테고리 사이드바를 배치합니다. -->
+      <div class="list-group">
+        <a th:href="@{/regular/regularList.do}" class="list-group-item list-group-item-action">전체보기</a>
+        <a th:href="@{/regular/regularList.do(regularState=1)}" class="list-group-item list-group-item-action">New</a>
+        <a th:href="@{/regular/regularList.do(regularState=2)}"  class="list-group-item list-group-item-action">Best</a>
+        <div style="text-align: center">카테고리</div>
+          <th:block th:each="category, vs:${category}">
+            <a th:id="|category${vs.index  + 1}|"th:href="@{/regular/regularList.do(regularCategory=${category.regularCategory})}" class="list-group-item list-group-item-action" th:text="${category.regularCategoryName}"></a>
+          </th:block>
         </div>
       </div>
-       <a th:href="@{/regular/regularDetail.do(regularNo=${regularList.regularNo})}">
-        <div class="textBox" >
-          <p class="textBox__name" th:text="${regularList.regularName}"></p>
-          <p class="textBox__price" th:text="${#numbers.formatInteger(regularList.regularSellPrice, 3, 'COMMA') + '원'}"></p>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated"  th:each="regularList, vs: ${regularList}">
+            <div class="product">
+              <div th:each="regularMainImgList : ${regularMainImgList}" th:if="${regularList.regularNo == regularMainImgList.regularNo}" >
+              <a th:href="@{/regular/regularDetail.do(regularNo=${regularList.regularNo})}" class="img-prod"><img id="imgSize" class="img-fluid" th:src="@{/regular/regularMainDisplay.do(regularNo=${regularMainImgList.regularNo})}"  alt="Colorlib Template"></a>
+              </div>
+              <input type="hidden" name="regularNo" th:value="${regularList.regularNo}">
+              <div class="avg-star" th:id="|avg-star-${regularList.regularNo}|" style="text-align: center">리뷰없음</div>
+              <div class="overlay"></div>
+              <div class="text py-3 pb-4 px-3 text-center">
+                <h3><a th:href="@{/regular/regularDetail.do(regularNo=${regularList.regularNo})}" th:text="${regularList.regularName}"></a></h3>
+                <div class="d-flex">
+                  <div class="pricing">
+                    <p class="price"><span class="mr-2 price" th:text="${#numbers.formatInteger(regularList.regularSellPrice, 3, 'COMMA') + '원'}"></span><span class="price-sale"></span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-       </a>
-    </div>
-  </div>
-    
-    
+      </div>
+      <div th:utext="${pagination}" class="d-flex justify-content-center"></div>
+    </section>
+
 </body>
+
+<script>
+
+$(document).ready(function() {
+	  $('.product').each(function() {
+	    var regularNo = $(this).find('input[name="regularNo"]').val();
+	    fnAvgStar(regularNo, $(this));
+	  });
+	});
+  function fnAvgStar(regularNo) {
+       $.ajax({
+             url: '/regular/regAvgStar.do',  
+             type: 'post',
+             data: {
+                 'regularNo': regularNo
+             },
+             dataType: 'json',
+             success: function(resData){
+            	 if(resData.regAvgStar != 0){
+            	  $('#avg-star-' + regularNo).text('평점: ' + resData.regAvgStar  + '/5');
+            	 }
+             }
+       })
+    }
+  
+</script>
 
 </html>

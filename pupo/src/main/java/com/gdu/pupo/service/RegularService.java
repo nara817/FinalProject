@@ -21,8 +21,9 @@ public interface RegularService {
   public int addRegular(MultipartHttpServletRequest multipartRequest); // 상품등록
   public void regularList(HttpServletRequest request, Model model); // 상품리스트
   public ResponseEntity<byte[]> regularMainDisplay(int regularNo); // 상품썸네일, 그냥이미지
-  public RegularProductDTO regularDetail(int regularNo, Model model);
-  public ResponseEntity<byte[]> regularDetailDisplay(int regularNo);
+  public RegularProductDTO regularDetail(int regularNo, Model model); // 상품 상세보기
+  public List<RegularReviewDTO> regularReviewList(HttpServletRequest request, Model model, int regularNo); // 리뷰리스트 가져오기
+  public ResponseEntity<byte[]> regularDetailDisplay(int regularNo); // 
   public int regularPurchase(HttpServletRequest request, Model model); // 구매완료 후 구매 저장
   public String getToken(); // 아임포트 토큰가져오기
   public String regAgainPay(); // 자동결제
@@ -36,4 +37,5 @@ public interface RegularService {
   public void getRegModifyReview(int regPurchaseNo, Model model); // 리뷰 수정 페이지 이동 및 기존 작성 내역 가져오기
   public void regModifyReview(RegularReviewDTO regularReviewDTO); // 리뷰 수정 저장
   public Map<String, Object> regDeleteReview(HttpServletRequest request); // 리뷰 삭제
+  public Map<String, Object> regAvgStar(HttpServletRequest request); // 리뷰 평점 평균 구하기
 }

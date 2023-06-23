@@ -49,11 +49,14 @@ public class RegularController {
     return "redirect:/regular/regularMain.html";
   }
 
-  @GetMapping("/regularList.do") // 리스트 불러오기
+  //리스트 불러오기
+  @GetMapping("/regularList.do") 
   public String regularList(HttpServletRequest request, Model model) {
     regularService.regularList(request, model);
+    regularService.getRegCategory(model);
     return "/regular/regularList";
   }
+  
 
   // 메인 이미지 보여주기
   @GetMapping("/regularDetailDisplay.do")
@@ -61,12 +64,16 @@ public class RegularController {
     return regularService.regularDetailDisplay(regularNo);
   }
 
+  // 상품 상세 및 리뷰 리스트 가져오기
   @GetMapping("/regularDetail.do")
-  public String regularDetail(@RequestParam("regularNo") int regularNo, Model model) {
+  public String regularDetail(@RequestParam("regularNo") int regularNo, Model model, HttpServletRequest request) {
     model.addAttribute("regularDetail", regularService.regularDetail(regularNo, model));
+    regularService.regularReviewList(request, model, regularNo);
+    regularService.getRegCategory(model);
     return "/regular/regularDetail";
   }
 
+  // 메인 이미지 보여주기
   @GetMapping("/regularMainDisplay.do")
   public ResponseEntity<byte[]> regularMainDsiplay(@RequestParam("regularNo") int regularNo) {
     return regularService.regularMainDisplay(regularNo);
@@ -194,4 +201,15 @@ public class RegularController {
   public Map<String, Object> regDeleteReview(HttpServletRequest request){
     return regularService.regDeleteReview(request);
   }
+  
+  // 리뷰 평점 평균 구하기 (ajax)버전
+  @ResponseBody
+  @PostMapping(value="/regAvgStar.do", produces="application/json")
+  public Map<String, Object> regAvgStar(HttpServletRequest request){
+    return regularService.regAvgStar(request);
+  }
+  
+  
+  
+
 }
