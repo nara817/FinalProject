@@ -40,9 +40,8 @@ import com.gdu.pupo.domain.RegularPurchaseDTO;
 	public int editRegular(RegularProductDTO regularProductDTO);
 	public void editRegMainImg(RegularMainImgDTO regularMainImgDTO);
 	public void editRegImg(RegularDetailImgDTO regularDetailImgDTO);
+	public List<RegularMainImgDTO> getRegularMainImgListInYesterday();
+	public List<RegularDetailImgDTO> getRegularDetailImgListInYesterday();
 	
 	
-	
-
 }
-

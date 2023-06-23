@@ -168,4 +168,18 @@ DELETE
 	      REG_FILESYSTEMNAME = #{regFilesystemName}
 	  WHERE REGULAR_NO = #{regularNo}
 	</update>
+
+<!-- 첨부삭제 -->	
+	 <delete id="deleteRegularaAttach" parameterType="int">
+    DELETE
+      FROM REGULAR_DETAIL_IMG_T
+    WHERE REGULAR_NO = #{regularNo}
+  </delete>
+  
+    <select id="getAttachListInYesterday" resultType="RegularProductDTO">
+    SELECT REGULAR_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
+      FROM ATTACH
+     WHERE PATH LIKE CONCAT('%', DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 DAY), '%Y\\%m\\%d'))
+  </select>
+  
 </mapper>

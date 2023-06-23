@@ -39,15 +39,16 @@
       <typeAlias alias="RegularCategoryDTO"          type="com.gdu.pupo.domain.RegularCategoryDTO" />
 
 		
-		<!-- park / Item / Cart -->
-		<typeAlias alias="ItemDTO" 			type="com.gdu.pupo.domain.ItemDTO" />
-		<typeAlias alias="CategoryDTO" 	type="com.gdu.pupo.domain.CategoryDTO" />
-		<typeAlias alias="ShipDTO" 					type="com.gdu.pupo.domain.ShipDTO" />
-		<typeAlias alias="ReviewDTO" 				type="com.gdu.pupo.domain.ReviewDTO" />
-		<typeAlias alias="CartDTO" 					type="com.gdu.pupo.domain.CartDTO" />
-		<typeAlias alias="CartListDTO" 			type="com.gdu.pupo.domain.CartListDTO" />
-		<typeAlias alias="OrderDTO" 				type="com.gdu.pupo.domain.OrderDTO" />
-		<typeAlias alias="AttachDTO" 				type="com.gdu.pupo.domain.AttachDTO" />
+ <!-- park / Item / Cart -->
+    <typeAlias alias="ItemDTO"      type="com.gdu.pupo.domain.ItemDTO" />
+    <typeAlias alias="CategoryDTO"    type="com.gdu.pupo.domain.CategoryDTO" />
+    <typeAlias alias="ShipDTO"          type="com.gdu.pupo.domain.ShipDTO" />
+    <typeAlias alias="ReviewDTO"        type="com.gdu.pupo.domain.ReviewDTO" />
+    <typeAlias alias="CartDTO"          type="com.gdu.pupo.domain.CartDTO" />
+    <typeAlias alias="CartItemDTO"      type="com.gdu.pupo.domain.CartItemDTO" />
+    <typeAlias alias="OrderDTO"         type="com.gdu.pupo.domain.OrderDTO" />
+    <typeAlias alias="ItemImgDTO"         type="com.gdu.pupo.domain.ItemImgDTO" />
+    <typeAlias alias="ItemImgDetailDTO"         type="com.gdu.pupo.domain.ItemImgDetailDTO" />
 
 						
 	</typeAliases>

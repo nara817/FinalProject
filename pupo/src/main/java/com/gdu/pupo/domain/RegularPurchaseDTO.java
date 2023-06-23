@@ -26,5 +26,5 @@ public class RegularPurchaseDTO {
   private int regPayStatus;
   private Date regLastPayAt;
   private int regPayCount;
-  private int regCancle;
+  private int regCancel;
 }

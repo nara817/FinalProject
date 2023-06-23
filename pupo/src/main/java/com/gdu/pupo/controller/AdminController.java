@@ -41,7 +41,6 @@ public class AdminController {
 		// List<UserDTO> user = adminService.userList();
 		// model.addAttribute("user", user);
 		adminService.getlistUsingPagination(request, model);
-
 		return "admin/adminUserList";
 	}
 
@@ -52,9 +51,6 @@ public class AdminController {
 		model.addAttribute("sellerCount", adminService.sellerCount());
 		return "admin/adminMain";
 	}
-	
-	
-	// 관리자-회원관리 페이지 정렬
 	
 	// 관리자-쿠폰등록
 	@GetMapping("/addCoupon.html")
@@ -83,7 +79,6 @@ public class AdminController {
 	// 관리자-이벤트 페이지 이동
 	@GetMapping("/eventCoupon.html")
 	public String eventCoupon(HttpServletRequest request, HttpServletResponse response) {
-
 		return "admin/eventCoupon";
 
 	}
@@ -91,26 +86,17 @@ public class AdminController {
 	// 관리자-이벤트 페이지 / 쿠폰발급
 	@PostMapping("/eventCoupon.do")
 	public void getEventCoupon(HttpServletRequest request, HttpServletResponse response) {
-		couponService.getEventCoupon(request, response);
+		couponService.getEventCoupon(request, response);		
+	}
 		
-	}
+	// 관리자-상품등록
 	
-	
-	// 테스트 페이지 관리자 메인/ 관리자 확인중
-	@GetMapping("/indexAdmin.html")
-	public String indexAdmin(Model model) {
-		model.addAttribute("userCount", adminService.userCount());
-		model.addAttribute("sellerCount", adminService.sellerCount());
-		return "admin/indexAdmin";
-	}
-
 	// 상품리스트 페이지 이동
 	@GetMapping("/regularList.html")
 	public String regularList(HttpServletRequest request, Model model) {
 		// List<UserDTO> user = adminService.userList();
 		// model.addAttribute("user", user);
 		adminService.getRegularListPagination(request, model);
-
 		return "admin/regularList";
 	}
 
@@ -121,7 +107,7 @@ public class AdminController {
 	  return adminService.delProduct(regularNo);
 	}
 	
-  	// 구독상품 수정페이지이동
+  	// 구독상품 수정 페이지 이동
 	@PostMapping(value="/regularEditPage.do", produces="text/html") // 수정: produces 값을 'text/html'로 변경
 	public String editProduct(@RequestParam("regularNo") int regularNo, Model model) {
 	  RegularProductDTO regularProductDTO = adminService.editProduct(regularNo);
@@ -131,24 +117,21 @@ public class AdminController {
 	  return "admin/regularEditPage";
 	}
 	
-	@PostMapping("/regularEdit.do") // 상품 수정
+	// 구독상품 수정
+	@PostMapping("/regularEdit.do") 
 	public String addRegular(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
 	  int addResult = adminService.editRegular(multipartRequest);
 	  redirectAttributes.addFlashAttribute("addResult", addResult);
 	  return "redirect:/admin/regularList.html";
 	}
 
-//  @PostMapping("/regularAdd.do") // 상품 등록
-//  public String addRegular(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
-//    int addResult = regularService.addRegular(multipartRequest);
-//    redirectAttributes.addFlashAttribute("addResult", addResult);
-//    return "redirect:/regular/regularMain.html";
-//  }
-//
-//  @PostMapping("/addCategory.do")
-//  public String addCategory(HttpServletRequest request) {
-//  regularService.addRegCategory(request);
-//  return "redirect:/regular/regularAddPage.html";
-//  }
+//	// 테스트 페이지 관리자 메인/ 관리자 확인중
+//	@GetMapping("/indexAdmin.html")
+//	public String indexAdmin(Model model) {
+//		model.addAttribute("userCount", adminService.userCount());
+//		model.addAttribute("sellerCount", adminService.sellerCount());
+//		return "admin/indexAdmin";
+//	}
+
 }
 

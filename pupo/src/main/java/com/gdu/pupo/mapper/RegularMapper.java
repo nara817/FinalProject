@@ -30,4 +30,7 @@ public interface RegularMapper {
   public RegularPurchaseDTO getRegularPurchaseByNo(int regPurchaseNo); // 주문완료 시 정보 보여주기
   public List<RegularPurchaseDTO> regularPayList(); // 정기구독 상태가 1인 주문정보
   public int regularPayUpdate(int regPurchaseNo); // 정기구독 자동결제 후 결제된 횟수 증가 및 마지막 결제 업데이트
+  public List<RegularProductDTO> getAttachListInYesterday();
+  
+  
 }

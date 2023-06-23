@@ -5,6 +5,7 @@
   <title th:text="${title}">PullPowerSalad 관리자:메인페이지</title>
   <!-- font-awesome icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
   
    <!-- 부트스트랩테마 -->
@@ -111,16 +112,23 @@
 	            </li>
             <li class="menu-header">주문</li>
             <li class="dropdown">
-              <a href="#" class="nav-link has-dropdown"><i><ion-icon name="cart-outline"></ion-icon></i> <span>주문관리</span></a>
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-receipt"></i> <span>주문관리</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" th:href="@{/admin/regularList.html}">상품조회</a></li> 
                 <li><a class="nav-link" href="errors-503.html">주문조회</a></li> 
                 <li><a class="nav-link" href="errors-403.html">배송조회</a></li> 
               </ul>
             </li>
+            <li class="menu-header">상품</li>
+            <li class="dropdown">
+              <a href="#" class="nav-link has-dropdown"><i class="fa-solid fa-cart-shopping"></i> <span>상품관리</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="errors-503.html">상품등록</a></li> 
+                <li><a class="nav-link" th:href="@{/admin/regularList.html}">상품조회</a></li> 
+              </ul>
+            </li>
 	            <li class="menu-header">쿠폰</li>
 	            <li class="dropdown">                     
-	              <a href="#" class="nav-link has-dropdown"><i><ion-icon name="ticket-outline"></ion-icon></i> <span>쿠폰관리</span></a>
+	              <a href="#" class="nav-link has-dropdown"><i class="fas fa-ticket-alt"></i> <span>쿠폰관리</span></a>
 	              <ul class="dropdown-menu">
 	               <!--  <li><a href="#">쿠폰생성</a></li>  -->
 	               <li><a th:onclick="|location.href='@{/admin/addCoupon.html}'|">쿠폰생성</a></li>
@@ -153,7 +161,7 @@
                     <h3>가입 회원 수</h3>
                     <p></p>
                     <a th:href="@{/admin/adminUserList.html}" class="card-cta"><label class="aaa" id="userCount" th:text="${userCount + ' 명'}"></label>
-                    <i class="fas fa-chevron-right"></i></a>
+                    <i class="fas fa-chevron-right"></i></a><i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
               </div>
@@ -166,7 +174,7 @@
                     <h3>가입 판매자 수</h3>
                     <p></p>
                     <a th:href="@{/admin/adminUserList.html}" class="card-cta"><label class="aaa" id="sellerCount" th:text="${sellerCount + ' 명'}"></label>
-                    <i class="fas fa-chevron-right"></i></a>
+                    <i class="fas fa-chevron-right"></i></a><i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
               </div>
@@ -178,7 +186,7 @@
                   <div class="card-body">
                     <h4>주문관리</h4>
                     <p></p>
-                    <a href="features-setting-detail.html" class="card-cta">주문조회하러가기
+                    <a href="features-setting-detail.html" class="card-cta">주문조회하러가기 <i class="fas fa-chevron-right"></i></a>
                      <i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
@@ -186,13 +194,13 @@
               <div class="col-lg-6">
                 <div class="card card-large-icons">
                   <div class="card-icon bg-primary text-white">
-                    <i class="fas fa-th"></i>
+                    <i class="fa-solid fa-cart-shopping fa-4x"></i>
                   </div>
                   <div class="card-body">
                     <h4>상품관리</h4>
                     <p></p>
-                    <a th:href="@{/admin/regularList.html}" class="card-cta">상품등록하러가기 
-                    <i class="fas fa-chevron-right"></i></a>
+                    <a th:href="@{/admin/regularList.html}" class="card-cta">상품등록하러가기 <i class="fas fa-chevron-right"></i></a>
+                  <i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
               </div>
@@ -205,6 +213,7 @@
                     <h4>쿠폰관리</h4>
                     <p></p>
                     <a th:href="@{/admin/addCoupon.html}" class="card-cta">쿠폰등록하러가기 <i class="fas fa-chevron-right"></i></a>
+                  <i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
               </div>
@@ -216,7 +225,8 @@
                   <div class="card-body">
                     <h4>게시판 관리</h4>
                     <p></p>
-                    <a href="@{/customerCenter/qna.html}"class="card-cta text-primary">답변하러가기<i class="fas fa-chevron-right"></i></a>
+                    <a href="@{/customerCenter/qna.html}"class="card-cta text-primary">답변하러가기 <i class="fas fa-chevron-right"></i></a>
+                  <i class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
               </div>

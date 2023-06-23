@@ -1,6 +1,6 @@
 package com.gdu.pupo.domain;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDTO {
-  private String classCode;
-  private String mainCategory;
-  private String midCategory;
-  private String fullPath;
-  private int lv;
+  
+  private int categoryid;
+  private String categoryName;
 }

@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NoticeDTO {
 	private int noticeNo;
-    private int noticeCategory;
+	private int sellerCheck;
+	private String id;
+  private String noticeCategory;
 	private String noticeTitle;
 	private String noticeContent;
 	private Date noticeCreatedAt;
 	private Date noticeModifiedAt;
-	private int noticHit;
-	private String id;
+	private int noticeHit;
+	private int attachCount;
 
 }
