@@ -1,8 +1,16 @@
 package com.gdu.pupo.service;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.gdu.pupo.domain.RegularCategoryDTO;
+import com.gdu.pupo.domain.RegularProductDTO;
 
 public interface AdminService {
 	
@@ -15,5 +23,11 @@ public interface AdminService {
 	
 	// 페이지네이션
 	public void getlistUsingPagination(HttpServletRequest request, Model model);
-
+	public void getRegularListPagination(HttpServletRequest request, Model model);
+	
+	public Map<String, Object> delProduct(int regularNo);
+	public RegularProductDTO editProduct(int regularNo);
+	public List<RegularCategoryDTO> getRegCategory();
+	public int editRegular(MultipartHttpServletRequest multipartRequest);
+	
 }

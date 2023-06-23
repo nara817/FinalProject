@@ -52,14 +52,134 @@
 	      FROM USER_T
   	</select>
   
-	<!-- 페이지네이션 -->
-	<select id="getlistUsingPagination" parameterType="Map" resultType="UserDTO">
-	SELECT A.RN, A.USER_NO, A.ID, A.PW, A.NAME, A.GENDER, A.EMAIL, A.MOBILE, A.BIRTHYEAR, A.BIRTHDATE, A.POSTCODE, A.ROAD_ADDRESS, A.JIBUN_ADDRESS, A.DETAIL_ADDRESS, A.EXTRA_ADDRESS, A.AGREECODE, A.JOINED_AT, A.PW_MODIFIED_AT, A.AUTOLOGIN_ID, A.AUTOLOGIN_EXPIRED_AT, A.SELLER_CHECK, A.POINT, A.GRADE
-	FROM (
-	    SELECT ROW_NUMBER() OVER(ORDER BY USER_NO ASC) AS RN, U.*
-	    FROM USER_T U
-	) A
-	WHERE A.RN BETWEEN #{begin} AND #{end};
+	<!-- 회원 조회 페이지네이션 -->
+	<select id="getlistUsingPagination" parameterType="Map" resultType="RegularPurchaseDTO">
+SELECT
+	A.RN,
+	A.USER_NO	 			           	AS 'userDTO.userNo',
+	A.ID		 				            AS 'userDTO.id',
+	A.PW						            AS 'userDTO.pw',
+	A.NAME                      AS 'userDTO.name',
+	A.GENDER                    AS 'userDTO.gender',
+	A.EMAIL						          AS 'userDTO.email',
+	A.MOBILE                    AS 'userDTO.mobile',
+	A.BIRTHYEAR                 AS 'userDTO.birthyear',
+	A.BIRTHDATE                 AS 'userDTO.birthdate',
+	A.POSTCODE                  AS 'userDTO.postcode',
+	A.ROAD_ADDRESS              AS 'userDTO.roadAddress',
+	A.JIBUN_ADDRESS				      AS 'userDTO.jibunAddress',
+	A.DETAIL_ADDRESS            AS 'userDTO.detailAddress',
+	A.EXTRA_ADDRESS             AS 'userDTO.extraAddress',
+	A.AGREECODE                 AS 'userDTO.agreecode',
+	A.JOINED_AT                 AS 'userDTO.joinedAt',
+	A.PW_MODIFIED_AT            AS 'userDTO.pwModifiedAt',
+	A.AUTOLOGIN_ID              AS 'userDTO.autologinId',
+	A.AUTOLOGIN_EXPIRED_AT      AS 'userDTO.autologinExpiredAt',
+	A.SELLER_CHECK              AS 'userDTO.sellerCheck',
+	A.POINT                     AS 'userDTO.point',
+	A.GRADE                     AS 'userDTO.grade',		
+	B.REG_PAY_STATUS
+FROM (
+    SELECT
+      ROW_NUMBER() OVER(ORDER BY USER_NO ASC) AS RN,
+      U.*
+    FROM USER_T U
+) A
+LEFT JOIN REGULAR_PURCHASE_T B ON A.ID = B.ID
+WHERE A.RN BETWEEN #{begin} AND #{end}
+ORDER BY A.RN ASC;
  	</select>
 
+    <select id="getListCountRegular" resultType="int">
+	    SELECT COUNT(*)
+	      FROM REGULAR_PRODUCT_T 
+  	</select>
+ 
+  <!-- 구독상품 페이지네이션 -->
+	<select id="getRegularListPagination" parameterType="Map" resultType="RegularProductDTO">
+SELECT
+	A.RN,     
+	A.REGULAR_NO,
+    A.REGULAR_NAME,
+    A.REGULAR_SELL_PRICE,
+    A.REGULAR_ORIGIN_PRICE,
+    A.REGULAR_DISPLAY,
+    A.REGULAR_STOCK,
+    A.REGULAR_CATEGORY,
+    B.REGULAR_CATEGORY_NAME,
+    A.REGULAR_STATE,
+    A.REGULAR_SIMPLE_DETAIL
+FROM (
+    SELECT
+      ROW_NUMBER() OVER(ORDER BY REGULAR_NO ASC) AS RN,
+      U.*
+    FROM REGULAR_PRODUCT_T U
+) A LEFT JOIN REGULAR_CATEGORY_T B
+ON A.REGULAR_CATEGORY = B.REGULAR_CATEGORY
+WHERE A.RN BETWEEN #{begin} AND #{end}
+ORDER BY A.RN ASC;
+ 	</select>
+ 	
+ 	<!-- 정기상품 삭제 -->
+ 	<delete id="deleteRegularProduct" parameterType="RegularProductDTO">
+DELETE
+  FROM REGULAR_PRODUCT_T
+ WHERE REGULAR_NO = #{regularNo};
+ 	</delete>
+ 	
+    <select id="selectRegularProduct" parameterType="int" resultType="RegularProductDTO">
+		SELECT   
+			A.REGULAR_NO,
+		    A.REGULAR_NAME,
+		    A.REGULAR_SELL_PRICE,
+		    A.REGULAR_ORIGIN_PRICE,
+		    A.REGULAR_DISPLAY,
+		    A.REGULAR_STOCK,
+		    A.REGULAR_CATEGORY,
+		    A.REGULAR_STATE,
+		    A.REGULAR_SIMPLE_DETAIL
+		   FROM REGULAR_PRODUCT_T A
+		   WHERE A.REGULAR_NO = #{regularNo};
+  	</select>
+  	
+  	<update id="editRegular" parameterType="regularProductDTO">
+	  UPDATE REGULAR_PRODUCT_T SET
+	    REGULAR_NAME = #{regularName},
+	    REGULAR_SELL_PRICE = #{regularSellPrice},
+	    REGULAR_ORIGIN_PRICE = #{regularOriginPrice},
+	    REGULAR_DISPLAY = #{regularDisplay},
+	    REGULAR_STOCK = #{regularStock},
+	    REGULAR_CATEGORY = #{regularCategory},
+	    REGULAR_STATE = #{regularState},
+	    REGULAR_SIMPLE_DETAIL = #{regularSimpleDetail}
+	  WHERE REGULAR_NO = #{regularNo}
+	</update>
+  	
+ 	<update id="editRegMainImg" parameterType="RegularMainImgDTO">
+	  UPDATE REGULAR_MAIN_IMG_T
+	  SET REG_MAIN_IMG_NAME = #{regMainImgName},
+	      REG_FILESYSTEMNAME = #{regFilesystemName}
+	  WHERE REGULAR_NO = #{regularNo}
+	</update>
+  
+ 	<update id="editRegImg" parameterType="RegularMainImgDTO">
+	  UPDATE REGULAR_DETAIL_IMG_T
+	  SET REG_DETAIL_IMG_NAME = #{regDetailImgName},
+	      REG_FILESYSTEMNAME = #{regFilesystemName}
+	  WHERE REGULAR_NO = #{regularNo}
+	</update>
+
+<!-- 첨부삭제 -->	
+	 <delete id="deleteRegularaAttach" parameterType="int">
+    DELETE
+      FROM REGULAR_DETAIL_IMG_T
+    WHERE REGULAR_NO = #{regularNo}
+  </delete>
+  
+    <select id="getAttachListInYesterday" resultType="RegularProductDTO">
+    SELECT REGULAR_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
+      FROM ATTACH
+     WHERE PATH LIKE CONCAT('%', DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 DAY), '%Y\\%m\\%d'))
+  </select>
+  
 </mapper>

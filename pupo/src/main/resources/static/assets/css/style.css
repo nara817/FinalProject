@@ -2621,7 +2621,11 @@ body.layout-3 .main-footer {
       padding: 0 20px;
       width: 100%;
       letter-spacing: .3px;
+<<<<<<< HEAD
       color: #868e96;
+=======
+      /* color: #868e96; 좌측 메뉴 아이콘색상*/
+>>>>>>> b0735810f8e5c94c2aeb3fb85aaeb43eed1c2032
       text-decoration: none; }
       .main-sidebar .sidebar-menu li a .badge {
         float: right;
