@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachDTO {
-  private int attachNo;
+public class ItemImgDTO {
+  private int imgId;
   private String path;
   private String originName;
   private String filesystemName;
   private int hasThumbnail;
-  private int itemNo;
+  private int itemId;
 }

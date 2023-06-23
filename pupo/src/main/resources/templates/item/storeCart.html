@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
+<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<body>
+  <!-- <table>
+    <tr>
+      <td>카트아이디</td>
+      <td>아이디</td>
+      <td>아이템 번호</td>
+      <td>수량</td>
+      <td>상품명</td>
+      <td>가격</td>
+      <td>총 가격</td>
+    </tr>
+    <tr th:each="cartInfo : ${cartInfo}">
+      <td th:text="${cartInfo.cartId}"></td>
+      <td th:text="${cartInfo.Id}"></td>
+      <td th:text="${cartInfo.itemNo}"></td>
+      <td th:text="${cartInfo.amount}"></td>
+      <td th:text="${cartInfo.itemName}"></td>
+      <td th:text="${cartInfo.Price}"></td>
+      <td th:text="${cartInfo.totalPrice}"></td>
+    </tr>
+  </table> -->
+ 
+  <div class="content_subject"><span>장바구니</span></div>
+  <div class="content_middle_section"></div>
+  <div class="content_totalCount_section">
+  <form method="post" th:action="@{/item/removeCart.do}" id="frm_remove_cart">
+    <button>선택삭제</button>
+    <table class="cart_table" border="1">
+      <thead>
+          <tr>
+            <td class="td_width_1 chk_all"><input type="checkbox" id="chk_all" class="screen_out"></td>
+            <td class="td_width_3">상품명</td>
+            <td class="td_width_4">가격</td>
+            <td class="td_width_4">수량</td>
+            <td class="td_width_4">합계</td>
+          </tr>
+      </thead>
+      <tbody>
+          <tr th:each="cartList : ${cartList}">
+            <td><input type="checkbox" th:id="|chk_one${cartList.cartItemId}|" class="chk_one screen_out" th:value="${cartList.cartItemId}" name="cartItemId"></td>
+            <td class="td_width_3" th:text="${cartList.itemDTO.itemName}"></td>
+            <td class="td_width_4 price_td" th:text="${cartList.itemDTO.price}"></td>
+            <td class="td_width_4 table_text_align_center">
+              <div>
+                <strong th:text="${cartList.quantity}"></strong>
+              </div>
+              <div>
+              <a href="#">-</a>
+              <a href="#">+</a>
+              </div>
+            </td>  
+            <td class="td_width_4 table_text_align_center" th:text="${cartList.itemDTO.price} * ${cartList.quantity}"></td>
+          </tr>
+      </tbody>
+    </table>
+   </form>
+  <div><button onclick="fnOrder()">결제하기</button></div>
+  </div> 
+</body>
+<script th:inline="javascript">
+
+$(function(){
+    fnChkAll();
+    fnChkOne();
+    fnRemoveList();
+ })
+ // 전체선택 
+ function fnChkAll(){
+    $('#chk_all').on('click', function(){
+       $('.chk_one').prop('checked', $(this).prop('checked'));
+    })
+ }
+ // 개별선택
+ function fnChkOne(){
+    let chkOne = $('.chk_one');
+    chkOne.on('click', function(){
+       let chkCnt = 0;
+       for(let i = 0; i < chkOne.length; i++){
+          chkCnt += $(chkOne[i].prop('checked'));
+       }
+       $('#chk_all').prop('checked', chkCnt == chkOne.length);
+    })
+ }
+ // 선택 항목 삭제
+ function fnRemoveList(){
+    $('#frm_remove_cart').on('submit', function(event){
+       if($('.chk_one:checked').length == 0){
+          alert('선택된 제품이 없습니다.');
+          event.preventDefault();
+          return;
+       }
+       if(confirm('선택된 제품을 모두 삭제할까요?') == false){
+          event.preventDefault();
+          return;
+       }
+    })
+ }
+
+ function fnRemoveList(){
+    $('#frm_remove_list').on('submit', function(event){
+      if($('.chk_one:checked').length == 0){
+        alert('선택된 상품이 없습니다.');
+        event.preventDefault();
+        return;
+      }
+      if(confirm('선택한 상품을 모두 삭제할까요?') == false){
+        event.preventDefault();
+        return;
+      }
+    })
+  }
+
+ function fnOrder(){
+   let toalPrice = /*[[${totalPrice}]]*/ null;
+     IMP.init('imp35851217'); 
+      IMP.request_pay({
+         pg : "kakaopay", 
+          pay_method : 'card',
+          merchant_uid : 'merchant_' + new Date().getTime(),
+          name : '구디 문고',
+          amount : toalPrice,
+          buyer_email : 'gdj61@naver.com',
+          buyer_name : '구매자',
+          buyer_tel : 'gdj61',
+          buyer_addr : '서울특별시 금천구 가산동'
+      }, function(rsp) {
+          if ( rsp.success ) {
+              var msg = '결제가 완료되었습니다.';
+              alert(msg);
+              location.href='/item/orderList.html';
+          } else {
+              var msg = '결제에 실패하였습니다.';
+              rsp.error_msg;
+              
+          }
+      });
+      
+
+ }
+</script>
+
+</html>

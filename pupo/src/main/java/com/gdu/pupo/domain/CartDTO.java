@@ -1,6 +1,7 @@
 package com.gdu.pupo.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartDTO {
-  private int cartCode;
-  private String id;
-  private int itemNo;
-  private int itemCount;
-  private Date madeAt;
+  
+	private int cartId;
+	private String id;
+	private LocalDate createdAt;
+	private List<CartItemDTO> cartList;
 }

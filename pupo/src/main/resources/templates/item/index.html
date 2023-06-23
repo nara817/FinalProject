@@ -27,11 +27,8 @@
   
   <div>
     <div><a th:href="@{/item/storeList.html}">shop</a></div>
-    <th:block th:if="${session.loginId != null and session.sellerChk == 1}">
-      <a th:href="@{/item/itemManage.html}">판매자 페이지</a>
-    </th:block>
+    <div><a th:href="@{/item/itemManage.html}">manage</a></div>
   </div>
-  
 
 </body>
 </html>

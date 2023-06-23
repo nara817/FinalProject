@@ -13,8 +13,11 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.gdu.pupo.domain.AttachDTO;
+import com.gdu.pupo.domain.CartDTO;
 import com.gdu.pupo.domain.ItemDTO;
+import com.gdu.pupo.domain.ItemImgDTO;
+import com.gdu.pupo.domain.ItemImgDetailDTO;
+import com.gdu.pupo.mapper.CartMapper;
 import com.gdu.pupo.mapper.ItemMapper;
 import com.gdu.pupo.util.MyFileUtil;
 
@@ -25,45 +28,38 @@ import net.coobird.thumbnailator.Thumbnails;
 @RequiredArgsConstructor
 @Service
 public class ItemServiceImpl implements ItemService {
-
   
   private final ItemMapper itemMapper;
   private final MyFileUtil myFileUtil;
   
   @Override
-  public List<ItemDTO> itemList() {
-      return itemMapper.itemList();
+  public List<ItemDTO> getAllItems() {
+    return itemMapper.getAllItems();
   }
-
+  
   @Override
-  public void itemListByNo(int itemNo, Model model) {
-    model.addAttribute("item", itemMapper.itemListByNo(itemNo));
-    model.addAttribute("attachList", itemMapper.attachByNo(itemNo));
-  }
-
+	public List<ItemDTO> getItemsByCategoryId(int categoryId) {
+		return itemMapper.getItemsByCategoryId(categoryId);
+	}
+  
   @Transactional
   @Override
-  public int itemRegister(MultipartHttpServletRequest multipartRequest) {
+  public int insertItem(MultipartHttpServletRequest multipartRequest) {
+    
     String itemName = multipartRequest.getParameter("itemName");
-    String itemCategory = multipartRequest.getParameter("itemCategory");
-    String itemComment = multipartRequest.getParameter("itemComment");
+    String description= multipartRequest.getParameter("description");
     int price = Integer.parseInt(multipartRequest.getParameter("price"));
-    int originPrice = Integer.parseInt(multipartRequest.getParameter("originPrice"));
     int stock = Integer.parseInt(multipartRequest.getParameter("stock"));
-    String dispStat = multipartRequest.getParameter("dispStat");
-    String saleStat = multipartRequest.getParameter("saleStat");
-        
+    int categoryId = Integer.parseInt(multipartRequest.getParameter("categoryId"));
+    
     ItemDTO itemDTO = new ItemDTO();
     itemDTO.setItemName(itemName);
-    itemDTO.setItemCategory(itemCategory);
-    itemDTO.setItemComment(itemComment);
+    itemDTO.setDescription(description);
     itemDTO.setPrice(price);
-    itemDTO.setOriginPrice(originPrice);
     itemDTO.setStock(stock);
-    itemDTO.setDispStat(dispStat);
-    itemDTO.setSaleStat(saleStat);
+    itemDTO.setCategoryId(categoryId);
     
-    int registerResult = itemMapper.itemRegister(itemDTO);
+    int registerResult = itemMapper.insertItem(itemDTO);
     
     List<MultipartFile> files = multipartRequest.getFiles("files");
     for(MultipartFile multipartFile : files) {
@@ -84,55 +80,82 @@ public class ItemServiceImpl implements ItemService {
           if(hasThumbnail) {
             File thumbnail = new File(dir, "s_" + filesystemName);
             Thumbnails.of(file).size(50, 50).toFile(thumbnail);
-            
           }
-          
-          AttachDTO attachDTO = new AttachDTO();
-          attachDTO.setFilesystemName(filesystemName);
-          attachDTO.setHasThumbnail(hasThumbnail ? 1 : 0);
-          attachDTO.setOriginName(originName);
-          attachDTO.setPath(path);
-          attachDTO.setItemNo(itemDTO.getItemNo());
-          
-          itemMapper.imgRegister(attachDTO);
-          
+          ItemImgDTO itemImgDTO = new ItemImgDTO();
+          itemImgDTO.setPath(path);
+          itemImgDTO.setOriginName(originName);
+          itemImgDTO.setFilesystemName(filesystemName);
+          itemImgDTO.setHasThumbnail(registerResult);
+          itemImgDTO.setItemId(itemDTO.getItemId());
+          itemMapper.insertImg(itemImgDTO);
         } catch (Exception e) {
           e.printStackTrace();
         }
       }
     }
+    
+    List<MultipartFile> detailFiles = multipartRequest.getFiles("detailFiles");
+    for(MultipartFile multipartFile : detailFiles) {
+      if(multipartFile != null && multipartFile.isEmpty() == false) {
+        try {
+          String path = myFileUtil.getPath();
+          File dir = new File(path);
+          if(dir.exists() == false) {
+            dir.mkdirs();
+          }
+          String originName = multipartFile.getOriginalFilename();
+          originName = originName.substring(originName.lastIndexOf("\\") + 1);
+          String filesystemName = myFileUtil.getFilesystemName(originName);
+          File file = new File(dir, filesystemName);
+          multipartFile.transferTo(file);
+          String contentType = Files.probeContentType(file.toPath());
+          boolean hasThumbnail = contentType != null && contentType.startsWith("image");
+          if(hasThumbnail) {
+            File thumbnail = new File(dir, "s_" + filesystemName);
+            Thumbnails.of(file).size(50, 50).toFile(thumbnail);
+          }
+          ItemImgDetailDTO itemImgDetailDTO = new ItemImgDetailDTO();
+          itemImgDetailDTO.setPathDetail(path);
+          itemImgDetailDTO.setOriginDetailName(originName);
+          itemImgDetailDTO.setFilesystemDetailName(filesystemName);
+          itemImgDetailDTO.setHasDetailThumbnail(registerResult);
+          itemImgDetailDTO.setItemId(itemDTO.getItemId());
+          itemMapper.insertDetailImg(itemImgDetailDTO);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    
     return registerResult;
   }
-   @Transactional
-   @Override
-   public int itemUpdate(MultipartHttpServletRequest multipartRequest) {
-     System.out.println("--------------------------------");
-    int itemNo = Integer.parseInt(multipartRequest.getParameter("itemNo"));
+  
+  public void getItem(int itemId, Model model) {
+    model.addAttribute("item", itemMapper.getItem(itemId));
+    model.addAttribute("img", itemMapper.getImg(itemId));
+    model.addAttribute("imgDetail", itemMapper.getDetailImg(itemId));
+     
+  };
+  
+  
+  @Override
+  public int itemUpdate(MultipartHttpServletRequest multipartRequest) {
+    int itemId = Integer.parseInt(multipartRequest.getParameter("itemId"));
     String itemName = multipartRequest.getParameter("itemName");
-    String itemCategory = multipartRequest.getParameter("itemCategory");
-    String itemComment = multipartRequest.getParameter("itemComment");
+    String description = multipartRequest.getParameter("description");
     int price = Integer.parseInt(multipartRequest.getParameter("price"));
-    int originPrice = Integer.parseInt(multipartRequest.getParameter("originPrice"));
     int stock = Integer.parseInt(multipartRequest.getParameter("stock"));
-    String dispStat = multipartRequest.getParameter("dispStat");
-    String saleStat = multipartRequest.getParameter("saleStat");
-        
+    int categoryId = Integer.parseInt(multipartRequest.getParameter("categoryId"));
+    
     ItemDTO itemDTO = new ItemDTO();
-    itemDTO.setItemNo(itemNo);
+    itemDTO.setItemId(itemId);
     itemDTO.setItemName(itemName);
-    itemDTO.setItemCategory(itemCategory);
-    itemDTO.setItemComment(itemComment);
+    itemDTO.setDescription(description);
     itemDTO.setPrice(price);
-    itemDTO.setOriginPrice(originPrice);
     itemDTO.setStock(stock);
-    itemDTO.setDispStat(dispStat);
-    itemDTO.setSaleStat(saleStat);
+    itemDTO.setCategoryId(categoryId);
     
-    System.out.println(itemNo);
-    System.out.println("-----------------------------------------------------------------------------");
-    
-    
-    int updateResult = itemMapper.itemUpdate(itemDTO);
+    int updateResult = itemMapper.updateItem(itemDTO);
     
     List<MultipartFile> files = multipartRequest.getFiles("files");
     for(MultipartFile multipartFile : files) {
@@ -149,19 +172,51 @@ public class ItemServiceImpl implements ItemService {
           File file = new File(dir, filesystemName);
           multipartFile.transferTo(file);
           String contentType = Files.probeContentType(file.toPath());
-          boolean hasthumbnail = contentType != null && contentType.startsWith("image");
-          if(hasthumbnail) {
+          boolean hasThumbnail = contentType != null && contentType.startsWith("image");
+          if(hasThumbnail) {
             File thumbnail = new File(dir, "s_" + filesystemName);
             Thumbnails.of(file).size(50, 50).toFile(thumbnail);
           }
-          AttachDTO attachDTO = new AttachDTO();
-          attachDTO.setFilesystemName(filesystemName);
-          attachDTO.setHasThumbnail(hasthumbnail ? 1 : 0);
-          attachDTO.setOriginName(originName);
-          attachDTO.setPath(path);
-          attachDTO.setItemNo(itemDTO.getItemNo());
-          
-          itemMapper.imgRegister(attachDTO);
+          ItemImgDTO itemImgDTO = new ItemImgDTO();
+          itemImgDTO.setPath(path);
+          itemImgDTO.setOriginName(originName);
+          itemImgDTO.setFilesystemName(filesystemName);
+          itemImgDTO.setHasThumbnail(updateResult);
+          itemImgDTO.setItemId(itemDTO.getItemId());
+          itemMapper.insertImg(itemImgDTO);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    
+    List<MultipartFile> detailFiles = multipartRequest.getFiles("detailFiles");
+    for(MultipartFile multipartFile : detailFiles) {
+      if(multipartFile != null && multipartFile.isEmpty() == false) {
+        try {
+          String path = myFileUtil.getPath();
+          File dir = new File(path);
+          if(dir.exists() == false) {
+            dir.mkdirs();
+          }
+          String originName = multipartFile.getOriginalFilename();
+          originName = originName.substring(originName.lastIndexOf("\\") + 1);
+          String filesystemName = myFileUtil.getFilesystemName(originName);
+          File file = new File(dir, filesystemName);
+          multipartFile.transferTo(file);
+          String contentType = Files.probeContentType(file.toPath());
+          boolean hasThumbnail = contentType != null && contentType.startsWith("image");
+          if(hasThumbnail) {
+            File thumbnail = new File(dir, "s_" + filesystemName);
+            Thumbnails.of(file).size(50, 50).toFile(thumbnail);
+          }
+          ItemImgDetailDTO itemImgDetailDTO = new ItemImgDetailDTO();
+          itemImgDetailDTO.setPathDetail(path);
+          itemImgDetailDTO.setOriginDetailName(originName);
+          itemImgDetailDTO.setFilesystemDetailName(filesystemName);
+          itemImgDetailDTO.setHasDetailThumbnail(updateResult);
+          itemImgDetailDTO.setItemId(itemDTO.getItemId());
+          itemMapper.insertDetailImg(itemImgDetailDTO);
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -170,43 +225,42 @@ public class ItemServiceImpl implements ItemService {
     return updateResult;
   }
   
-   @Override
-   public int itemDelete(int itemNo) {
-     int deleteResult = itemMapper.itemDelete(itemNo);
-     return deleteResult;
-   }
-   
-  
   @Override
-  public int attachDelete(int attachNo) {
-    AttachDTO attachDTO = itemMapper.attachByNo(attachNo);
-    if(attachDTO != null) {
-      File file = new File(attachDTO.getPath(), attachDTO.getFilesystemName());
-      if(file.exists()) {
-        file.delete();
-      }
-      if(attachDTO.getHasThumbnail() == 1) {
-        File thumbnail = new File(attachDTO.getPath(), "s_" + attachDTO.getFilesystemName());
-        if(thumbnail.exists()) {
-          thumbnail.delete();
-        }
-      }
-    }
-    int removeResult = itemMapper.attachDelete(attachNo);
-    return removeResult;
+  public int itemDelete(int itemId) {
+      int deleteResult = itemMapper.deleteItem(itemId);
+    return deleteResult;
   }
   
+  
   @Override
-  public ResponseEntity<byte[]> display(int attachNo) {
-    AttachDTO attachDTO = itemMapper.attachByNo(attachNo);
+  public ResponseEntity<byte[]> itemImgDisplay(int itemId) {
+    ItemImgDTO itemImgDTO = itemMapper.getImg(itemId);
     ResponseEntity<byte[]> image = null;
+    
     try {
-      File thumbnail = new File(attachDTO.getPath(), "s_" + attachDTO.getFilesystemName());
+      File thumbnail = new File(itemImgDTO.getPath(), itemImgDTO.getFilesystemName());
       image = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(thumbnail), HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return image;
   }
-   
+  
+  @Override
+  public ResponseEntity<byte[]> itemImgDetailDisplay(int itemId) {
+    ItemImgDetailDTO itemImgDetailDTO = itemMapper.getDetailImg(itemId);
+    ResponseEntity<byte[]> image = null;
+    try {
+      File thumbnail = new File(itemImgDetailDTO.getPathDetail(), itemImgDetailDTO.getFilesystemDetailName());
+      image = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(thumbnail), HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return image;
+  }
+  
+  
+  
+  
 }
+
