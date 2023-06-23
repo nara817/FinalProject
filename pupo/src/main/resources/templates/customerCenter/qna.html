@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<style>
-.fnRowButton {
-cursor: pointer;
-}
-</style>
+
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
 <head th:replace="~{/layout/header::headFrag('고객센터')}"></head>
+
 <div th:replace="~{/layout/header::gnbFrag}"></div>
   
 <body class="goto-here">
@@ -43,16 +40,16 @@ cursor: pointer;
             <div class="row mt-4">
               <div class="card-body" style="width: 100%">
                 <div class="comment-form-wrap pt-5 ">
-                <form action="#" class="p-6 bg-white">
+                <form method="post" action="#" class="p-6 bg-white">
                   <div class="form-group search-form">
-                    <label for="title">제목</label>
-                    <input type="text" class="form-control" id="title">
+                    <label for="qnaTitle">제목</label>
+                    <input name="qnaTitle" type="text" class="form-control" id="qnaTitle">
                   </div>
                   <div class="form-group row mb-4">
-                          <label for="noticeCategory" class="col-form-label col-12 col-md-3 col-lg-3">카테고리</label>
+                          <label for="qnaCategory" class="col-form-label col-12 col-md-3 col-lg-3">카테고리</label>
                           <div class="col-sm-12 col-md-12">
-                            <select name="faqCategory" id="noticeCategory" required="required" class="form-control selectric">
-                              <option value="" style="display: none;" disabled selected hidden>카테고리를 선택하세요</option>
+                            <select name="qnaCategory" id="qnaCategory" required="required" class="form-control selectric">
+                              <option value="" style="display: none;" disabled selected hidden>문의유형을 선택하세요</option>
                               <option value="상품">상품</option>
                               <option value="배송">배송</option>
                               <option value="회원정보">회원정보</option>
@@ -62,18 +59,21 @@ cursor: pointer;
                           </div>
                         </div>
                   <div class="form-group">
-                    <label for="website">휴대폰번호</label>
-                    <input type="url" class="form-control" id="website">
+                    <label for="qnaEmail">이메일</label>
+                    <input type="email" class="form-control" id="qnaEmail" name="qnaEmail">
+                    <div class="form-group form-check">
+                      <input type="checkbox" class="form-check-input" id="CheckEmail">
+                      <label class="form-check-label" for="exampleCheck1">이메일 수신 알람</label>
+                    </div>
                   </div>
-
                   <div class="form-group">
-                    <label for="message">내용</label>
-                    <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+
+                    <textarea name="message" id="message" cols="30" rows="10" class="form-control"></textarea>
                   </div>
                   <div class="form-group">
                       <div class="card">
                         <div class="card-body">
-                          <form action="#" class="dropzone" id="mydropzone">
+                          <form class="dropzone" id="mydropzone">
                             <div class="fallback">
                               <input name="file" type="file" multiple />
                             </div>
@@ -93,17 +93,11 @@ cursor: pointer;
       </section>
     </div>
   </div>
-  <div th:replace="~{/layout/header::gnbFooter}"></div> 
+  <div th:replace="~{/layout/footer::gnbFooter}"></div> 
   <div th:replace="~{/layout/sweetAlert::gnbSweetAlert}"></div> 
 </body>
 <script th:inline="javascript">
-$().ready(function () {
-    $(document).ready(function() {
-        $("#swal-2").click(function () {
-          swal("작성완료","접수가 완료되었습니다","success");
-          });
-        });
-    });
- 
+
+
 </script>
 </html>
