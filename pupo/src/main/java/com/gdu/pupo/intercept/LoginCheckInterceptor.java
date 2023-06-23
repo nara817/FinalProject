@@ -25,7 +25,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
       PrintWriter out = response.getWriter();
       out.println("<script>");
       out.println("if(confirm('로그인이 필요한 기능입니다. 로그인하시겠습니까?')){");
-      out.println("location.href='" + request.getContextPath() + "/user/login.form';");
+      out.println("location.href='" + request.getContextPath() + "/user/login.html';");
       out.println("} else {");
       out.println("history.back();");
       out.println("}");

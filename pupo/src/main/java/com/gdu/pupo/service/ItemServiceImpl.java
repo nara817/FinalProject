@@ -38,9 +38,9 @@ public class ItemServiceImpl implements ItemService {
   }
   
   @Override
-	public List<ItemDTO> getItemsByCategoryId(int categoryId) {
-		return itemMapper.getItemsByCategoryId(categoryId);
-	}
+  public List<ItemDTO> getItemsByCategoryId(int categoryId) {
+    return itemMapper.getItemsByCategoryId(categoryId);
+  }
   
   @Transactional
   @Override
