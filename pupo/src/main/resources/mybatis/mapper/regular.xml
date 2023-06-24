@@ -442,4 +442,39 @@
      WHERE REGULAR_NO = #{regularNo}
   </select>
   
+  <!-- 정기구독 전체 주문 갯수 -->
+  <select id="regOrderListCount" resultType="int">
+    SELECT COUNT(*)
+      FROM REGULAR_PURCHASE_T
+  </select>
+  
+  <!-- 정기구독 전체 주문 리스트 -->
+    <select id="getRegOrderList" resultMap="RegularPayMap">
+    SELECT  RP.REG_PURCHASE_NO,
+            RP.REG_PURCHASE_PRICE,
+            RP.REG_PURCHASE_LAST_PRICE,
+            RP.REG_PURCHASE_AT,
+            RP.REG_DELIVERY_STATUS,
+            RP.REG_PRODUCT_COUNT,
+            RP.REG_PG,
+            RP.REG_LAST_PAY_AT,
+            RP.REG_DELIVERY_DAY,
+            RP.REG_PAY_STATUS,
+            RP.REG_PAY_COUNT,
+            RP.REGULAR_NO,
+            RP.REG_CANCEL,
+            U.ID,
+            RPD.REGULAR_NAME,
+            RPD.REGULAR_SIMPLE_DETAIL,
+            RS.REG_SHIP_NO,
+            RS.REG_RECEIVER_NAME,
+            RS.REG_RECEIVER_MOBILE
+       FROM REGULAR_PURCHASE_T RP
+            INNER JOIN USER_T U ON RP.ID = U.ID
+            INNER JOIN REGULAR_PRODUCT_T RPD ON RP.REGULAR_NO = RPD.REGULAR_NO
+            INNER JOIN REGULAR_SHIP_T RS ON RP.REG_SHIP_NO = RS.REG_SHIP_NO
+      ORDER BY RP.REG_LAST_PAY_AT DESC
+      LIMIT #{begin}, #{recordPerPage}
+  </select>
+  
 </mapper>

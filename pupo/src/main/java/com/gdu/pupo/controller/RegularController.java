@@ -1,6 +1,7 @@
 package com.gdu.pupo.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -105,9 +106,17 @@ public class RegularController {
 
   // 주문완료시 주문완료 페이지 보여주기
   @GetMapping("/regularPayDone.do")
-  public String regularPayDone(@RequestParam("regPurchaseNo") int regPurchaseNo, Model model) {
+  public String regularPayDone(@RequestParam("regPurchaseNo") int regPurchaseNo, Model model,HttpSession session) {
     model.addAttribute("regPurchase", regularService.regularPurchasInfo(regPurchaseNo, model));
-    return "/regular/regularPayDone";
+    Optional<String> opt1 = Optional.ofNullable((String) session.getAttribute("loginId"));
+    String loginId = opt1.orElse("");
+    Optional<String> opt2 = Optional.ofNullable(regularService.regularPurchasInfo(regPurchaseNo, model).getUserDTO().getId());
+    String id = opt2.orElse("");
+    if(!loginId.isEmpty() && loginId.equals(id)) {
+      return "/regular/regularPayDone";
+    } else {
+      return "redirect:/";
+    }
   }
 
   // 카테고리 추가
@@ -209,6 +218,12 @@ public class RegularController {
     return regularService.regAvgStar(request);
   }
   
+  // 관리자 주문조회
+  @GetMapping("adminRegOrder.do")
+  public String regAdminOrder(HttpServletRequest request, Model model) {
+    regularService.getRegAdminOrderList(request, model);
+    return "admin/adminRegOrder";
+  }
   
   
 
