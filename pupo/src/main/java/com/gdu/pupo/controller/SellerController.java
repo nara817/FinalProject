@@ -24,7 +24,7 @@ public class SellerController {
 //	  model.addAttribute("sellerCount", adminService.sellerCount());
 //	  return "seller/sellerMain";
 //  }
-  @GetMapping("/adminMain.html")
+  @GetMapping("/sellerMain.html")
   public String sellerMain(Model model) {
 	  model.addAttribute("userCount", adminService.userCount());
 	  model.addAttribute("sellerCount", adminService.sellerCount());

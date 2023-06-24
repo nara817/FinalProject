@@ -77,6 +77,28 @@
     FROM ITEM_IMG_DETAIL
    WHERE ITEM_ID = #{itemId}
 </select>
+
+<!-- 이미지 수정 -->
+<update id="editItemImg" parameterType="int">
+UPDATE ITEM_IMG
+SET PATH  = #{path}
+	, ORIGIN_NAME  = #{originName}
+	, FILESYSTEM_NAME  = #{filesystemName}
+	, HAS_THUMBNAIL  = #{hasThumbnail}
+	WHERE ITEM_ID = #{itemId}
+</update>
+
+<!-- 디테일 이미지 수정 -->
+<update id="editItemImgDetail" parameterType="int">
+UPDATE ITEM_IMG_DETAIL
+SET PATH_DETAIL  = #{pathDetail}
+	, ORIGIN_DETAIL_NAME  = #{originDetailName}
+	, FILESYSTEM_DETAIL_NAME  = #{filesystemDetailName}
+	, HAS_DETAIL_THUMBNAIL  = #{hasDetailThumbnail}
+	WHERE ITEM_ID = #{itemId}
+</update>
+
+<!-- 상세 이미지 수정 -->
   
   <!-- <select id="itemList" resultType="ItemDTO">
     SELECT ITEM_NO, ITEM_NAME, ITEM_CONTENT, PRICE, ORIGIN_PRICE, STOCK, DISP_STAT, SALE_STAT

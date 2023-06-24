@@ -183,7 +183,8 @@ public class ItemServiceImpl implements ItemService {
           itemImgDTO.setFilesystemName(filesystemName);
           itemImgDTO.setHasThumbnail(updateResult);
           itemImgDTO.setItemId(itemDTO.getItemId());
-          itemMapper.insertImg(itemImgDTO);
+//        itemMapper.insertImg(itemImgDTO);
+          itemMapper.editItemImg(itemImgDTO);
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -216,7 +217,8 @@ public class ItemServiceImpl implements ItemService {
           itemImgDetailDTO.setFilesystemDetailName(filesystemName);
           itemImgDetailDTO.setHasDetailThumbnail(updateResult);
           itemImgDetailDTO.setItemId(itemDTO.getItemId());
-          itemMapper.insertDetailImg(itemImgDetailDTO);
+//        itemMapper.insertDetailImg(itemImgDetailDTO);
+          itemMapper.editItemImgDetail(itemImgDetailDTO);
         } catch (Exception e) {
           e.printStackTrace();
         }

@@ -182,4 +182,10 @@ DELETE
      WHERE PATH LIKE CONCAT('%', DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 DAY), '%Y\\%m\\%d'))
   </select>
   
+  <select id="getRegCategory" parameterType="int" resultType="RegularCategoryDTO">
+    SELECT REGULAR_CATEGORY, REGULAR_CATEGORY_NAME
+      FROM REGULAR_CATEGORY_T
+    WHERE REGULAR_CATEGORY = #{regularCategory}
+  </select>
+  
 </mapper>

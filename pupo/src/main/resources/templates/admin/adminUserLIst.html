@@ -1,103 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<!-- 아이콘 -->
-<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-  <!-- General CSS Files -->
-  <link rel="stylesheet" href="../assets/modules/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../assets/modules/fontawesome/css/all.min.css">
-
-  <!-- CSS Libraries -->
-
-  <!-- Template CSS -->
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/components.css">
-  <link rel="stylesheet" href="../assets/css/rtl.css">
-</head>
-<meta charset="UTF-8">
- <title>관리자: 조회</title>
-  <style>
-  </style>
-  <script>
-
-	// 정렬
-	 $(function(){ 
-		    // recordPerPage의 변경
-		    $('#recordPerPage').on('change', function(){
-		      location.href = '/employees/change/record?recordPerPage=' + $(this).val();
-		    });
-		  });
-// 메인페이지로가기 이벤트
-	  function showText() {
-	    document.getElementById("hoverText").style.display = "inline";
-	  }
-
-	  function hideText() {
-	    document.getElementById("hoverText").style.display = "none";
-	  }
-
-  </script>
-</head>
+<head th:replace="~{/admin/adminMain::headFrag('관리자')}"></head>
 <body>
+<div th:replace="~{/admin/adminMain::topFrag}"></div>
+<div th:replace="~{/admin/adminMain::sideFrag}"></div>
+<div class="card-body">
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
-		  <!-- Main Content -->
-		  <div class="main-content">
+      <!-- Main Content -->
+      <div class="main-content">
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
                 <h4>회원조회</h4>
-                <div class="card-header-form">
-                </div>
+                <div class="card-header-form"></div>
               </div>
               <div class="card-body p-0">
                 <div class="table-responsive">
-                  <table class="table table-striped" >
-                    <tr>
-                      <th>
-                        <div class="custom-checkbox custom-control" id="memberTable">
-                          <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
-                          <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                        </div>
-                      </th>
-                      <th>회원번호</th>
-                      <th>구분</th>
-                      <th>등급</th>
-                      <th>ID</th>
-								      <th>이름</th>
-								      <th>성별</th>
-								      <th>휴대폰</th>
-								      <th>이메일</th>
-								      <th>주소</th><!-- /* roadAddress */ -->
-								      <th>상세주소</th><!-- /* detailAddress */ -->
-								      <th>가입일</th>
-								      <th>구독여부</th>
-                    </tr>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>
+                          <div class="custom-checkbox custom-control" id="memberTable">
+                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </th>
+                        <th>회원번호</th>
+                        <th>구분</th>
+                        <th>등급</th>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>성별</th>
+                        <th>휴대폰</th>
+                        <th>이메일</th>
+                        <th>주소</th><!-- /* roadAddress */ -->
+                        <th>상세주소</th><!-- /* detailAddress */ -->
+                        <th>가입일</th>
+                        <th>구독여부</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                       <tr th:each="user : ${user}">
-                      <td>
-										    <div class="custom-checkbox custom-control" id="memberTable">
-										      <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
-										      <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-										    </div>
-											</td>
-						           <td th:text="${user.userDTO.userNo}"></td>
-							         <td>
-							          <span th:text="${user.userDTO.sellerCheck == 0 ? '사용자' : (user.userDTO.sellerCheck == 1 ? '판매자' : (user.userDTO.sellerCheck == 2 ? '관리자' : ''))}"></span>
-                       </td>
+                        <td>
+                          <div class="custom-checkbox custom-control" id="memberTable">
+                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </td>
+                        <td th:text="${user.userDTO.userNo}"></td>
+                        <td>
+                          <span th:text="${user.userDTO.sellerCheck == 0 ? '사용자' : (user.userDTO.sellerCheck == 1 ? '판매자' : (user.userDTO.sellerCheck == 2 ? '관리자' : ''))}"></span>
+                        </td>
                         <td th:text="${user.userDTO.grade}"></td>
-									      <td th:text="${user.userDTO.id}"></td>
-									      <td th:text="${user.userDTO.name}"></td>
-									      <td th:text="${user.userDTO.gender}"></td>
-									      <td th:text="${user.userDTO.mobile}"></td>
-									      <td th:text="${user.userDTO.email}"></td>
-									      <td th:text="${user.userDTO.roadAddress}"></td>
-									      <td th:text="${user.userDTO.detailAddress}"></td>
-									      <td th:text="${#dates.format(user.userDTO.joinedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-            <!--        <td th:text="${user.regPayStatus == 1 ? '구독' : (user.regPayStatus == 2 ? '취소')"></td> -->
+                        <td th:text="${user.userDTO.id}"></td>
+                        <td th:text="${user.userDTO.name}"></td>
+                        <td th:text="${user.userDTO.gender}"></td>
+                        <td th:text="${user.userDTO.mobile}"></td>
+                        <td th:text="${user.userDTO.email}"></td>
+                        <td th:text="${user.userDTO.roadAddress}"></td>
+                        <td th:text="${user.userDTO.detailAddress}"></td>
+                        <td th:text="${#dates.format(user.userDTO.joinedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td th:text="${user.regPayStatus == 0 ? '일반' : (user.regPayStatus == 1 ? '구독' : (user.regPayStatus == 2 ? '취소' : ''))}"></td>
-                    </tr>
+                      </tr>
+                    </tbody>
                   </table>
                 </div>
               </div>
@@ -105,35 +72,9 @@
           </div>
         </div>
       </div>
-  </div>
-      <footer class="main-footer">
-        <div class="footer-left">
-          Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
-        </div>
-        <div class="footer-right">
-
-        </div>
-      </footer>
     </div>
   </div>
-
-  <!-- General JS Scripts -->
-  <script src="../assets/modules/jquery.min.js"></script>
-  <script src="../assets/modules/popper.js"></script>
-  <script src="../assets/modules/tooltip.js"></script>
-  <script src="../assets/modules/bootstrap/js/bootstrap.min.js"></script>
-  <script src="../assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
-  <script src="../assets/modules/moment.min.js"></script>
-  <script src="../assets/js/stisla.js"></script>
-  
-  <!-- JS Libraies -->
-  <script src="../assets/modules/jquery-ui/jquery-ui.min.js"></script>
-
-  <!-- Page Specific JS File -->
-  <script src="../assets/js/page/components-table.js"></script>
-  
-  <!-- Template JS File -->
-  <script src="../assets/js/scripts.js"></script>
-  <script src="../assets/js/custom.js"></script>
+</div>
+<div th:replace="~{/admin/adminMain::footerFrag}"></div>
 </body>
 </html>

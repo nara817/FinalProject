@@ -89,8 +89,6 @@ public class AdminController {
 		couponService.getEventCoupon(request, response);		
 	}
 		
-	// 관리자-상품등록
-	
 	// 상품리스트 페이지 이동
 	@GetMapping("/regularList.html")
 	public String regularList(HttpServletRequest request, Model model) {
@@ -98,8 +96,6 @@ public class AdminController {
 		// model.addAttribute("user", user);
 		adminService.getRegularListPagination(request, model);
 		return "admin/regularList";
-		
-		
 	}
 
   	// 구독상품 삭제

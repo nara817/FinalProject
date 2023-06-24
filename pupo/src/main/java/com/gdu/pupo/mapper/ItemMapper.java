@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.gdu.pupo.domain.ItemDTO;
 import com.gdu.pupo.domain.ItemImgDTO;
 import com.gdu.pupo.domain.ItemImgDetailDTO;
+import com.gdu.pupo.domain.RegularDetailImgDTO;
+import com.gdu.pupo.domain.RegularMainImgDTO;
 
 @Mapper
 public interface ItemMapper {
@@ -25,7 +27,10 @@ public interface ItemMapper {
   public ItemImgDetailDTO getDetailImg(int itemId);                 // 상세 이미지 보기
   public int updateItem(ItemDTO itemDTO);                           // 상품 수정
   public int deleteItem(int itemId);                                // 상품 삭제
-  
-  
+ 
+  public int editItemImg(ItemImgDTO itemImgDTO); 					 // 이미지 수정
+  public int editItemImgDetail(ItemImgDetailDTO itemImgDetailDTO);	 // 디테일 이미지  수정
+
+
 }
 
