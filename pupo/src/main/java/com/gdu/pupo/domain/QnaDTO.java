@@ -14,7 +14,7 @@ public class QnaDTO {
 	  private int qnaNo;
 	  private int sellerCheck;
     private String id;
-    private int qnaCategory;
+    private String qnaCategory;
     private String qnaTitle;
     private String qnaContent;
     private String qnaEmail;

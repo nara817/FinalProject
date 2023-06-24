@@ -13,10 +13,10 @@
           <div class="row section-header-breadcrumb ftco-animate">
             <div class="breadcrumb-item active"><a th:href="@{/}">home</a></div>
             <div class="breadcrumb-item"><a th:href="@{/customerCenter/centerHome.html}">고객센터</a></div>
-            <div class="breadcrumb-item">자주 묻는 질문</div>
+            <div class="breadcrumb-item">1:1 문의 리스트 -관리자 페이지</div>
           </div>
         </div>
-        <h1 class="ftco-animate text-center font-weight-bold pt-5">자주 묻는 질문</h1>
+        <h1 class="ftco-animate text-center font-weight-bold pt-5">관리자 페이지</h1>
       </header>
       <section>
         <div class="row aline-items-center">
@@ -38,38 +38,26 @@
           <div class="col-lg-10 ftco-animate">
             <div class="row mt-4">
               <div class="card-body" style="width: 100%">
-                <form th:action="@{/customerCenter/faq.html}" class="p-5 search-form" id="frm1">
+                <form th:action="@{/customerCenter/qnaList.html}" class="p-5 search-form" id="frm1">
                   <div class="form-group">
                     <input name="query" id="query" type="text" class="form-control" placeholder="검색어를 입력하세요" aria-describedby="button-addon2">
                     <span class="icon ion-ios-search" style="cursor: pointer;"></span>
                   </div>
                 </form>
                 <h3 class="blind">자주묻는질문카테고리</h3>
-                <form id="frmKind" th:action="@{/customerCenter/faq.html}">
+                <form id="frmKind" th:action="@{/customerCenter/qnaList.html}">
                   <div class="radioButtonStyle" role="group" aria-label="Basic radio toggle button group">
                     <label for="btnradio1" class="radioStyle">
                         <input value="" type="radio" name="kind" id="btnradio1"  >
                         <span>전체</span>
                     </label>
                     <label for="btnradio2" class="radioStyle">
-                        <input value="상품" type="radio" name="kind" id="btnradio2" >
-                        <span>상품</span>
+                        <input value="일반사용자" type="radio" name="kind" id="btnradio2" >
+                        <span>일반 사용자</span>
                     </label>
                     <label  for="btnradio3" class="radioStyle">
-                        <input value="배송" type="radio"name="kind" id="btnradio3" >
-                        <span>배송</span>
-                    </label>
-                    <label  for="btnradio4" class="radioStyle">
-                        <input value="회원정보" type="radio"  name="kind" id="btnradio4" >
-                        <span>회원정보</span>
-                    </label>
-                    <label  for="btnradio5" class="radioStyle">
-                        <input value="주문/결제" type="radio"  name="kind" id="btnradio5" >
-                        <span>주문/결제</span>
-                    </label>
-                    <label for="btnradio6" class="radioStyle" >
-                        <input value="취소/교환/반품" type="radio"  name="kind" id="btnradio6" >
-                        <span>취소/교환/반품</span>
+                        <input value="판매자" type="radio"name="kind" id="btnradio3" >
+                        <span>판매자</span>
                     </label>
                   </div>
                 </form>
@@ -90,34 +78,30 @@
                       <tr>
                         <th scope="row" colspan="4">
                           <div id="Accordion_wrap">
-                            <th:block th:if="${#lists.isEmpty(faqList)}">
+                            <th:block th:if="${#lists.isEmpty(qnaList)}">
                               <div class="que" >
                               게시글이 없습니다.
                               </div>
                             </th:block>
-                            <th:block th:if="${not #lists.isEmpty(faqList)}"> 
-                              <th:block th:each="faq, vs:${faqList}" > 
+                            <th:block th:if="${not #lists.isEmpty(qnaList)}"> 
+                              <th:block th:each="qna, vs:${qnaList}" > 
                                 <div class="que">
                                   <em class="text-left" th:text="${beginNo - vs.index}" ></em>
-                                  <em th:id="faqCategory" th:text="|&nbsp[${faq.faqCategory}]|"></em>
-                                  <span th:text="${faq.faqTitle}"></span> 
+                                  <em th:id="qnaCategory" th:text="|&nbsp[${qna.qnaCategory}]|"></em>
+                                  <span th:text="${qna.qnaTitle}"></span> 
                                   <div class="arrow-wrap">
                                     <span class="arrow-top"><i class="fa-solid fa-angle-up" style="color: #82ae46;"></i></span>
                                     <span class="arrow-bottom"><i class="fa-solid fa-angle-down" style="color: #82ae46;"></i></span>
                                    </div>    
                                 <th:block th:if="${session.loginId != null and session.sellerChk == 2}">
-                                <form class="frm_remove" method="post">
-                                  <input type="hidden" name="faqNo" th:value="${faq.faqNo}">
-                                  <button>삭제</button>
-                                </form>
-                                <form class="frm_edit" method="post"  th:action="@{/customerCenter/faqEdit.html}">
-                                  <input type="hidden" name="faqNo" th:value="${faq.faqNo}">
-                                  <button>수정하기</button>
+                                <form class="frm_edit" method="post"  th:action="@{/customerCenter/qnaWrite.html}">
+                                  <input type="hidden" name="faqNo" th:value="${qna.qnaNo}">
+                                  <button>답변하기</button>
                                 </form>
                               </th:block>
                                 </div>
                                 <div class="anw">
-                                  <span th:text="${faq.faqContent}"></span>
+                                  <span th:text="${qna.qnaContent}"></span>
                                 </div>
                               </th:block>
                             </th:block>
@@ -134,13 +118,6 @@
                     <div th:utext="${pagination}"></div>
                   </div>
                 </nav>
-                <th:block th:if="${session.loginId != null and session.sellerChk == 2}">
-                  <div class="float-right">
-                  <form  method="post" th:action="@{/customerCenter/faqWrite.html}">
-                    <button class="button btn btn-primary">글쓰기</button>
-                    </form>
-                  </div>
-                </th:block>
               </div>
             </div>
           </div>
@@ -169,7 +146,7 @@
 $(function() {
 // 라디오 버튼 클릭 이벤트 처리
 $('input[name="kind"]').on('click', function fnKindChange() {
-	 $(this).prop('checked', true); // 선택한 라디오 버튼에 checked 속성 추가
+   $(this).prop('checked', true); // 선택한 라디오 버튼에 checked 속성 추가
   $('#frmKind').submit();
 });
 });
@@ -183,51 +160,40 @@ $('input[name="kind"]').on('click', function fnKindChange() {
 
 */
 
-
+/*
 
 $(function() {
-	  // 라디오 버튼 클릭 이벤트 처리
-	  $('input[name="kind"]').on('click', function fnKindChange() {
-	    var selectedValue = $(this).val(); // 선택한 라디오 버튼의 값
+    // 라디오 버튼 클릭 이벤트 처리
+    $('input[name="kind"]').on('click', function fnKindChange() {
+      var selectedValue = $(this).val(); // 선택한 라디오 버튼의 값
 
-	    // AJAX 요청
-	    $.ajax({
-	      url: '/customerCenter/faq.html?kind=' + $(this).val(),
-	      method: 'GET',
-	      data: { kind: selectedValue },
-	      success: function(response) {
-	        console.log('AJAX 요청 성공');
-	        // 선택한 라디오 버튼에 checked 속성 추가
-	        $('input[name="kind"]').prop('checked', false);
-	        $('input[name="kind"][value="' + selectedValue + '"]').prop('checked', true);
-	      },
-	      error: function(xhr, status, error) {
-	        console.error('AJAX 요청 실패:', error);
-	      }
-	    });
-	  });
-	});
-	
+      // AJAX 요청
+      $.ajax({
+        url: '/customerCenter/faq.html?kind=' + $(this).val(),
+        method: 'GET',
+        data: { kind: selectedValue },
+        success: function(response) {
+          console.log('AJAX 요청 성공');
+          // 선택한 라디오 버튼에 checked 속성 추가
+          $('input[name="kind"]').prop('checked', false);
+          $('input[name="kind"][value="' + selectedValue + '"]').prop('checked', true);
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX 요청 실패:', error);
+        }
+      });
+    });
+  });
+  
 
+*/
 
-
-
-
-
-
-function frm_remove(){
-    if(confirm('게시글을 삭제하시겠습니까?') == false){
-      return;
-    }
-    frm.prop('action', '/customerCenter/faqRemove.do');
-    frm.submit();
-}
 
 $(".que").click(function() {
-	   $(this).next(".anw").stop().slideToggle(300);
-	  $(this).toggleClass('on').siblings().removeClass('on');
-	  $(this).next(".anw").siblings(".anw").slideUp(300); // 1개씩 펼치기
-	});
+     $(this).next(".anw").stop().slideToggle(300);
+    $(this).toggleClass('on').siblings().removeClass('on');
+    $(this).next(".anw").siblings(".anw").slideUp(300); // 1개씩 펼치기
+  });
 </script>
 <script src="https://kit.fontawesome.com/bfad29b6fa.js" crossorigin="anonymous"></script>
 </html>

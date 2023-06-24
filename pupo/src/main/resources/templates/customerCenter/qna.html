@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
+  
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
 <head th:replace="~{/layout/header::headFrag('고객센터')}"></head>
 
@@ -38,15 +38,11 @@
           </div>
           <div class="col-lg-10 ftco-animate">
             <div class="row mt-4">
-              <div class="card-body" style="width: 100%">
+              <div class="card-body">
                 <div class="comment-form-wrap pt-5 ">
-                <form method="post" action="#" class="p-6 bg-white">
-                  <div class="form-group search-form">
-                    <label for="qnaTitle">제목</label>
-                    <input name="qnaTitle" type="text" class="form-control" id="qnaTitle">
-                  </div>
+                <form  enctype="multipart/form-data"  method="post" th:action="@{/customerCenter/qnaAdd.do}" class="p-6 bg-white">
                   <div class="form-group row mb-4">
-                          <label for="qnaCategory" class="col-form-label col-12 col-md-3 col-lg-3">카테고리</label>
+                          <label for="qnaCategory" class="col-form-label col-12 col-md-3 col-lg-3">분류</label>
                           <div class="col-sm-12 col-md-12">
                             <select name="qnaCategory" id="qnaCategory" required="required" class="form-control selectric">
                               <option value="" style="display: none;" disabled selected hidden>문의유형을 선택하세요</option>
@@ -54,35 +50,53 @@
                               <option value="배송">배송</option>
                               <option value="회원정보">회원정보</option>
                               <option value="주문/결제">주문/결제</option>
-                              <option value="취소/교환/반품">취소/교환/반품</option>
+                              <option value="취소">취소</option>
+                              <option value="교환">교환</option>
+                              <option value="반품">반품</option>
+                              <option value="환불">환불</option>
+                              <option value="서비스">서비스</option>
+                              <option value="기타">기타</option>
                             </select>
                           </div>
                         </div>
+                        <div class="search-form ">
+                         <label class="form-group" for="disabledTextInput">주문조회</label>
+                         <div class="d-flex">
+                            <input type="text" disabled id="disabledTextInput" class="form-control disabled" placeholder="관련된 주문건이 있는 경우 조회하여 선택해 주세요."  >
+                            <div class="p-2 ">
+                              <input class="qnaButton" value="조회" type="button" id="button-addon2"></button>
+                            </div>
+                         </div>
+                          </div>
+                  <div class="form-group search-form mt-3">
+                    <label for="qnaTitle">제목</label>
+                    <input name="qnaTitle" type="text" class="form-control" id="qnaTitle">
+                  </div>
                   <div class="form-group">
                     <label for="qnaEmail">이메일</label>
-                    <input type="email" class="form-control" id="qnaEmail" name="qnaEmail">
+                    <input type="email" class="form-control " id="qnaEmail" name="qnaEmail">
                     <div class="form-group form-check">
                       <input type="checkbox" class="form-check-input" id="CheckEmail">
-                      <label class="form-check-label" for="exampleCheck1">이메일 수신 알람</label>
+                      <label  class="form-check-label" for="CheckEmail">이메일 수신 알람</label>
                     </div>
                   </div>
                   <div class="form-group">
-
-                    <textarea name="message" id="message" cols="30" rows="10" class="form-control"></textarea>
+                    <textarea name="qnaContent" id="qnaContent" cols="30" rows="10" class="form-control"></textarea>
                   </div>
                   <div class="form-group">
                       <div class="card">
                         <div class="card-body">
-                          <form class="dropzone" id="mydropzone">
                             <div class="fallback">
-                              <input name="file" type="file" multiple />
+                              <input type="file" id="files" name="files" multiple="multiple" onchange="fnFileCheck(this)">
                             </div>
-                          </form>
                         </div>
                       </div>
                     </div>
-                     <div class="col-12 col-sm-6 col-lg-3">
+                     <div>* 1:1 문의하기 내역은 마이페이지 > 1:1 문의내역에서 확인할 수 있습니다.</div>
+                     <div class="col-sm-12 col-md-7 ftco-animate">
                       <button class="btn py-3 px-4 btn-primary" id="swal-2">작성완료</button>
+                      <input class="btn py-3 px-4  btn-primary" type="reset" value="입력초기화">
+                      <input class="btn py-3 px-4  btn-primary"  type="button" value="목록" onclick="fnList()">
                     </div>
                 </form>
               </div>
@@ -94,10 +108,34 @@
     </div>
   </div>
   <div th:replace="~{/layout/footer::gnbFooter}"></div> 
-  <div th:replace="~{/layout/sweetAlert::gnbSweetAlert}"></div> 
 </body>
 <script th:inline="javascript">
+function fnList() {
+    location.href = '/customerCenter/notice.html';
+  }
 
+function fnFileCheck(vThis){
+
+  // 최대 크기 10MB
+  let maxSize = 1024 * 1024 * 10;
+  
+  // 첨부된 파일 목록
+  let files = vThis.files;
+  
+  // 첨부된 파일 순회(크기 체크 + 첨부된 파일명 표시)
+  $('#fileList').empty();
+  $.each(files, function(i, file){
+    
+    // 크기 체크
+    if(file.size > maxSize){
+      alert('각 첨부파일의 최대 크기는 10MB입니다.');
+      $(vThis).val('');  // 첨부된 파일을 모두 지운다.
+      $('#fileList').text('첨부 파일의 목록이 이 곳에 표시됩니다');
+      return;
+    } 
+  })
+  
+}
 
 </script>
 </html>

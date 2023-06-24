@@ -6,7 +6,111 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.pupo.mapper.QnaMapper">
 
+  <!-- JOIN 결과를 저장할 resultMap 만들기 -->
+  <resultMap type="QnaDTO" id="QnaMap">
+    <id column="Qna_NO" property="qnaNo" />
+    <result column="SELLER_CHECK" property="sellerCheck" />
+    <result column="ID" property="id" />
+    <result column="QNA_CATEGORY" property="qnaCategory" />
+    <result column="QNA_TITLE" property="qnaTitle" />
+    <result column="QNA_CONTENT" property="qnaContent" />
+    <result column="QNA_EMAIL" property="qnaEmail" />
+    <result column="QNA_CREATED_AT" property="qnaCreatedAt" />
+    <result column="QNA_MODIFIED_AT" property="qnaModifiedAt" />
+    <result column="QNA_EMAIL_ALARM_CHECK" property="qnaEmailAlarmCheck" />
+    <result column="QNA_HIT" property="qnaHit"/>
+ </resultMap>
+ 
+ <!-- 공지게시글 작성 쿼리문 -->
+  <insert id="qnaAdd" useGeneratedKeys="true" keyProperty="qnaNo" parameterType="QnaDTO">
+    INSERT INTO QNA (
+        SELLER_CHECK
+      , ID
+      , QNA_CATEGORY
+      , QNA_TITLE
+      , QNA_CONTENT   
+      , QNA_EMAIL
+      , QNA_CREATED_AT  
+      , QNA_MODIFIED_AT        
+      , QNA_HIT
+      ) VALUES (
+        2
+      , 'admin'
+      , #{qnaCategory}
+      , #{qnaTitle}
+      , #{qnaContent}
+      , #{qnaEmail}
+      , NOW()
+      , NOW()
+      , 0
+      )
+  </insert>
+  
+  <!-- attach첨부 -->
+  <insert id="noticeAddAttach" parameterType="NoticeAttachDTO">
+    INSERT INTO QNA_ATTACH (
+      PATH
+    , ORIGIN_NAME
+    , FILESYSTEM_NAME
+    , DOWNLOAD_COUNT
+    , HAS_THUMBNAIL
+    , QNA_NO
+    ) VALUES (
+      #{path}
+    , #{originName}
+    , #{filesystemName}
+    , 0
+    , #{hasThumbnail}
+    , #{qnaNo}
+    )
+  </insert>
+ 
+ 
+ <!-- QNA 전체 목록 가져오기 -->
+<select id="getQnaList" parameterType="Map" resultMap="QnaMap">
+  SELECT QNA_NO, SELLER_CHECK, ID, QNA_CATEGORY, QNA_TITLE, QNA_CONTENT, QNA_EMAIL, QNA_CREATED_AT, QNA_MODIFIED_AT, QNA_EMAIL_ALARM_CHECK, QNA_HIT
+    FROM QNA
+    <where>
+      <if test="kind != null and kind != ''">
+       QNA_CATEGORY = #{kind}
+      </if>
+      <if test="query != null and query != ''">
+       QNA_TITLE LIKE CONCAT('%', #{query}, '%') OR NOTICE_CONTENT LIKE CONCAT('%', #{query}, '%')
+      </if>
+    </where>
+   ORDER BY QNA_NO DESC
+    LIMIT #{begin}, #{recordPerPage}
+  </select>
+  
+  
+<!-- 전체 카운트 중 kind값과 query값 조건문 넣어준 쿼리문 -->
+  <select id="getQnaCount" parameterType="Map" resultType="int">
+    SELECT COUNT(*)
+      FROM QNA
+    <where>
+      <if test="kind != null and kind != ''">
+        QNA_CATEGORY = #{kind}
+      </if>
+      <if test="query != null and query != ''">
+        QNA_TITLE LIKE CONCAT('%', #{query}, '%') OR QNA_CONTENT LIKE CONCAT('%', #{query}, '%')
+      </if>
+    </where>
+  </select>
+  
+ 
+  <!-- 카테고리 게시글 수 카운트 용 -->
+<select id="getQnaCategoryCount" parameterType="string" resultType="int">
+  SELECT COUNT(QNA_NO)
+  FROM QNA
+  WHERE QNA_CATEGORY = #{kind}
+</select>
 
+<!-- 공지사항 조회수 -->
+  <update id="qnaHitUp" parameterType="int">
+    UPDATE QNA
+       SET QNA_HIT = NOTICE_HIT + 1
+     WHERE QNA_NO = #{qnaNo}
+  </update>
   
   
 </mapper>

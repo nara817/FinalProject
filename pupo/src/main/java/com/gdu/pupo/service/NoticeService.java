@@ -1,7 +1,6 @@
 package com.gdu.pupo.service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
