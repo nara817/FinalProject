@@ -98,6 +98,16 @@ SET PATH_DETAIL  = #{pathDetail}
   WHERE ITEM_ID = #{itemId}
 </update>
 
+<!-- 디테일 이미지 수정 -->
+<update id="editItemImgDetail" parameterType="int">
+UPDATE ITEM_IMG_DETAIL
+SET PATH_DETAIL  = #{pathDetail}
+	, ORIGIN_DETAIL_NAME  = #{originDetailName}
+	, FILESYSTEM_DETAIL_NAME  = #{filesystemDetailName}
+	, HAS_DETAIL_THUMBNAIL  = #{hasDetailThumbnail}
+	WHERE ITEM_ID = #{itemId}
+</update>
+
 <!-- 상세 이미지 수정 -->
   
   <!-- <select id="itemList" resultType="ItemDTO">

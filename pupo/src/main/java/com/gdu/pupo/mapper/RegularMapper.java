@@ -48,4 +48,6 @@ public interface RegularMapper {
   public int updateRegModifyReview(RegularReviewDTO regularReviewDTO); // 리뷰 수정 저장하기
   public int regDeleteReview(int regPurchaseNo); // 리뷰 삭제 하기
   public Double regAvgStar(int regularNo); // 리뷰 평점 평균 구하기
+  public List<RegularPurchaseDTO> getRegOrderList(Map<String, Object> map); // 어드민 주문 전체 리스트
+  public int regOrderListCount(); // 주문 전체 리스트 갯수
 }

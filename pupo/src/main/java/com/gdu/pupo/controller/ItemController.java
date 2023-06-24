@@ -63,9 +63,9 @@ public class ItemController {
   
   @GetMapping("/categoryList.html")
   public String categoryList(int categoryId, Model model) {
-	  List<ItemDTO> categoryList = itemService.getItemsByCategoryId(categoryId);
-	  model.addAttribute("categoryList", categoryList);
-	  return "item/categoryList";
+    List<ItemDTO> categoryList = itemService.getItemsByCategoryId(categoryId);
+    model.addAttribute("categoryList", categoryList);
+    return "item/categoryList";
   }
   
   
