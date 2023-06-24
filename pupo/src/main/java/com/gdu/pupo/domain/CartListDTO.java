@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartDTO {
-  
-  private int cartId;
-  private String id;
-  private LocalDate createdAt;
-  private List<CartItemDTO> cartList;
+public class CartListDTO {
+  private int cartListNo;
+  private String cartCode;
+  private int itemNo;
+  private int itemCount;
 }

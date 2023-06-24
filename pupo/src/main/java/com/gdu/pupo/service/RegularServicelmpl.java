@@ -1,6 +1,7 @@
 package com.gdu.pupo.service;
 
 import java.io.File;
+import java.net.http.HttpRequest;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.time.Instant;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -411,6 +413,8 @@ public class RegularServicelmpl implements RegularService {
   public RegularPurchaseDTO regularPurchasInfo(int regPurchaseNo, Model model) {
     RegularPurchaseDTO regularPurchaseDTO = new RegularPurchaseDTO();
     regularPurchaseDTO = regularMapper.getRegularPayDone(regPurchaseNo);
+    String id = regularPurchaseDTO.getUserDTO().getId();
+    model.addAttribute("id", id);
     return regularPurchaseDTO;
   }
   
@@ -443,6 +447,8 @@ public class RegularServicelmpl implements RegularService {
     System.out.println(restTemplate.postForObject("https://api.iamport.kr/users/getToken", entity, String.class));
     return restTemplate.postForObject("https://api.iamport.kr/users/getToken", entity, String.class);
     }
+  
+  
   
   // 최종결제시점 기준 1개월 후 자동 결제 및 구독취소예약 구독 종료로 만들기
   @Override
@@ -698,4 +704,41 @@ public class RegularServicelmpl implements RegularService {
     map.put("regAvgStar", regAvgStar);
     return map;
   }
+  
+  @Override
+  public void getRegAdminOrderList(HttpServletRequest request, Model model) {
+    
+    
+    Optional<String> opt1 = Optional.ofNullable(request.getParameter("page"));
+    int page = Integer.parseInt(opt1.orElse("1"));
+    
+    // DB로 보낼 Map 만들기( query, cancel)    
+    Map<String, Object> map = new HashMap<String, Object>();
+    int recordPerPage = 5;
+    int regOrderListCount = regularMapper.regOrderListCount(); // 전체 구매 가져오기
+    pageUtil.setPageUtil(page, regOrderListCount, recordPerPage);
+    
+    map.put("begin", pageUtil.getBegin());
+    map.put("recordPerPage", recordPerPage);
+    
+    model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/admin/regularregAdminOrder.html"));
+    
+    List<RegularPurchaseDTO> regOrderList = regularMapper.getRegOrderList(map);
+    
+    // 한달 뒤 결제일 미리 계산해서 html에 보내주기
+    List<Date> oneMonthList = new ArrayList<>();
+    
+    Calendar cal = Calendar.getInstance();
+   
+    for (RegularPurchaseDTO regPurchase : regOrderList) {
+      cal.setTime(regPurchase.getRegLastPayAt());
+      cal.add(Calendar.MONTH, 1);
+      Date oneMonthLater = cal.getTime();
+      oneMonthList.add(oneMonthLater);
+    }
+    model.addAttribute("oneMonth", oneMonthList);
+    model.addAttribute("regOrderList", regOrderList);
+  }
+ 
+  
 }

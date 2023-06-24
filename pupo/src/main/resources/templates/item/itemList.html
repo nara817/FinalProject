@@ -2,7 +2,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
-<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+<head th:replace="~{/layout/header::headFrag('fullPowerSalad')}"></head>
+
+<!--/* /layout/header.html의 gnbFrag조각으로 div 태그를 바꾼다. */-->
+<div th:replace="~{/layout/header::gnbFrag}"></div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 <body>
@@ -38,6 +41,7 @@
     </div>
    </form>  
   </div>
+  <div th:replace="~{/layout/footer::gnbFooter}"></div>
 </body>
 <style>
       .mainContent{

@@ -13,11 +13,9 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.gdu.pupo.domain.CartDTO;
 import com.gdu.pupo.domain.ItemDTO;
 import com.gdu.pupo.domain.ItemImgDTO;
 import com.gdu.pupo.domain.ItemImgDetailDTO;
-import com.gdu.pupo.mapper.CartMapper;
 import com.gdu.pupo.mapper.ItemMapper;
 import com.gdu.pupo.util.MyFileUtil;
 
@@ -87,7 +85,7 @@ public class ItemServiceImpl implements ItemService {
           itemImgDTO.setFilesystemName(filesystemName);
           itemImgDTO.setHasThumbnail(registerResult);
           itemImgDTO.setItemId(itemDTO.getItemId());
-          itemMapper.insertImg(itemImgDTO);
+          itemMapper.editItemImg(itemImgDTO);
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -120,7 +118,7 @@ public class ItemServiceImpl implements ItemService {
           itemImgDetailDTO.setFilesystemDetailName(filesystemName);
           itemImgDetailDTO.setHasDetailThumbnail(registerResult);
           itemImgDetailDTO.setItemId(itemDTO.getItemId());
-          itemMapper.insertDetailImg(itemImgDetailDTO);
+          itemMapper.editItemImgDetail(itemImgDetailDTO);
         } catch (Exception e) {
           e.printStackTrace();
         }

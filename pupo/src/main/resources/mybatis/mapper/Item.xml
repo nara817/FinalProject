@@ -82,69 +82,30 @@
 <update id="editItemImg" parameterType="int">
 UPDATE ITEM_IMG
 SET PATH  = #{path}
-	, ORIGIN_NAME  = #{originName}
-	, FILESYSTEM_NAME  = #{filesystemName}
-	, HAS_THUMBNAIL  = #{hasThumbnail}
-	WHERE ITEM_ID = #{itemId}
+  , ORIGIN_NAME  = #{originName}
+  , FILESYSTEM_NAME  = #{filesystemName}
+  , HAS_THUMBNAIL  = #{hasThumbnail}
+  WHERE ITEM_ID = #{itemId}
+</update>
+
+<!-- 디테일 이미지 수정 -->
+<update id="editeditItemImgDetail" parameterType="int">
+UPDATE ITEM_IMG_DETAIL
+SET PATH_DETAIL  = #{pathDetail}
+  , ORIGIN_DETAIL_NAME  = #{originDetailName}
+  , FILESYSTEM_DETAIL_NAME  = #{filesystemDetailName}
+  , HAS_DETAIL_THUMBNAIL  = #{hasDetailThumbnail}
+  WHERE ITEM_ID = #{itemId}
 </update>
 
 <!-- 디테일 이미지 수정 -->
 <update id="editItemImgDetail" parameterType="int">
 UPDATE ITEM_IMG_DETAIL
 SET PATH_DETAIL  = #{pathDetail}
-	, ORIGIN_DETAIL_NAME  = #{originDetailName}
-	, FILESYSTEM_DETAIL_NAME  = #{filesystemDetailName}
-	, HAS_DETAIL_THUMBNAIL  = #{hasDetailThumbnail}
-	WHERE ITEM_ID = #{itemId}
+  , ORIGIN_DETAIL_NAME  = #{originDetailName}
+  , FILESYSTEM_DETAIL_NAME  = #{filesystemDetailName}
+  , HAS_DETAIL_THUMBNAIL  = #{hasDetailThumbnail}
+  WHERE ITEM_ID = #{itemId}
 </update>
 
-<!-- 상세 이미지 수정 -->
-  
-  <!-- <select id="itemList" resultType="ItemDTO">
-    SELECT ITEM_NO, ITEM_NAME, ITEM_CONTENT, PRICE, ORIGIN_PRICE, STOCK, DISP_STAT, SALE_STAT
-      FROM ITEM
-     ORDER BY ITEM_NO DESC;
-  </select>
-  
-  <insert id="itemRegister" useGeneratedKeys="true" keyProperty="itemNo" parameterType="ItemDTO">
-    INSERT INTO ITEM(ITEM_NAME, ITEM_CONTENT, PRICE, ORIGIN_PRICE, STOCK, DISP_STAT, SALE_STAT)
-       VALUES(#{itemName}, #{itemContent}, #{price}, #{originPrice}, #{stock}, #{dispStat}, #{saleStat})
-  </insert>
-  
-  
-
-  <select id="itemListByNo" parameterType="int" resultType="ItemDTO">
-    SELECT ITEM_NO, ITEM_NAME, ITEM_CONTENT, PRICE, ORIGIN_PRICE, STOCK, DISP_STAT, SALE_STAT
-      FROM ITEM
-     WHERE ITEM_NO = #{itemNo}
-  </select>
-  
-  <select id="itemImgByNo" parameterType="int" resultType="ItemImgDTO">
-    SELECT IMG_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, HAS_THUMBNAIL, ITEM_NO
-      FROM ITEM_IMG
-     WHERE ITEM_NO = #{itemNo}
-  </select>
-  
-  <select id="itemImgDetailByNo" parameterType="int" resultType="ItemImgDetailDTO">
-    SELECT IMG_DETAIL_NO, PATH_DETAIL, ORIGIN_DETAIL_NAME, FILESYSTEM_DETAIL_NAME, HAS_DETAIL_THUMBNAIL, ITEM_NO
-      FROM ITEM_IMG_DETAIL
-     WHERE ITEM_NO = #{itemNo}
-  </select>
-  
-  <update id="itemUpdate" parameterType="ItemDTO">
-    UPDATE ITEM
-       SET ITEM_NAME = #{itemName}
-         , ITEM_CONTENT = #{itemContent}
-         , PRICE = #{price}
-         , ORIGIN_PRICE = #{originPrice}
-         , STOCK = #{stock}
-         , DISP_STAT = #{dispStat}
-         , SALE_STAT = #{saleStat}
-     WHERE ITEM_NO = #{itemNo}
-  </update>
-  
-  <delete id="itemDelete" parameterType="int">
-    DELETE FROM ITEM
-     WHERE ITEM_NO = #{itemNo}
-  </delete> -->
 </mapper>

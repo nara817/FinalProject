@@ -2,8 +2,11 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
-<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
-    <title></title>
+<head th:replace="~{/layout/header::headFrag('fullPowerSalad')}"></head>
+
+<!--/* /layout/header.html의 gnbFrag조각으로 div 태그를 바꾼다. */-->
+<div th:replace="~{/layout/header::gnbFrag}"></div>
+
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js}"></script>
     <script th:src="@{https://kit.fontawesome.com/20962f3e4b.js}" crossorigin="anonymous"></script>
@@ -16,49 +19,48 @@
 
     
 <body class="goto-here">
-  
   <main id="product">
-  <section class="view">
-    <nav>
-      <h1>상품보기</h1>
-    </nav>
-    <article class="info">
-      <div class="image">
-        <img th:src="@{/item/itemImgDisplay.do(itemId=${item.itemId})}" alt="상품이미지">
-      </div>
-      <div class="summary">
-        <nav>
-          <h3><span th:text="${item.itemName}"></span></h3>
-          <p><span th:text="${item.description}"></span></p>
-        </nav>
-        <nav>
-          <div class="org_price">
-            <div><span th:text="${item.price}"></span> 원</div>
-          </div>
-        </nav>
-        <nav>
-          <div class="delivery">무료배송</div>
-          <div class="desc">본 상품은 국내배송만 가능합니다.</div>
-        </nav>
-        <nav>
-          <span class="origin">원산지-상세설명 참조</span>
-        </nav>
-        <input type="hidden" name="${item.itemId}">
-        <div>가격: <span id="totalPrice"><a th:text="${item.price}"></a></span>원</div>
-        <form method="post" th:action="@{/item/addCart.do}">
-          <span>주문 수량</span>
-          <input type="hidden" th:value="${item.itemId}" name="itemId">
-          <input type="number" min="1" th:max="${item.stock}" name="count">
-      <input type="submit" class="add-to-cart-btn" data-item-id="1" th:value="장바구니">
-        <input type="button" class="order" value="구매하기">
-        </form>
-        <button onclick="fnCartList()">장바구니 가기</button>
-       </div>
-     <div class="total">
-       <span id="quantity" th:text="${totalPrice}"></span>
-       <em>총 상품금액</em>
-     </div>
-  </article>
+    <section class="view">
+      <nav>
+        <h1>상품보기</h1>
+      </nav>
+      <article class="info">
+        <div class="image">
+          <img th:src="@{/item/itemImgDisplay.do(itemId=${item.itemId})}" alt="상품이미지">
+        </div>
+        <div class="summary">
+          <nav>
+            <h3><span th:text="${item.itemName}"></span></h3>
+            <p><span th:text="${item.description}"></span></p>
+          </nav>
+          <nav>
+            <div class="org_price">
+              <div><span th:text="${item.price}"></span> 원</div>
+            </div>
+          </nav>
+          <nav>
+            <div class="delivery">무료배송</div>
+            <div class="desc">본 상품은 국내배송만 가능합니다.</div>
+          </nav>
+          <nav>
+            <span class="origin">원산지-상세설명 참조</span>
+          </nav>
+          <input type="hidden" name="${item.itemId}">
+          <div>가격: <span id="totalPrice"><a th:text="${item.price}"></a></span>원</div>
+          <form method="post" th:action="@{/item/addCart.do}">
+            <span>주문 수량</span>
+            <input type="hidden" th:value="${item.itemId}" name="itemId">
+            <input id="quantityInput" type="number" min="1" th:max="${item.stock}" name="count" oninput="updateTotalPrice(this)">
+            <input type="submit" class="add-to-cart-btn" data-item-id="1" th:value="장바구니" onclick="checkLogin(event)">
+          </form>
+        </div>
+        <div class="total">
+          <span id="quantity">0</span>
+          <em>총 상품금액</em>
+        </div>
+      </article>
+    </section>
+  </main>
     <article class="detail">
       <nav><h1>상품정보</h1></nav>
       <img th:src="@{/item/itemImgDetailDisplay.do(itemId=${item.itemId})}" alt="상세페이지1">
@@ -184,33 +186,54 @@
       </article>
     </section>
   </main>
+  <div th:replace="~{/layout/footer::gnbFooter}"></div>
 </body>
 
 <script th:inline="javascript">
   
-function decreaseQuantity() {
-    var quantityInput = document.getElementById('quantityInput');
-    var currentQuantity = parseInt(quantityInput.value);
-    if (currentQuantity > 1) {
-      quantityInput.value = currentQuantity - 1;
-    }
+function updateTotalPrice(input) {
+    var count = parseInt(input.value);
+    var price = parseInt(/*[[${item.price}]]*/);
+    var totalPrice = count * price;
+    document.getElementById("quantity").textContent = totalPrice;
   }
 
-  function increaseQuantity() {
-    var quantityInput = document.getElementById('quantityInput');
-    var currentQuantity = parseInt(quantityInput.value);
-    var maxQuantity = parseInt(quantityInput.max);
-    if (currentQuantity < maxQuantity) {
-      quantityInput.value = currentQuantity + 1;
-    }
-  }
+function decreaseQuantity() {
+	  var quantityInput = document.getElementById('quantityInput');
+	  var currentQuantity = parseInt(quantityInput.value);
+	  if (currentQuantity > 1) {
+	    quantityInput.value = currentQuantity - 1;
+	    updateTotalPrice(quantityInput); // 수량 감소 시 총 상품 금액 업데이트
+	  }
+	}
+
+	function increaseQuantity() {
+	  var quantityInput = document.getElementById('quantityInput');
+	  var currentQuantity = parseInt(quantityInput.value);
+	  var maxQuantity = parseInt(quantityInput.max);
+	  if (currentQuantity < maxQuantity) {
+	    quantityInput.value = currentQuantity + 1;
+	    updateTotalPrice(quantityInput); // 수량 증가 시 총 상품 금액 업데이트
+	  }
+	}
   
   function fnCartList(){
     let loginId = /*[[${session.loginId}]]*/ null;
     location.href = '/item/cartList.do?loginId=' + loginId;
   }
   
-  
+  function checkLogin(event) {
+      event.preventDefault();
+      var isLoggedIn = /*[[${session.loginId}]]*/ null; // 로그인 여부 확인 로직을 구현해야 합니다.
+
+      if (isLoggedIn) {
+        // 로그인 되어 있을 경우 장바구니에 추가하는 로직을 실행합니다.
+        event.target.closest('form').submit();
+      } else {
+        // 로그인이 필요한 알림 메시지를 표시합니다.
+        alert("로그인이 필요합니다.");
+      }
+    }
   
   
   
