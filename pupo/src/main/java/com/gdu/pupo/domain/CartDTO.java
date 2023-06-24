@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartDTO {
   
-	private int cartId;
-	private String id;
-	private LocalDate createdAt;
-	private List<CartItemDTO> cartList;
+  private int cartId;
+  private String id;
+  private LocalDate createdAt;
+  private List<CartItemDTO> cartList;
 }
