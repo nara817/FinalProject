@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gdu.pupo.domain.RegularCategoryDTO;
 import com.gdu.pupo.domain.RegularDetailImgDTO;
 import com.gdu.pupo.domain.RegularMainImgDTO;
 import com.gdu.pupo.domain.RegularProductDTO;
@@ -38,5 +39,7 @@ import com.gdu.pupo.domain.RegularPurchaseDTO;
 	public List<RegularMainImgDTO> getRegularMainImgListInYesterday();
 	public List<RegularDetailImgDTO> getRegularDetailImgListInYesterday();
 	
+	// 카테고리 이름 가져오기
+	public RegularCategoryDTO getRegCategory(int RegularCategory);
 	
 }

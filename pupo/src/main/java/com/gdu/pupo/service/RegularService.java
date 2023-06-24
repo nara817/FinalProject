@@ -37,5 +37,6 @@ public interface RegularService {
   public void getRegModifyReview(int regPurchaseNo, Model model); // 리뷰 수정 페이지 이동 및 기존 작성 내역 가져오기
   public void regModifyReview(RegularReviewDTO regularReviewDTO); // 리뷰 수정 저장
   public Map<String, Object> regDeleteReview(HttpServletRequest request); // 리뷰 삭제
-  public Map<String, Object> regAvgStar(HttpServletRequest request); // 리뷰 평점 평균 구하기
+  public Map<String, Object> regAvgStar(HttpServletRequest request); // 리뷰 평점 평균 구하기erList
+  public void getRegAdminOrderList(HttpServletRequest request, Model model);  // 관리자 전체 주문 리스트 조회
 }

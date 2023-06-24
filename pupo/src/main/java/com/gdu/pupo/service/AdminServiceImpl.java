@@ -2,6 +2,7 @@ package com.gdu.pupo.service;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,6 +162,11 @@ public class AdminServiceImpl implements AdminService {
 			break;
 		}
 		model.addAttribute("page", page);
+		List<RegularCategoryDTO> regularCategoryList = new ArrayList<>();
+	 for(RegularProductDTO reg : regularProduct) { 
+		 regularCategoryList.add(adminMapper.getRegCategory(reg.getRegularCategory()));
+	 }
+	 model.addAttribute("regCategory", regularCategoryList);
 	}
 
 	// 정기구독상품-삭제

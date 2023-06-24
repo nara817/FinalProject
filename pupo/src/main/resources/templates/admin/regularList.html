@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<!-- 아이콘 -->
-<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+<head th:replace="~{/admin/adminMain::headFrag('관리자')}"></head>
+
+<div th:replace="~{/admin/adminMain::topFrag}"></div>
+
+<div th:replace="~{/admin/adminMain::sideFrag}"></div>
 <meta charset="UTF-8">
 <title>관리자: 상품조회</title>
 <style>
@@ -220,18 +221,8 @@
   
   <h1><i class="fa-solid fa-user"></i>상품관리</h1>
   
-  <div>
-    <label for="category">카테고리 선택:</label>
-    <select class="category_select" id="category" name="category">
-      <option value="all">전체</option>
-      <option value="user"></option>
-      <option value="admin"></option>
-      <option value="seller"></option>
-      <option value="all">전체</option>
-    </select>
-  </div>
-  
   <form id="regularForm">
+   <div class="card-body">
     <table id="regularTable">
     <thead>
       <tr>
@@ -250,10 +241,10 @@
       </thead>
       <tbody>
       <!-- 여기에 회원 데이터를 동적으로 추가할 예정입니다 -->
-      <tr th:each="regularProduct : ${regularProduct}">
-        <td><input type="checkbox" name="productIds" value="${regularProduct.regularNo}"></td>
+      <tr th:each="regularProduct, vs: ${regularProduct}">
+        <td><input type="checkbox" name="productIds" th:value="${regularProduct.regularNo}"></td>
         <td th:text="${regularProduct.regularNo}"></td>
-        <td th:text="${regularProduct.regularCategoryName}"></td>
+        <td th:text="${regCategory[vs.index].regularCategoryName}"></td>
         <td th:text="${regularProduct.regularName}"></td>
         <td th:text="${regularProduct.regularSellPrice}"></td>
         <td th:text="${regularProduct.regularOriginPrice}"></td>
@@ -274,10 +265,9 @@
         <td th:utext="${pagination}"></td>
       </tr>
     </table>
+    </div>
     
   </form>
-  <script>
-
-  </script>
+  <div th:replace="~{/admin/adminMain::footerFrag}"></div>  
 </body>
 </html>

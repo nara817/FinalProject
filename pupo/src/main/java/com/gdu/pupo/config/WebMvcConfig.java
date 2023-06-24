@@ -29,7 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
       .addPathPatterns("/regular/regularPayPage.do", "/regular/regularMyOrder.html" ,"/regular/regularPayDetail.html", "/regular/regWriteReview.html")
       .addPathPatterns("/user/logout.do");
     registry.addInterceptor(adminCheckInterceptor)
-    .addPathPatterns("/regular/regularAddPage.html", "/regular/adminRegOrder.do");
+    .addPathPatterns("/regular/regularAddPage.html", "/regular/adminRegOrder.do", "/admin/**");
     
     
     //registry.addInterceptor(loginCheckInterceptor)
