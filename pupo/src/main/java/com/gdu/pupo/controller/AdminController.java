@@ -98,6 +98,8 @@ public class AdminController {
 		// model.addAttribute("user", user);
 		adminService.getRegularListPagination(request, model);
 		return "admin/regularList";
+		
+		
 	}
 
   	// 구독상품 삭제
