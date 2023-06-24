@@ -1,162 +1,110 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
-<!--/*
-  1. Variable Expressions           : ${...} (값을 나타낼 때 사용한다.)
-  2. Selection Variable Expressions : *{...} (객체의 특정 필드 값을 나타낼 때 사용한다.)
-  3. Message Expressions
-  4. Link URL Expressions           : @{...} (경로 작성할 때 사용한다.)
-  5. Fragment Expressions           : ~{...} (조각을 사용할 때 사용한다.)
-*/-->
-
-<!--/*
-  ${name}             : request attribute      model.addAttribute("name", "킹콩")
-                                               redirectAttributes.addFlashAttribute("name", "킹콩")
-  ${param.name}       : request parameter      /board/detail.do?name=킹콩
-  ${session.name}     : session attribute      session.setAttribute("name", "킹콩")
-  ${application.name} : application attribute  servletContext.setAttribute("name", "킹콩")
-*/-->
-
+<style>
+.fnRowButton {
+cursor: pointer;
+}
+</style>
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
 <head th:replace="~{/layout/header::headFrag('고객센터')}"></head>
-<body>
-  <!--/* /layout/header.html의 gnbFrag조각으로 div 태그를 바꾼다. */-->
-  <div th:replace="~{/layout/header::gnbFrag}"></div>
+<div th:replace="~{/layout/header::gnbFrag}"></div>
   
-  <main>
-    <header>
-      <span class="text-muted pl-7" th:text="|HOME > 고객센터 >|"></span>
-      <span class="text-dark" th:text="|1:1문의|"></span>
-      <div>
-      <h1 class="text-center font-weight-bold pt-5">1:1문의</h1></div>
-    </header>
-    <section class="pt-5 pl-7">
-     <div style="float: left; width: 15%;">
-      <aside  class="align-items-center" >
-        <h3 style="display:none;">서브메뉴</h3>
-        <ul>
-            <li id="notice">
-            <a th:href="@{/customerCenter/notice.html}">공지사항</a>
-            </li>
-            <li id="faq">
-            <a th:href="@{/customerCenter/qna.html}">자주 묻는 질문</a>
-            </li>
-            <li id="myPersonalInquery">
-            <a th:href="@{/customerCenter/qna.html}">1:1 문의</a>
-            </li>
-            <li id="qna">
-            <a href="/serviceCenter/qna">고객의 소리(미완성 접근금지)</a>
-            </li>
-        </ul>
-        <aside>
-            <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="verBtnradio1" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="verBtnradio1">공지사항</label>
-          
-            <input type="radio" class="btn-check" name="btnradio" id="verBtnradio2" autocomplete="off">
-            <label class="btn btn-outline-primary" for="verBtnradio2">자주 묻는 질문</label>
-          
-            <input type="radio" class="btn-check" name="btnradio" id="verBtnradio3" autocomplete="off">
-            <label class="btn btn-outline-primary" for="verBtnradio3">1:1문의</label>
-            
-            <input type="radio" class="btn-check" name="btnradio" id="verBtnradio4" autocomplete="off">
-            <label class="btn btn-outline-primary" for="verBtnradio4">고객의소리</label>
-            </div>
-        </aside>
-          
-        
-        
-        
-        
-        
-        <div >
-          <span>고객센터<strong>1800-0700</strong></span>
-          <p>평일, 토요일 7:00~18:00<br>공휴일 7시 ~ 13시 (일요일 휴무)</p>
-        </div>
-      </aside>
-      </div>
-      
-      <div>
-      <div class="body px-4 px-lg-5" style="float: left; width: 65%;">
-       <div class="pd-r-68" >
-        <div class="subcontent pl-12 py-3" >
-          <h3 style="display:none;">자주묻는질문카테고리</h3>
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-              <label class="btn btn-outline-primary" for="btnradio1">전체</label>
-            
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio2">상품</label>
-            
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio3">배송</label>
-              
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio4">회원정보</label>
-              
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio5">주문/결제</label>
-              
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio6">취소/교환/반품</label>
-            </div>
-        </div>
-        
-        <div class="col-sm-7 mb-3">분류
-            <select class="form-select" aria-label="Default select example">
-              <option selected>선택</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-        </div>
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="주문번호" aria-label="Recipient's username" aria-describedby="button-addon2"  readonly>
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2">조회</button>
-      </div>
-        <div class="row g-2">
-        <div class="col-sm-7">
-          <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" >
-            <label for="floatingInputGrid">이메일</label>
+<body class="goto-here">
+  <div class="ftco-section">
+    <div class="container">
+      <header> 
+        <div class="nav navbar">
+          <div class="row section-header-breadcrumb ftco-animate">
+            <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+            <div class="breadcrumb-item"><a href="#">Posts</a></div>
+            <div class="breadcrumb-item">All Posts</div>
           </div>
         </div>
-          <div class="col-md">
-            <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    답변 알람 수신
-  </label>
-</div>
+        <h1 class="ftco-animate text-center font-weight-bold pt-5">고객의 소리</h1>
+      </header>
+      <section>
+        <div class="row aline-items-center">
+          <div class="col-lg-2 ftco-animate">
+            <div class=" ftco-animate mt-5">
+              <h3 class="heading blind">카테고리</h3>
+                <ul class="categories">
+                  <li><a th:href="@{/customerCenter/notice.html}">공지사항</a></li>
+                  <li><a th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a></li>
+                  <li><a th:href="@{/customerCenter/qna.html}">1:1문의</a></li>
+                  <li><a th:href="@{/customerCenter/voc.html}">고객의 소리</a></li>
+                </ul>
+            </div>
+            <div class=" ftco-animate mt-5">
+              <h4 class="heading">고객센터</h4>
+              <p><strong>7777-7777</strong><br>평일, 토요일 7:00~18:00<br>공휴일 7시 ~ 13시 <br>(일요일 휴무)</p>
+            </div>
+          </div>
+          <div class="col-lg-10 ftco-animate">
+            <div class="row mt-4">
+              <div class="card-body" style="width: 100%">
+                <div class="comment-form-wrap pt-5 ">
+                <form action="#" class="p-6 bg-white">
+                  <div class="form-group search-form">
+                    <label for="title">제목</label>
+                    <input type="text" class="form-control" id="title">
+                  </div>
+                  <div class="form-group row mb-4">
+                          <label for="noticeCategory" class="col-form-label col-12 col-md-3 col-lg-3">카테고리</label>
+                          <div class="col-sm-12 col-md-12">
+                            <select name="faqCategory" id="noticeCategory" required="required" class="form-control selectric">
+                              <option value="전체">전체</option>
+                              <option value="상품">상품</option>
+                              <option value="배송">배송</option>
+                              <option value="회원정보">회원정보</option>
+                              <option value="주문/결제">주문/결제</option>
+                              <option value="취소/교환/반품">취소/교환/반품</option>
+                            </select>
+                          </div>
+                        </div>
+                  <div class="form-group">
+                    <label for="website">휴대폰번호</label>
+                    <input type="url" class="form-control" id="website">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="message">내용</label>
+                    <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group">
+                      <div class="card">
+                        <div class="card-body">
+                          <form action="#" class="dropzone" id="mydropzone">
+                            <div class="fallback">
+                              <input name="file" type="file" multiple />
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                      <button class="btn py-3 px-4 btn-primary" id="swal-2">작성완료</button>
+                    </div>
+                </form>
+              </div>
+              </div>
+            </div>
           </div>
         </div>
-        <hr>
-        <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-          <label for="floatingTextarea">제목</label>
-        </div>
-        <hr>
-        <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-          <label for="floatingTextarea2">내용</label>
-        </div>
-        <hr>
-        <div>첨부파일</div>
-        * 파일형식은 이미지파일(jpg, png)로 제출 가능합니다.
-        * 파일 용량은 최대 10MB 까지 가능합니다.
- 
-        * 1:1 문의하기 내역은 마이페이지 > 1:1 문의내역에서 확인할 수 있습니다.
-        <span><button>취소</button><button>등록</button></span>
-        
-       </div>
-       </div>
-       </div>
-       
-       
-       
-      
-    </section>
-  </main>
- 
+      </section>
+    </div>
+  </div>
+  <div th:replace="~{/layout/footer::gnbFooter}"></div> 
+  <div th:replace="~{/layout/sweetAlert::gnbSweetAlert}"></div> 
 </body>
+<script th:inline="javascript">
+$().ready(function () {
+	  $(document).ready(function() {
+	      $("#swal-2").click(function () {
+	        swal("작성완료","접수가 완료되었습니다","success");
+	        });
+	      });
+	  });
+ 
+</script>
 </html>

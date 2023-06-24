@@ -53,7 +53,7 @@
             var id = resData.findUser.id;
             id = id.substring(0, 3) + '*****';
             moment.locale('ko-KR');
-            $('#findResult').html('회원님의 아이디는 ' + id + '입니다.<br>(가입일 : ' + moment(resData.findUser.joinedAt).format("YYYY년 MM월 DD일 a h:mm:ss") + ')');
+            $('#findResult').html('회원님의 아이디는 ' + id + '입니다.<br>(가입일 : ' + moment(resData.findUser.joinedAt).htmlat("YYYY년 MM월 DD일 a h:mm:ss") + ')');
           } else {
             $('#findResult').html('일치하는 회원이 없습니다. 입력 정보를 확인하세요.');
           }
@@ -66,5 +66,36 @@
     fnFindId();
   });
 </script>
+<<<<<<< HEAD
+</head>
+<body>
+  <div>
+    <h1>아이디 찾기</h1>
+    <div>
+      <label for="name">*이름</label>
+      <input type="text" name="name" id="name" required="required">
+    </div>
+    <div>
+      <label for="email">*이메일</label>
+      <input type="text" name="email" id="email" required="required">
+    </div>
+    <div>
+      <input type="button" th:value="아이디찾기" id="btnFindId" >
+    </div>
+    <div>
+      <a th:href="@{/user/login.html}">로그인</a> |
+      <a th:href="@{/user/findPw.html}">비밀번호 찾기</a> |
+      <a th:href="@{/user/agree.html}">회원가입</a>
+    </div>
+  </div>
+  <hr>
+  <div id="findResult" th:if="@{/resData.findUser != null}">
+    <th:block th:text="'회원님의 아이디는 ' + @{/resData.findUser.id.substring(0, 3)} + '*****' + '입니다.<br>(가입일 : ' + @{/#dates.htmlat(resData.findUser.joinedAt, 'yyyy년 MM월 dd일 a hh:mm:ss')} + ')'"></th:block>
+  </div>
+  <div id="findResult" th:if="@{/resData.findUser == null}">
+    <th:block th:text="'일치하는 회원이 없습니다. 입력 정보를 확인하세요.'"></th:block>
+  </div>
+=======
+>>>>>>> b65e3b0bc936425f7659b9e471e42b5318ba1441
 </body>
 </html>

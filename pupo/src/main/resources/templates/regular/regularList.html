@@ -85,11 +85,11 @@
 <script>
 
 $(document).ready(function() {
-	  $('.product').each(function() {
-	    var regularNo = $(this).find('input[name="regularNo"]').val();
-	    fnAvgStar(regularNo, $(this));
-	  });
-	});
+    $('.product').each(function() {
+      var regularNo = $(this).find('input[name="regularNo"]').val();
+      fnAvgStar(regularNo, $(this));
+    });
+  });
   function fnAvgStar(regularNo) {
        $.ajax({
              url: '/regular/regAvgStar.do',  
@@ -99,9 +99,9 @@ $(document).ready(function() {
              },
              dataType: 'json',
              success: function(resData){
-            	 if(resData.regAvgStar != 0){
-            	  $('#avg-star-' + regularNo).text('평점: ' + resData.regAvgStar  + '/5');
-            	 }
+               if(resData.regAvgStar != 0){
+                $('#avg-star-' + regularNo).text('평점: ' + resData.regAvgStar  + '/5');
+               }
              }
        })
     }

@@ -13,5 +13,5 @@ public class QnaAttachDTO {
   private String originName;
   private String filesystemName;
   private int hasThumbnail;
-  private int itemNo;
+  private int qnaNo;
 }

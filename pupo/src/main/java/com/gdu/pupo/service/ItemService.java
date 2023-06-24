@@ -22,4 +22,8 @@ public interface ItemService {
   public int itemDelete(int itemId);                                      // 상품 삭제
   
   
+<<<<<<< HEAD
 } 
+=======
+} 
+>>>>>>> 185fbfe572c666a9718feb98ff1a1eb7e16ecc82

@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,103 +18,105 @@ import com.gdu.pupo.service.ItemService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RequestMapping(value="/" , method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping("/item")
 @Controller
 public class ItemController {
 
   private final ItemService itemService;
-
-  @GetMapping("item/list")
-  public String list(Model model) {
-    List<ItemDTO> itemList = itemService.itemList();
+  
+  // 스토어 메인
+  @GetMapping("/storeList.html")
+  public String storeList(Model model) {
+    List<ItemDTO> itemList = itemService.getAllItems();
     model.addAttribute("itemList", itemList);
-    return "item/list";
+    return "item/storeList";
   }
-
-  @GetMapping("item/item")
-  public String detail(int itemNo, Model model) {
-    itemService.itemListByNo(itemNo, model);
-    return "item/detail";
+  
+  
+  @GetMapping("/storeDetail.html")
+  public String storeDetail(int itemId, Model model) {
+    itemService.getItem(itemId, model);
+    return "item/storeDetail";
   }
-
-  /*
-   * @GetMapping("item/detail") public String detail(HttpServletRequest request,
-   * Model model) { model.addAttribute("itemDetail",
-   * itemService.itemListByNo(request)); return "item/detail"; }
-   */
-  @GetMapping("seller/main")
-  public String sellerMain(Model model) {
-    List<ItemDTO> itemList = itemService.itemList();
+  
+  // 판매자 페이지
+  @GetMapping("/itemManage.html")
+  public String Manage(Model model) {
+    return "item/itemManage";
+  }
+  
+  // 상품 등록 페이지
+  @GetMapping("/itemRegister.html")
+  public String itemRegist(Model model) {
+    return "item/itemRegister";
+  }
+  
+  // 상품 리스트 페이지
+  @GetMapping("/itemList.html")
+  public String itemList(Model model) {
+    List<ItemDTO> itemList = itemService.getAllItems();
     model.addAttribute("itemList", itemList);
-    return "seller/main";
+    return "item/itemList";
   }
-
-  @GetMapping("seller/list")
-  public String selleList(Model model) {
-    List<ItemDTO> itemList = itemService.itemList();
-    model.addAttribute("itemList", itemList);
-    return "seller/list";
+  
+  // 카테고리별 페이지
+  
+  @GetMapping("/categoryList.html")
+  public String categoryList(int categoryId, Model model) {
+    List<ItemDTO> categoryList = itemService.getItemsByCategoryId(categoryId);
+    model.addAttribute("categoryList", categoryList);
+    return "item/categoryList";
   }
-
-  @GetMapping("seller/register.html")
-  public String register() {
-    return "seller/register";
-  }
-
-  @GetMapping("seller/detail")
-  public String sellerDetail(int itemNo, Model model) {
-    itemService.itemListByNo(itemNo, model);
-    return "seller/detail";
-  }
-  /*
-   * @GetMapping("seller/detail") public String sellerDetail(HttpServletRequest
-   * request, Model model) { model.addAttribute("itemDetail",
-   * itemService.itemListByNo(request)); return "seller/detail"; }
-   */
-
-  @PostMapping("seller/add.do")
-  public String add(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
-    int registerResult = itemService.itemRegister(multipartRequest);
+  
+  
+  // 상품 등록
+  @PostMapping("/itemRegister.do")
+  public String insertItem(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
+    int registerResult = itemService.insertItem(multipartRequest);
     redirectAttributes.addFlashAttribute("registerResult", registerResult);
-    return "redirect:/seller/list";
+    return "redirect:/item/itemList.html";
   }
-
-   @PostMapping("seller/modify.html") 
-   public String modify(@RequestParam("itemNo") int itemNo, Model model) {
-     itemService.itemListByNo(itemNo, model);
-     return "seller/modify"; 
-   }
-
-   /*
-    * @GetMapping("seller/editUpload") public String modify(HttpServletRequest
-    * request, Model model) {
-    * model.addAttribute("itemDetail",itemService.itemListByNo(request)); return
-    * "seller/modify"; }
-    */   
-  @PostMapping("seller/modify.do")
-  public String sellerModify(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
+  
+  // 상품 상세
+  @GetMapping("/itemDetail.html")
+  public String itemDetail(int itemId, Model model) {
+    itemService.getItem(itemId, model);
+    return "item/itemDetail";
+  }
+  
+  // 상품 이미지
+  @GetMapping("/itemImgDisplay.do")
+  public ResponseEntity<byte[]> itemDisplay(@RequestParam("itemId") int itemId){
+    return itemService.itemImgDisplay(itemId);
+  }
+  
+  // 상품 상세 이미지
+  @GetMapping("/itemImgDetailDisplay.do")
+  public ResponseEntity<byte[]> itemDetailDisplay(@RequestParam("itemId") int itemId){
+    return itemService.itemImgDetailDisplay(itemId);
+  }
+  
+  // 상품 수정 페이지
+  @GetMapping("/itemModify.html")
+  public String modify(int itemId, Model model) {
+    itemService.getItem(itemId, model);
+    return "item/itemModify";
+  }
+  
+  // 상품 수정
+  @PostMapping("/itemModify.do")
+  public String itemModify(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttribute) {
     int updateResult = itemService.itemUpdate(multipartRequest);
-    redirectAttributes.addFlashAttribute("updateResult", updateResult);
-    return "redirect:/seller/detail?itemNo=" + multipartRequest.getParameter("itemNo");
+    redirectAttribute.addFlashAttribute("updateResult", updateResult);
+    return "redirect:/item/itemDetail.html?itemId=" + multipartRequest.getParameter("itemId");
   }
   
-
-  @PostMapping("seller/remove.do")
-  public String remove(int itemNo, RedirectAttributes redirectAttributes) {
-    int deleteResult = itemService.itemDelete(itemNo);
-    redirectAttributes.addFlashAttribute("deleteResult", deleteResult);
-    return "redirect:/seller/list";
-  }
-  
-  @GetMapping("seller/display")
-  public ResponseEntity<byte[]> display(int attachNo){
-    return itemService.display(attachNo);
-  }
-  
-  @GetMapping("seller/removeAttach")
-  public String removeAttach(int itemNo, int attachNo) {
-    itemService.attachDelete(attachNo);
-    return "redirect:/seller/detail?itemNo=" + itemNo;
+  // 상품 삭제
+  @PostMapping("/itemRemove.do")
+  public String remove(int itemId, RedirectAttributes redirectAttribute) {
+    int deleteResult = itemService.itemDelete(itemId);
+    redirectAttribute.addFlashAttribute("deleteResult", deleteResult);
+    return "redirect:/item/itemList.html";
   }
   
 }

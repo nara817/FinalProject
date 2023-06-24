@@ -11,10 +11,10 @@ public interface FaqService {
   
   //reviewsBoard 서비스
   public void getFaqList(HttpServletRequest request,Model model);
-  public void addFaq(HttpServletRequest request, HttpServletResponse response);
+  public void faqAdd(HttpServletRequest request, HttpServletResponse response);
   public FaqDTO getFaqByNo(HttpServletRequest request);
-  public void modifyFaq(HttpServletRequest request, HttpServletResponse response);
-  public void removeFaq(HttpServletRequest request, HttpServletResponse response);
+  public void faqModify(HttpServletRequest request, HttpServletResponse response);
+  public void faqRemove(HttpServletRequest request, HttpServletResponse response);
   
 
 
