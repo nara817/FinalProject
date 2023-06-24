@@ -13,7 +13,7 @@ public interface FaqMapper {
   //public List<ReviewsDTO> getReviewsList();
   public int insertFaq(FaqDTO faqDTO);
   public FaqDTO selectFaqByNo(int faqNo);
-  public int up(int faqNo);
+  public int faqHitUp(int faqNo);
   public int updateFaq(FaqDTO faqDTO);
   public int deleteFaq(int faqNo);
   

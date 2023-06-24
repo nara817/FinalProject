@@ -9,40 +9,25 @@
 
 <head th:fragment="headFrag(title)">
   <meta charset="UTF-8">
-  <title th:text="${title}"></title>
-   <!-- 부트스트랩테마 -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/animate.css}">
-    
-    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
-    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
-    <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
-
-    <link rel="stylesheet" th:href="@{/css/aos.css}">
-
-    <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
-
-    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
-    <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
-
-    
-    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
-    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/gdu.css}">
-    <!-- 부트스트랩테마 끝-->
-
-    <!-- 원래 파일 -->
-    <script th:src="@{/js/lib/jquery-3.6.4.min.js}"></script>
-    <script th:src="@{/bootstrap-5.0.2/js/bootstrap.min.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/style.css(ver=1.0)}">
-    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2/css/bootstrap.min.css(ver=1.0)}">
-      
-    
+  <title th:text="${title}"></title>
+  <link rel="stylesheet" th:href="@{/css/animate.css}">
+  <link rel="stylesheet" th:href="@{/css/aos.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
+  <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+  <link rel="stylesheet" th:href="@{/css/gdu.css}">
+  <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+  <link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
+  <link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
+  <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+  <link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+  <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body  class="goto-here">
+
+<body class="goto-here">
 
   <!--/*
     div 태그를 조각(fragment)으로 만든다.
@@ -53,7 +38,7 @@
  <div class="goto-here">
   <nav class="navbar navbar-expand-lg navbar-white bg-white" id="ftco-navbar">
       <div class="container">
-      <a  th:href="@{/}" style="font-size: 35px"><strong class="cartt">PullPowerSalad</strong></a>
+      <a  th:href="@{/}" style="font-size: 35px"><strong class="cartt">FullPowerSalad</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu "></span> Menu
         </button>
@@ -70,7 +55,7 @@
                 <a class="dropdown-item customer" th:href="@{/customerCenter/notice.html}">공지사항</a>
                 <a class="dropdown-item customer" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a>
                 <a class="dropdown-item customer" th:href="@{/customerCenter/qna.html}">1:1 문의</a>
-                <a class="dropdown-item customer" th:href="@{/customerCenter/faq.html}">뭐하지..?리얼후기?</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/voc.html}">고객의 소리</a>
               </div>
             </div>
             <li class="nav-item"><a href="cart.html" class="nav-link cartt"><span class="icon-shopping_cart"></span>[0]</a></li>
@@ -86,7 +71,7 @@
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
              <li class="nav-item">
-              <div class="text-dark nav-link" 
+              <div class="text-dark nav-link user-select-none"
               style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none"
               th:text="|${session.loginId} 님 반갑습니다|">
               </div>
@@ -106,18 +91,6 @@
                 <a class="aa nav-link" th:href="@{/admin/adminMain.html}">관리자페이지</a>
               </th:block>
             </li>
-<<<<<<< HEAD
-          </ul>
-          <div class="dropdown nav-item">
-            <a  th:href="@{/customerCenter/centerHome.html}" class="text-reset nav-link dropdown-toggle" >고객센터</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" th:href="@{/customerCenter/notice.html}">공지사항</a>
-              <a class="dropdown-item" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a>
-              <a class="dropdown-item" th:href="@{/customerCenter/qna.html}">1:1 문의</a>
-              <a class="dropdown-item" th:href="@{/customerCenter/faq.html}">뭐하지..?리얼후기?</a>
-              <!-- 추가 사항 -->
-              <a class="dropdown-item" th:href="@{/admin/eventCoupon.html}">이벤트</a>
-=======
             </li>
             <div class="dropdown nav-item">
               <a th:href="@{/customerCenter/centerHome.html}" class="aa nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" >고객센터</a>
@@ -125,9 +98,8 @@
                 <a class="dropdown-item customer" th:href="@{/customerCenter/notice.html}">공지사항</a>
                 <a class="dropdown-item customer" th:href="@{/customerCenter/faq.html}">자주 묻는 질문</a>
                 <a class="dropdown-item customer" th:href="@{/customerCenter/qna.html}">1:1 문의</a>
-                <a class="dropdown-item customer" th:href="@{/customerCenter/faq.html}">뭐하지..?리얼후기?</a>
+                <a class="dropdown-item customer" th:href="@{/customerCenter/voc.html}">고객의 소리</a>
               </div>
->>>>>>> b0735810f8e5c94c2aeb3fb85aaeb43eed1c2032
             </div>
             <li class="nav-item"><a href="cart.html" class="nav-link cartt"><span class="icon-shopping_cart"></span>[0]</a></li>
           </ul>
@@ -146,13 +118,13 @@
             </a>
             </div>
             <div class="nav-item row">
-              <a class="nav-link cartt" th:href="@{regular/regularMain.html}">정기구독</a>
+              <a class="nav-link cartt" th:href="@{/regular/regularList.do}">정기구독</a>
             </div>
             <div class="nav-item row"  >
               <a class="nav-link cartt" th:href="@{item/list.html}">단품구매</a>
             </div>
             <div class="nav-item row" >
-              <a class="nav-link cartt" th:href="@{/admin/eventCoupon.html}">이벤트</a>
+              <a class="nav-link cartt" href="#">이벤트</a>
             </div>
             <div class="nav-item row"  >
               <a class="nav-link cartt" href="#">뭐넣지</a>
@@ -186,38 +158,8 @@
     </nav>
     </div>
     <!-- END nav -->
- 
- 
- 
- 
- 
- 
   </div>
-  
-  <div th:fragment="gnbScript">
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-  
-  <script th:src="@{/js/jquery.min.js}"></script>
-  <script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
-  <script th:src="@{/js/popper.min.js}"></script>
-  <script th:src="@{/js/bootstrap.min.js}"></script>
-  <script th:src="@{/js/jquery.easing.1.3.js}"></script>
-  <script th:src="@{/js/jquery.waypoints.min.js}"></script>
-  <script th:src="@{/js/jquery.stellar.min.js}"></script>
-  <script th:src="@{/js/owl.carousel.min.js}"></script>
-  <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
-  <script th:src="@{/js/aos.js}"></script>
-  <script th:src="@{/js/jquery.animateNumber.min.js}"></script>
-  <script th:src="@{/js/bootstrap-datepicker.js}"></script>
-  <script th:src="@{/js/scrollax.min.js}"></script>
-  <script th:src="@{/js/google-map.js}"></script>
-  <script th:src="@{/js/main.js}"></script>
-  
-   <script th:src="@{/js/lib/jquery-3.6.4.min.js}"></script>
-  
-  </div>
-  
+
   
 </body>
 </html>
