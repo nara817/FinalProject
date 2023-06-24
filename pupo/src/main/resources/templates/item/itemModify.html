@@ -9,6 +9,7 @@
 
 <body>
   <form method="post" enctype="multipart/form-data" th:action="@{/item/itemModify.do}">
+  <input type="hidden" name="itemId" id="itemId" th:value="${item.itemId}"/>
     <div class="container">
       <div class="mainContent" style="margin-top:50px; margin-left:200px;">
         <div class="title">
@@ -65,6 +66,7 @@
       </div>
     </div>
   </form>  
+  <div th:replace="~{/layout/footer::gnbFooter}"></div>
 </body>
  <style>
   td{
