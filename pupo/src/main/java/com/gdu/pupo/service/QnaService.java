@@ -1,6 +1,7 @@
 package com.gdu.pupo.service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -8,7 +9,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public interface QnaService {
   
   public void getQnaList(HttpServletRequest request, Model model);
-  public int qnaAdd(MultipartHttpServletRequest multipartRequest);
+  public void getQnaListAdmin(HttpServletRequest request, Model model);
+  public void qnaAdd(MultipartHttpServletRequest multipartRequest, HttpServletResponse response);
   public void getQnaByNo(int qnaNo, Model model);
   public int qnaModify(MultipartHttpServletRequest multipartRequest);
   public int qnaRemove(int qnaNo);

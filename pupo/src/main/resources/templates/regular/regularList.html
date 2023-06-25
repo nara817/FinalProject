@@ -1,24 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-<link th:href="@{https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap}" rel="stylesheet">
-<link th:href="@{https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap}" rel="stylesheet">
-<link th:href="@{https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap}" rel="stylesheet">
-<link rel="stylesheet" th:href="@{/css/open-iconic-bootstrap.min.css}">
-<link rel="stylesheet" th:href="@{/css/animate.css}">
-<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
-<link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
-<link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
-<link rel="stylesheet" th:href="@{/css/aos.css}">
-<link rel="stylesheet" th:href="@{/css/ionicons.min.css}">
-<link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}">
-<link rel="stylesheet" th:href="@{/css/jquery.timepicker.css}">
-<link rel="stylesheet" th:href="@{/css/flaticon.css}">
-<link rel="stylesheet" th:href="@{/css/icomoon.css}">
-<link rel="stylesheet" th:href="@{/css/style2.css}" />
 <style>
   .sidebar {
     position: fixed;
@@ -33,8 +14,12 @@
 </style>
     
 
+<!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
+<head th:replace="~{/layout/header::headFrag('고객센터')}"></head>
+<div th:replace="~{/layout/header::gnbFrag}"></div>
+
+
 <body>
-  <div th:replace="~{/layout/header::gnbFrag}"></div>
   <form id="frm1" th:action="@{/regular/regularList.do}">
     <div class="d-flex justify-content-end mr-5">
       <input type="text" name="query" id="query" placeholder="구독명검색">

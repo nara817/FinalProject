@@ -12,8 +12,8 @@
       <header> 
         <div class="nav navbar">
           <div class="row section-header-breadcrumb ftco-animate">
-            <div class="breadcrumb-item active"><a href="#">HOME</a></div>
-            <div class="breadcrumb-item"><a href="">고객센터</a></div>
+            <div class="breadcrumb-item active"><a th:href="@{/}">HOME</a></div>
+            <div class="breadcrumb-item"><a th:href="@{/customerCenter/centerHome.html}">고객센터</a></div>
             <div class="breadcrumb-item">1:1문의</div>
           </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="row mt-4">
               <div class="card-body">
                 <div class="comment-form-wrap pt-5 ">
-                <form  enctype="multipart/form-data"  method="post" th:action="@{/customerCenter/qnaAdd.do}" class="p-6 bg-white">
+                <form  id="myForm" enctype="multipart/form-data"  method="post" th:action="@{/customerCenter/qnaAdd.do}" class="p-6 bg-white">
                   <div class="form-group row mb-4">
                           <label for="qnaCategory" class="col-form-label col-12 col-md-3 col-lg-3">분류</label>
                           <div class="col-sm-12 col-md-12">
@@ -62,9 +62,9 @@
                         <div class="search-form ">
                          <label class="form-group" for="disabledTextInput">주문조회</label>
                          <div class="d-flex">
-                            <input type="text" disabled id="disabledTextInput" class="form-control disabled" placeholder="관련된 주문건이 있는 경우 조회하여 선택해 주세요."  >
+                            <input type="text" disabled id="disabledTextInput" class="form-control disabled" placeholder="관련된 주문건이 있는 경우 조회하여 선택해 주세요." >
                             <div class="p-2 ">
-                              <input class="qnaButton" value="조회" type="button" id="button-addon2"></button>
+                              <input class="qnaButton" value="조회" type="button" id="button-addon2" data-toggle="modal" data-target="#exampleModal"></button>
                             </div>
                          </div>
                           </div>
@@ -76,7 +76,8 @@
                     <label for="qnaEmail">이메일</label>
                     <input type="email" class="form-control " id="qnaEmail" name="qnaEmail">
                     <div class="form-group form-check">
-                      <input type="checkbox" class="form-check-input" id="CheckEmail">
+                      <input type="checkbox"  name="qnaEmailAlarmCheck" id="CheckEmail"  value="1" class="form-check-input">
+                      <input type="hidden" name="qnaEmailAlarmCheck" id="CheckEmailDone"  value="0" class="form-check-input">
                       <label  class="form-check-label" for="CheckEmail">이메일 수신 알람</label>
                     </div>
                   </div>
@@ -88,6 +89,7 @@
                         <div class="card-body">
                             <div class="fallback">
                               <input type="file" id="files" name="files" multiple="multiple" onchange="fnFileCheck(this)">
+                              <div>* 각 첨부파일의 최대 크기는 10MB입니다.</div>
                             </div>
                         </div>
                       </div>
@@ -107,11 +109,38 @@
       </section>
     </div>
   </div>
+  
+  
+  <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">주문조회</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+              <button type="button" class="btn btn-primary">선택하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+  
+  
+  
+  
   <div th:replace="~{/layout/footer::gnbFooter}"></div> 
 </body>
 <script th:inline="javascript">
 function fnList() {
-    location.href = '/customerCenter/notice.html';
+    location.href = '/customerCenter/qnaList.html';
   }
 
 function fnFileCheck(vThis){

@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class QnaDTO {
 	
 	  private int qnaNo;
-	  private int sellerCheck;
-    private String id;
+	  private UserDTO sellerCheck;
+    private UserDTO id;
     private String qnaCategory;
     private String qnaTitle;
     private String qnaContent;
@@ -22,10 +22,8 @@ public class QnaDTO {
     private Date qnaModifiedAt;
     private int qnaEmailAlarmCheck;
     private int qnaHit;
-    private int qnaState;
-    private int qnaDepth;
-    private int qnaGroupNo;
-    private int qnaGroupOrder;
+    private int qnaStatus;
+    private UserDTO userDTO;
     
 
 
