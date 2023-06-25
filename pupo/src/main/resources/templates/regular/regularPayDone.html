@@ -1,22 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<!--/*
-  1. Variable Expressions           : ${...} (값을 나타낼 때 사용한다.)
-  2. Selection Variable Expressions : *{...} (객체의 특정 필드 값을 나타낼 때 사용한다.)
-  3. Message Expressions
-  4. Link URL Expressions           : @{...} (경로 작성할 때 사용한다.)
-  5. Fragment Expressions           : ~{...} (조각을 사용할 때 사용한다.)
-*/-->
-
-<!--/*
-  ${name}             : request attribute      model.addAttribute("name", "킹콩")
-                                               redirectAttributes.addFlashAttribute("name", "킹콩")
-  ${param.name}       : request parameter      /board/detail.do?name=킹콩
-  ${session.name}     : session attribute      session.setAttribute("name", "킹콩")
-  ${application.name} : application attribute  servletContext.setAttribute("name", "킹콩")
-*/-->
-
 <style>
         #product > .complete > article {
             margin-top: 16px;
@@ -179,9 +163,9 @@
 </style>
 
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
-<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
-  <div th:replace="~{/layout/header::gnbFrag}"></div>
+<head th:replace="~{/layout/header::headFrag('구독완료')}"></head>
   <body>
+    <div th:replace="~{/layout/header::gnbFrag}"></div>
     <section class="ftco-section ftco-cart">
       <div class="container">
         <div id="wrapper">
@@ -280,10 +264,10 @@
         </div>
       </div>
     </section>
-          <div class="d-flex justify-content-center mb-5" >
-            <button type="button" onclick="btnMain()" class="btn btn-primary btn-lg mr-2">Main</button> <button type="button" onclick="btnMyPage()" class="btn btn-primary btn-lg mr-2">마이페이지</button> <button type="button" onclick="btnList()" class="btn btn-primary btn-lg mr-2">상품리스트</button>
-          </div>
-      
+    <div class="d-flex justify-content-center mb-5" >
+      <button type="button" onclick="btnMain()" class="btn btn-primary btn-lg mr-2">Main</button> <button type="button" onclick="btnMyPage()" class="btn btn-primary btn-lg mr-2">마이페이지</button> <button type="button" onclick="btnList()" class="btn btn-primary btn-lg mr-2">상품리스트</button>
+    </div>
+   <div th:replace="~{/layout/footer::gnbFooter}"></div> 
   </body>
 
   <script>

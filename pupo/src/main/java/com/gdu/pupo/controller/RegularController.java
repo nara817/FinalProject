@@ -47,7 +47,7 @@ public class RegularController {
   public String addRegular(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
     int addResult = regularService.addRegular(multipartRequest);
     redirectAttributes.addFlashAttribute("addResult", addResult);
-    return "redirect:/regular/regularMain.html";
+    return "redirect:/admin/regularList.html";
   }
 
   //리스트 불러오기
@@ -160,6 +160,7 @@ public class RegularController {
     int regShipNo = Integer.parseInt(request.getParameter("regShipNo"));
     model.addAttribute("regPurchaseNo", regPurchaseNo);
     model.addAttribute("regShipNo", regShipNo);
+    regularService.regAgainPay();
     return "/regular/regularChangeDelivery";
   }
   

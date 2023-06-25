@@ -3,9 +3,7 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
-<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
-  <div th:replace="~{/layout/header::gnbFrag}"></div>
-  
+<head th:replace="~{/layout/header::headFrag('나의구독')}"></head>
 <style>
 table {
     border-collapse: collapse;
@@ -39,6 +37,7 @@ th {
 
 </style>  
   <body> 
+  <div th:replace="~{/layout/header::gnbFrag}"></div>
     <section class="ftco-section ftco-cart">
      <div class="container">
       <div class="regi_main">
@@ -115,6 +114,7 @@ th {
      </div>
     </section>
     <div class="d-flex justify-content-center" th:utext="${pagination}"></div>
+   <div th:replace="~{/layout/footer::gnbFooter}"></div> 
   </body>
 <script>
   function checkReview(){
@@ -170,7 +170,7 @@ th {
 		  // 팝업창 post 방식 준비
 		  var url = '/regular/regWriteReview.html';
 		  var windowPopup = "frm";
-		  var features = "scrollbars=yes,width=1000,height=800,location=no, resizable=yes";
+		  var features = "scrollbars=yes,width=700,height=200,location=no, resizable=yes";
 		  var newWindow = window.open(url, windowPopup, features);
 	    // form 요소 생성
 	    var form = $("<form></form>");
