@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.pupo.service.FaqService;
 import com.gdu.pupo.service.NoticeService;
+import com.gdu.pupo.service.QnaService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +29,8 @@ public class CustomerCenterController {
   
   private final FaqService faqService;
   private final NoticeService noticeService;
+  private final QnaService qnaService;
+  
   
   /* 고객센터 홈 */
   @GetMapping("/centerHome.html")
@@ -36,11 +39,97 @@ public class CustomerCenterController {
   }
 
   
-  /* 1:1문의 */
+  
+  
   @GetMapping("/qna.html")
-  public String qna() {
-    return "customerCenter/qna";  
+  public String qna(Model model) {
+      return "customerCenter/qna";
   }
+ 
+  /* 1:1문의글쓴거 더하기 */
+  @PostMapping("/qnaAdd.do")
+  public void qnaAdd(MultipartHttpServletRequest multipartRequest,  HttpServletResponse response) {
+    qnaService.qnaAdd(multipartRequest, response);
+
+  }
+  
+
+  /* 1:1문의 */
+  @GetMapping("/qnaList.html")
+  public String qnaList(HttpServletRequest request, Model model) {
+    //session에 올라간 recordPerPage 값 날려주기
+    if(request.getHeader("referer").contains("qnaList.html") == false) {
+      request.getSession().removeAttribute("recordPerPage");
+    }
+    qnaService.getQnaList(request, model);
+    return "customerCenter/qnaList";  
+  }
+  
+  /* 1:1문의 - 관리자 */
+  @GetMapping("/qnaListAdmin.html")
+  public String qnaListAdmin(HttpServletRequest request, Model model) {
+    //session에 올라간 recordPerPage 값 날려주기
+    if(request.getHeader("referer").contains("qnaListAdmin.html") == false) {
+      request.getSession().removeAttribute("recordPerPage");
+    }
+    qnaService.getQnaListAdmin(request, model);
+    return "customerCenter/qnaListAdmin";  
+  }
+  
+  
+  /*
+  @GetMapping("/list.do")
+  public String list(HttpServletRequest request, Model model) {
+    blogService.loadBlogList(request, model);
+    return "blog/list";
+  }
+  
+  @GetMapping("/write.form")
+  public String write() {
+    return "blog/write";
+  }
+  
+ 
+  @ResponseBody
+  @PostMapping(value="/imageUpload.do", produces="application/json")
+  public Map<String, Object> imageUpload(MultipartHttpServletRequest multipartRequest) {
+    return blogService.imageUpload(multipartRequest);
+  }
+  
+  @GetMapping("/increseHit.do")
+  public String increseHit(@RequestParam(value="blogNo", required=false, defaultValue="0") int blogNo) {
+    int increaseResult = blogService.increaseHit(blogNo);
+    if(increaseResult == 1) {
+      return "redirect:/blog/detail.do?blogNo=" + blogNo;
+    } else {
+      return "redirect:/blog/list.do";
+    }
+  }
+  
+  @GetMapping("/detail.do")
+  public String detail(@RequestParam(value="blogNo", required=false, defaultValue="0") int blogNo
+                     , Model model) {
+    blogService.loadBlog(blogNo, model);
+    return "blog/detail";
+  }
+  
+  
+  */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   /* 고객의 소리 */
@@ -69,13 +158,11 @@ public class CustomerCenterController {
   
   /* notice 글쓴거 더하기 */
   @PostMapping("/noticeAdd.do")
-  public String noticeAdd(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
-    int addResult = noticeService.noticeAdd(multipartRequest);
-    redirectAttributes.addFlashAttribute("addResult", addResult);
-    return "redirect:/customerCenter/notice.html";
+  public void noticeAdd(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+    noticeService.noticeAdd(multipartRequest, response);
   }
-  
-  
+
+
   // notice디테일 화면가기
   @GetMapping("/noticeDetail.html")
   public String noticeDetail(@RequestParam(value="noticeNo", required=false, defaultValue="0") int noticeNo

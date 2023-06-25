@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public interface NoticeService {
   
   public void getNoticeList(HttpServletRequest request, Model model);
-  public int noticeAdd(MultipartHttpServletRequest multipartRequest);
+  public void noticeAdd(MultipartHttpServletRequest multipartRequest, HttpServletResponse response);
   public void getNoticeByNo(int noticeNo, Model model);
   public int noticeModify(MultipartHttpServletRequest multipartRequest);
   public int noticeRemove(int noticeNo);

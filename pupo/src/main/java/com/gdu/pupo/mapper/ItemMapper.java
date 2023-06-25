@@ -28,9 +28,8 @@ public interface ItemMapper {
   public int updateItem(ItemDTO itemDTO);                           // 상품 수정
   public int deleteItem(int itemId);                                // 상품 삭제
  
-  public int editItemImg(ItemImgDTO itemImgDTO); 					 // 이미지 수정
-  public int editItemImgDetail(ItemImgDetailDTO itemImgDetailDTO);	 // 디테일 이미지  수정
+  public void editItemImg(ItemImgDTO itemImgDTO); 
+  public void editItemImgDetail(ItemImgDetailDTO itemImgDetailDTO);   // 디테일 이미지  수정
 
 
 }
-

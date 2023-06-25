@@ -2,7 +2,11 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
-<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+<head th:replace="~{/layout/header::headFrag('FullPowerSalad')}"></head>
+
+<!--/* /layout/header.html의 gnbFrag조각으로 div 태그를 바꾼다. */-->
+<div th:replace="~{/layout/header::gnbFrag}"></div>
+
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap}" rel="stylesheet">
@@ -33,10 +37,6 @@
           </div>
         </div>
       </div>
-    </div>
-      <a th:href="@{/item/storeCart.html}">장바구니</a>
-    <div>
-    
     </div>
     
     <section class="ftco-section">
@@ -89,7 +89,7 @@
         </div>
       </div>
     </section>
-
+  <div th:replace="~{/layout/footer::gnbFooter}"></div>
 </body>
 
 </html>

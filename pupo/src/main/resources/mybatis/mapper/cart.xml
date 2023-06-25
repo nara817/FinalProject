@@ -31,7 +31,6 @@
     , #{itemDTO.itemId}
     , #{quantity}
   )
-  
 
 </insert>
 
@@ -42,7 +41,6 @@
       ON I.ITEM_ID = C.ITEM_ID
    WHERE C.ID = #{id} 
 </select>
-   
    
 <!-- 카트 생성 -->
 <insert id="createCart" parameterType="String">
@@ -75,8 +73,6 @@
      </foreach>
    </where>
 </delete>
-
-
 
 <!-- 카트 조회 -->
 <select id="getCartItemById" parameterType="string" resultType="CartItemDTO">

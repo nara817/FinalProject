@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.core.io.FileSystemResource;
@@ -124,110 +126,117 @@ public class NoticeServiceImpl implements NoticeService {
   // notice 글 작성
   @Transactional
   @Override
-  public int noticeAdd(MultipartHttpServletRequest multipartRequest) {
-  
-  /* Notice 테이블에 NoticeDTO 넣기 */
-  
-  // 카테고리, 제목, 내용  파라미터
-  String noticeCategory = multipartRequest.getParameter("noticeCategory");
-  String noticeTitle = multipartRequest.getParameter("noticeTitle");
-  String noticeContent = multipartRequest.getParameter("noticeContent");
-  
-  // DB로 보낼 NoticeDTO 만들기
-  NoticeDTO noticeDTO = new NoticeDTO();
-  noticeDTO.setNoticeCategory(noticeCategory);
-  noticeDTO.setNoticeTitle(noticeTitle);
-  noticeDTO.setNoticeContent(noticeContent);
-  
-  // DB로 NoticeDTO 보내기
-  int addResult = noticeMapper.noticeAdd(noticeDTO);  // <selectKey>에 의해서 uploadDTO 객체의 uploadNo 필드에 UPLOAD_SEQ.NEXTVAL값이 저장된다.
-  
-  /* noticeAttach 테이블에 noticeAttachDTO 넣기 */
-  
-  // 첨부된 파일 목록
-  List<MultipartFile> files = multipartRequest.getFiles("files");  // <input type="file" name="files">
-  
-  // 첨부가 없는 경우에도 files 리스트는 비어 있지 않고,
-  // [MultipartFile[field="files", filename=, contentType=application/octet-stream, size=0]] 형식으로 MultipartFile을 하나 가진 것으로 처리된다.
-  
-  // 첨부된 파일 목록 순회
-  for(MultipartFile multipartFile : files) {
-    
-    // 첨부된 파일이 있는지 체크
-    if(multipartFile != null && multipartFile.isEmpty() == false) {
-      
-      // 예외 처리
+  public void noticeAdd(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
       try {
-        
-        /* HDD에 첨부 파일 저장하기 */
-        
-        // 첨부 파일의 저장 경로
-        String path = myFileUtil.getPath();
-        
-        // 첨부 파일의 저장 경로가 없으면 만들기
-        File dir = new File(path);
-        if(dir.exists() == false) {
-          dir.mkdirs();
-        }
-        
-        // 첨부 파일의 원래 이름
-        String originName = multipartFile.getOriginalFilename();
-        originName = originName.substring(originName.lastIndexOf("\\") + 1);  // IE는 전체 경로가 오기 때문에 마지막 역슬래시 뒤에 있는 파일명만 사용한다.
-        
-        // 첨부 파일의 저장 이름
-        String filesystemName = myFileUtil.getFilesystemName(originName);
-        
-        // 첨부 파일의 File 객체 (HDD에 저장할 첨부 파일)
-        File file = new File(dir, filesystemName);
-        
-        // 첨부 파일을 HDD에 저장
-        multipartFile.transferTo(file);  // 실제로 서버에 저장된다.
-        
-        /* 썸네일(첨부 파일이 이미지인 경우에만 썸네일이 가능) */
-        
-        // 첨부 파일의 Content-Type 확인
-        String contentType = Files.probeContentType(file.toPath());  // 이미지 파일의 Content-Type : image/jpeg, image/png, image/gif, ...
-    
-        // DB에 저장할 썸네일 유무 정보 처리
-        boolean hasThumbnail = contentType != null && contentType.startsWith("image");
-        
-        // 첨부 파일의 Content-Type이 이미지로 확인되면 썸네일을 만듬
-        if(hasThumbnail) {
-          
-          // HDD에 썸네일 저장하기 (thumbnailator 디펜던시 사용)
-          File thumbnail = new File(dir, "s_" + filesystemName);
-          Thumbnails.of(file)
-          .size(50, 50)
-          .toFile(thumbnail);
-          
-        }
-        
-        /* DB에 첨부 파일 정보 저장하기 */
-        
-        // DB로 보낼 AttachDTO 만들기
-        NoticeAttachDTO noticeAttachDTO = new NoticeAttachDTO();
-        noticeAttachDTO.setFilesystemName(filesystemName);
-        noticeAttachDTO.setHasThumbnail(hasThumbnail ? 1 : 0);
-        noticeAttachDTO.setOriginName(originName);
-        noticeAttachDTO.setPath(path);
-        noticeAttachDTO.setNoticeNo(noticeDTO.getNoticeNo());
+          /* Notice 테이블에 QnaDTO 넣기 */
+
+          // 카테고리, 제목, 내용 파라미터
+        String noticeCategory = multipartRequest.getParameter("noticeCategory");
+        String noticeTitle = multipartRequest.getParameter("noticeTitle");
+        String noticeContent = multipartRequest.getParameter("noticeContent");
+          // DB로 보낼 QnaDTO 만들기
+        // DB로 보낼 NoticeDTO 만들기
+        NoticeDTO noticeDTO = new NoticeDTO();
+        noticeDTO.setNoticeCategory(noticeCategory);
+        noticeDTO.setNoticeTitle(noticeTitle);
+        noticeDTO.setNoticeContent(noticeContent);
         
         
-        System.out.println(noticeAttachDTO + "입니다.");
-        // DB로 AttachDTO 보내기
-        noticeMapper.noticeAddAttach(noticeAttachDTO);
+        // DB로 NoticeDTO 보내기
+        int addResult = noticeMapper.noticeAdd(noticeDTO);  // <selectKey>에 의해서 uploadDTO 객체의 uploadNo 필드에 UPLOAD_SEQ.NEXTVAL값이 저장된다.
         
-      } catch(Exception e) {
-        e.printStackTrace();
+          /* 게시글 등록 결과 처리 */
+
+          response.setContentType("text/html; charset=UTF-8");
+          PrintWriter out = response.getWriter();
+
+          out.println("<script>");
+          if (addResult == 1) {
+              out.println("alert('게시글이 등록되었습니다.')");
+              out.println("location.href='" + multipartRequest.getContextPath() + "/customerCenter/notice.html'");
+          } else {
+              out.println("alert('게시글이 등록되지 않았습니다.')");
+              out.println("history.back()");
+          }
+          out.println("</script>");
+          out.flush();
+          out.close();
+
+          /* QnaAttach 테이블에 QnaAttachDTO 넣기 */
+
+          // 첨부된 파일 목록
+          List<MultipartFile> files = multipartRequest.getFiles("files");  // <input type="file" name="files">
+
+          // 첨부된 파일 목록 순회
+          for (MultipartFile multipartFile : files) {
+              // 첨부된 파일이 있는지 체크
+              if (multipartFile != null && !multipartFile.isEmpty()) {
+                  try {
+                      /* HDD에 첨부 파일 저장하기 */
+
+                      // 첨부 파일의 저장 경로
+                      String path = myFileUtil.getPath();
+
+                      // 첨부 파일의 저장 경로가 없으면 만들기
+                      File dir = new File(path);
+                      if (!dir.exists()) {
+                          dir.mkdirs();
+                      }
+
+                      // 첨부 파일의 원래 이름
+                      String originName = multipartFile.getOriginalFilename();
+                      originName = originName.substring(originName.lastIndexOf("\\") + 1);
+
+                      // 첨부 파일의 저장 이름
+                      String filesystemName = myFileUtil.getFilesystemName(originName);
+
+                      // 첨부 파일의 File 객체 (HDD에 저장할 첨부 파일)
+                      File file = new File(dir, filesystemName);
+
+                      // 첨부 파일을 HDD에 저장
+                      multipartFile.transferTo(file);
+
+                      /* 썸네일(첨부 파일이 이미지인 경우에만 썸네일이 가능) */
+
+                      // 첨부 파일의 Content-Type 확인
+                      String contentType = Files.probeContentType(file.toPath());
+
+                      // DB에 저장할 썸네일 유무 정보 처리
+                      boolean hasThumbnail = contentType != null && contentType.startsWith("image");
+
+                      // 첨부 파일의 Content-Type이 이미지인 경우 썸네일 생성
+                      if (hasThumbnail) {
+                          // HDD에 썸네일 저장하기 (thumbnailator 디펜던시 사용)
+                          File thumbnail = new File(dir, "s_" + filesystemName);
+                          Thumbnails.of(file)
+                                  .size(50, 50)
+                                  .toFile(thumbnail);
+                      }
+
+                      /* DB에 첨부 파일 정보 저장하기 */
+
+                      // DB로 보낼 QnaAttachDTO 만들기
+                      NoticeAttachDTO noticeAttachDTO = new NoticeAttachDTO();
+                      noticeAttachDTO.setFilesystemName(filesystemName);
+                      noticeAttachDTO.setHasThumbnail(hasThumbnail ? 1 : 0);
+                      noticeAttachDTO.setOriginName(originName);
+                      noticeAttachDTO.setPath(path);
+                      noticeAttachDTO.setNoticeNo(noticeDTO.getNoticeNo());
+
+                      // DB로 QnaAttachDTO 보내기
+                      noticeMapper.noticeAddAttach(noticeAttachDTO);
+
+                  } catch (Exception e) {
+                      e.printStackTrace();
+                  }
+              }
+          }
+      } catch (Exception e) {
+          e.printStackTrace();
       }
-      
-    }
-    
   }
+
   
-  return addResult;
-  
-}
 
 
   @Override
