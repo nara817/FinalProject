@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/css/login.css}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
 <div th:replace="~{/layout/header::gnbFrag}"></div>
+
 
 <body class="goto-here">
   <div class="ftco-section">
@@ -17,8 +19,8 @@
       <div class="wrapper fadeInDown">
         <div id="formContent">
           <div class="login-content">
-          <div style="width: 360px;">
           <!-- form 태그 시작 -->
+            <form id="frmLogin" method="post" th:action="@{/user/login.do}">
               <input type="hidden" name="url" th:value="${url}">
                 <div class="ftco-animate">
                   <div class="heading-section text-center">
@@ -67,7 +69,7 @@
                     <a class="a-link" th:href="@{/user/agree.html}" >회원가입</a>
                   </span>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
