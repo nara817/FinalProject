@@ -114,9 +114,62 @@
 <!-- 공지사항 조회수 -->
   <update id="qnaHitUp" parameterType="int">
     UPDATE QNA
-       SET QNA_HIT = NOTICE_HIT + 1
+       SET QNA_HIT = QNA_HIT + 1
      WHERE QNA_NO = #{qnaNo}
   </update>
+  
+ 
+<!-- 첨부파일 다운로드 카운트 -->
+   <update id="qnaDownloadCount" parameterType="int">
+    UPDATE QNA_ATTACH
+       SET DOWNLOAD_COUNT = DOWNLOAD_COUNT + 1
+     WHERE ATTACH_NO = #{attachNo}
+  </update>
+
+<!--선택한 attachNo에 대한 공지 가져오기  -->
+  <select id="getQnaAttachByNo" parameterType="int" resultType="QnaAttachDTO">
+    SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, QNA_NO
+      FROM QNA_ATTACH
+     WHERE ATTACH_NO = #{attachNo}
+  </select>
+
+    <!-- 선택한 qnaNo에 대한 공지 가져오기 -->
+  <select id="getQnaByNo" parameterType="int" resultType="QnaDTO">
+    SELECT QNA_NO, SELLER_CHECK, ID, QNA_CATEGORY, QNA_TITLE, QNA_CONTENT, QNA_EMAIL, QNA_CREATED_AT, QNA_MODIFIED_AT, QNA_EMAIL_ALARM_CHECK, QNA_HIT, QNA_STATUS
+      FROM QNA
+     WHERE QNA_NO = #{qnaNo}
+  </select> 
+    
+  <!-- 이전글 -->
+  <select id="getPrevQna" parameterType="int" resultType="QnaDTO">
+  <![CDATA[
+    SELECT QNA_NO, SELLER_CHECK, ID, QNA_CATEGORY, QNA_TITLE, QNA_CONTENT, QNA_EMAIL, QNA_CREATED_AT, QNA_MODIFIED_AT, QNA_EMAIL_ALARM_CHECK, QNA_HIT, QNA_STATUS
+      FROM QNA
+     WHERE QNA_NO = (SELECT MAX(QNA_NO)
+                           FROM QNA
+                          WHERE QNA_NO < ${qnaNo})
+  ]]>
+  </select>
+  
+  
+<!-- 다음글 -->
+  <select id="getNextQna" parameterType="int" resultType="QnaDTO">
+  <![CDATA[
+      SELECT QNA_NO, SELLER_CHECK, ID, QNA_CATEGORY, QNA_TITLE, QNA_CONTENT, QNA_EMAIL, QNA_CREATED_AT, QNA_MODIFIED_AT, QNA_EMAIL_ALARM_CHECK, QNA_HIT, QNA_STATUS
+        FROM QNA
+       WHERE QNA_NO = (SELECT MIN(QNA_NO)
+                            FROM QNA
+                           WHERE QNA_NO > ${qnaNo})
+  ]]>
+  </select>
+  
+  <!-- attachList가져오기  -->
+  <select id="getAttachList" parameterType="int" resultType="QnaAttachDTO">
+    SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, QNA_NO
+      FROM QNA_ATTACH
+     WHERE QNA_NO = #{qnaNo}
+  </select>  
+  
   
   
 </mapper>

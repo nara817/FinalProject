@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<!-- 아이콘 -->
-<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+<head th:replace="~{/admin/adminMain::headFrag('관리자')}"></head>
+
+<div th:replace="~{/admin/adminMain::topFrag}"></div>
+
+<div th:replace="~{/admin/adminMain::sideFrag}"></div> 
  <!-- 제이쿼리 ui css -->
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <!-- 제이쿼리 style css -->
- <link rel="stylesheet" href="/resources/demos/style.css">
-<!--  제이쿼리 js -->
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <!-- 제이쿼리 ui js -->
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
- <title>관리자: 쿠폰관리</title>
+ <title></title>
   <style>
     table {
       border-collapse: collapse;
@@ -36,10 +33,6 @@
     }
     tr:nth-child(even) {
       background-color: #f2f2f2;
-    }
-    div {
-      text-align: right;
-      margin-bottom: 10px;
     }
     tr:first-child th,
     tr:first-child td {
@@ -73,22 +66,53 @@
 	$("#clearBtn").click(function() {
 		formClear();
 	});
+
+    // 상품 삭제
+  function couponDelete(button) {
+    event.preventDefault(); // 기본 동작 중지(삭제 후 원래페이지로)
+    var couponDelete = confirm("정말로 삭제하시겠습니까?");
+    if (couponDelete) {
+      // 삭제 작업 수행
+      var row = button.parentNode.parentNode;
+      var couponNo = row.querySelector("td:nth-child(1)").innerText; //상품번호
+          $.ajax({
+              type: 'post',
+              url: '/admin/delCoupon.do',
+              data: {
+            	  couponNo: couponNo
+              },
+              dataType: 'json',
+              success: function(resData) {
+                if(resData.delYn == 1) {
+                  alert(couponNo+"번 쿠폰이 삭제되었습니다.");
+                  location.reload(); 
+                } else {
+                  alert(couponNo+"번 쿠폰 삭제에 실패하였습니다.");
+                }
+              }
+            });
+    }
+  }
 </script>
 
 
 </head>
 <body>
-	
-   <h1><i class="fa fa-tag"></i>쿠폰관리</h1>
-
-    <label for="role">정렬:</label>
-    <select id="role" onchange="sortTable">
-      <option value="all">전체</option>
-      <option value="seller">사용불가</option>
-      <option value="admin">사용가능</option>
-    </select>
-
-  <table id="memberTable">
+	  <div class="card-body">
+    <div id="app">
+      <div class="main-wrapper main-wrapper-1">
+        <!-- Main Content -->
+        <div class="main-content">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>쿠폰관리</h4>
+                                    <div class="card-header-form"></div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
     <tr>
       <th>쿠폰번호</th>
       <th>쿠폰명</th>
@@ -105,13 +129,18 @@
       <td th:text="${coupon.couponBeginAt}"></td>
       <td th:text="${coupon.couponEndAt}"></td>
       <td th:text="${coupon.couponUse == 0 ? '사용불가' : (coupon.couponUse == 1 ? '사용가능' : '')}"></td>
-      <td><button>삭제</button></td>
-
-
+      <td><button type="button" onclick="couponDelete(this)">삭제</button></td>
   </table>
-  <script>
-    // DB에서 회원 데이터를 가져와서 동적으로 테이블에 추가하는 로직을 작성해야 합니다.
-    // 여기에 해당 로직을 작성하면 됩니다.
-  </script>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  <div th:replace="~{/admin/adminMain::footerFrag}"></div>
 </body>
 </html>

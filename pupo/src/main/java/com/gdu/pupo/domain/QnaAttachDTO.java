@@ -12,6 +12,7 @@ public class QnaAttachDTO {
   private String path;
   private String originName;
   private String filesystemName;
+  private int downloadCount;
   private int hasThumbnail;
   private int qnaNo;
 }

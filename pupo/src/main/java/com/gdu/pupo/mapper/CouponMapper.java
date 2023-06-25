@@ -21,4 +21,5 @@ public interface CouponMapper {
 	public CouponUserDTO getCouponUser(int couponNo, String id);
 	public void insertGetEventCoupon(CouponUserDTO couponUser);
 	//public void updateCouponUser(CouponUserDTO couponUser);
+	public int deleteCoupon(CouponDTO couponDTO);
 } 

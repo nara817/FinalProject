@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<meta charset="UTF-8">
-<title>FullPowerSalad : 약관동의</title>
+<!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
+<head th:replace="~{/layout/header::headFrag('fullPowerSalad')}"></head>
 
-<script src="/js/lib/jquery-3.6.4.min.js"></script>
-<head th:replace="~{/layout/header::headFrag('구독상세보기')}"></head>
+
+<!--/* /layout/header.html의 gnbFrag조각으로 div 태그를 바꾼다. */-->
+<div th:replace="~{/layout/header::gnbFrag}"></div>
 <script th:inline="javascript">
 
   // 취소하면 이전 페이지로 돌아간다.
@@ -53,17 +54,16 @@
 <style>
 @charset "UTF-8";
 
-.container h1 {
-  text-align: center;
+*{
+  margin: 0;
+  padding:0;
 }
 
-#input {
-  width: 700px;
-  
-}
+
+
 .box1,.box2,.box3,.box4 {
-  width:500px;
-  height:120px;
+  width:700px;
+  height:300px;
   overflow:scroll;  
   border:1px solid black;
   padding: 0 0.5em;
@@ -73,25 +73,6 @@
 
 
 
-/* float 속성 해제 */
-.clearfix{
-  clear: both;
-}
-
-
-
-.formFooter{
-  display: flex;
-  justify-content: center;
-}
-
-/* 모두동의 check아이콘 */
-.btn span.glyphicon {         
-  opacity: 0;       
-}
-.btn.active span.glyphicon {        
-  opacity: 1;       
-}
 
 #loginBox_input {
   color:#000000;
@@ -105,24 +86,22 @@
   padding: 5px;
   
   /* 텍스트에 그라데이션 효과주기 */
-  background: linear-gradient(to right, #270a09, #8ca6ce);
+  background: linear-gradient(to right, #82ae46, #006800);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   
 }
 </style>
 <body>
-  <div th:replace="~{/layout/header::gnbFrag}"></div>
-<section class="ftco-section ftco-cart">
-  <div class="container">
-  <div class="wrapper fadeInDown">
+  <div class="ftco-section">
+    <div class="container">
   <div id="formContent">
+   <div class="row justify-content-center mb-2 pb-3">
+        <div class="col-md-7 heading-section text-center">
     
-    <div class="loginBox_input">
-       <div class="loginBoxTitle" id="loginBox_input">FullPowerSalad 이용 약관</div>
-  
+    <div class="cartt">
+       <div class="cartt" id="loginBox_input">FullPowerSalad 이용 약관</div>
   </div>
-    
     <form id="frmAgree" th:action="@{/user/join.html}">
       <div class="checkbox_group">
       <div>
@@ -352,16 +331,16 @@
         </div>
       </div>
       </div>
-      <div class="formFooter">
-        <input type="button" value="취소" id="btnCancel">
-        <button>다음</button>
+      <div>
+        <input class="qnaButton" type="button" value="취소" id="btnCancel">
+        <button class="qnaButton">다음</button>
       </div>
     </form>
     </div>
-    
+    </div>
+    </div>
+    </div>
   </div>
-  </div>
-</section>
-     <div th:replace="~{/layout/footer::gnbFooter}"></div> 
+    <div th:replace="~{/layout/footer::gnbFooter}"></div> 
 </body>
 </html>

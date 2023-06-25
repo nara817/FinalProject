@@ -77,6 +77,28 @@ public class CustomerCenterController {
   }
   
   
+  // qna디테일 -관리자 화면가기
+  @GetMapping("/qnaDetailAdmin.html")
+  public String qnaDetail(@RequestParam(value="qnaNo", required=false, defaultValue="0") int qnaNo
+                     , Model model) {
+    qnaService.getQnaByNo(qnaNo, model);
+    return "customerCenter/qnaDetailAdmin";
+  }
+  
+
+  // qna 게시글에 첨부된 이미지 화면에 보여주기
+  @GetMapping("/qnaDisplay.do")
+  public ResponseEntity<byte[]> qnaDisplay(@RequestParam("attachNo") int attachNo) {
+    return qnaService.qnaDisplay(attachNo);
+  }
+
+// qna 게시글 첨부파일 다운받기
+  @GetMapping("/qnaDownload.do")
+  public ResponseEntity<Resource> qnaDownload(@RequestParam("attachNo") int attachNo, @RequestHeader("User-Agent") String userAgent) {
+    return qnaService.qnaDownload(attachNo, userAgent);
+  }
+
+  
   /*
   @GetMapping("/list.do")
   public String list(HttpServletRequest request, Model model) {

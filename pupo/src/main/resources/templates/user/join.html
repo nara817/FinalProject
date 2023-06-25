@@ -327,97 +327,19 @@
   })
 
 </script>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
-  margin: 0;
-  padding: 0;
-}
-
-.wrapper {
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.loginBox_input {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.loginBoxTitle {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-label {
-  font-weight: bold;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-.error-message {
-  color: red;
-  margin-bottom: 10px;
-}
-
-.success-message {
-  color: green;
-  margin-bottom: 10px;
-}
-
-/* 추가 스타일 */
-.formContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.formContent > div {
-  margin-bottom: 10px;
-}
-
-hr {
-  margin: 20px 0;
-  border: none;
-  border-top: 1px solid #ccc;
-}
-
-</style>
 <head th:replace="~{/layout/header::headFrag('구독리스트')}"></head>
 <body>  
-
 <div th:replace="~{/layout/header::gnbFrag}"></div>
+  <section class="ftco-section ftco-cart">
+    <div class="container">
     <div class="wrapper fadeInDown">
       <div id="formContent">
-      
+       <div class="row justify-content-center mb-2 pb-3">
+        <div class="col-md-7 heading-section ">        
+        <div class="card-body ml-10">
         <div class="loginBox_input">
            <div class="loginBoxTitle" id="loginBox_input">Join Page</div>
-  
-    
+
       <div>* 표시는 필수 입력사항입니다.</div>
       
       <hr>
@@ -559,13 +481,18 @@ hr {
         </div>
         <hr>
         <div>
-          <button class="loginButton">가입하기</button>
-          <input class="loginButton" type="button" value="취소하기">
+          <button class="qnaButton">가입하기</button>
+          <input class="qnaButton" type="button" value="취소하기">
         </div>
       </form>
       </div>
     </div>
+     </div>
    </div>
+   </div>
+   </div>
+   </div>
+  </section>
      <div th:replace="~{/layout/footer::gnbFooter}"></div> 
   
 </body>

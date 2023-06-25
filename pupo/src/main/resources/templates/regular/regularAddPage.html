@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="~{/layout/header::headFrag('구독상품등록')}"></head>
+<head th:replace="~{/admin/adminMain::headFrag('관리자- 구독상품등록')}"></head>
+<body>
+<div th:replace="~{/admin/adminMain::topFrag}"></div>
+<div th:replace="~{/admin/adminMain::sideFrag}"></div>
 <style>
   td{
       border-bottom: 1px solid #ddd;
@@ -61,6 +63,9 @@
    
      </style>
 <body>
+<div class="main-content">
+        <div class="section-body">
+          <div class="row mt-5">
   <div class="mainContent" style="margin-top:50px; margin-left:200px;">
     <div class="title">
       <h3>정기상품 등록</h3>
@@ -179,8 +184,11 @@
      </form>
     </div>
   </div>
+  </div>
+  </div>
+  </div>
+  <div th:replace="~{/admin/adminMain::footerFrag}"></div>
 </body>
-
 <script th:inline="javascript">
   // 상품분류 입력 창 열기
   function openCategoryPopup() {

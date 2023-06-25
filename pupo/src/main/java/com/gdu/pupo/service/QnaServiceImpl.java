@@ -2,6 +2,7 @@ package com.gdu.pupo.service;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -293,7 +302,16 @@ public class QnaServiceImpl implements QnaService {
    
     
   }
-  
+  @Override
+  public void getQnaByNo(int qnaNo, Model model) {
+    qnaMapper.qnaHitUp(qnaNo);
+    model.addAttribute("qnaDetail", qnaMapper.getQnaByNo(qnaNo));
+    model.addAttribute("qnaAttachList", qnaMapper.getAttachList(qnaNo));
+    model.addAttribute("prevArticle",  qnaMapper.getPrevQna(qnaNo));
+    model.addAttribute("nextArticle",  qnaMapper.getNextQna(qnaNo));
+    
+  }
+  /*
   @Override
   public int qnaModify(MultipartHttpServletRequest multipartRequest) {
     // TODO Auto-generated method stub
@@ -305,11 +323,87 @@ public class QnaServiceImpl implements QnaService {
     // TODO Auto-generated method stub
     return 0;
   }
+*/  
   
   @Override
-  public void getQnaByNo(int qnaNo, Model model) {
-    // TODO Auto-generated method stub
+  public ResponseEntity<byte[]> qnaDisplay(int attachNo) {
     
+    QnaAttachDTO qnaAttachDTO = qnaMapper.getQnaAttachByNo(attachNo);
+    
+    ResponseEntity<byte[]> image = null;
+    
+    try {
+      File thumbnail = new File(qnaAttachDTO.getPath(), "s_" + qnaAttachDTO.getFilesystemName());
+      image = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(thumbnail), HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return image;
   }
+  
+  
+  @Override
+  public ResponseEntity<Resource> qnaDownload(int attachNo, String userAgent) {
+    
+    // 다운로드 할 첨부 파일의 정보(경로, 원래 이름, 저장된 이름) 가져오기
+    QnaAttachDTO qnaAttachDTO = qnaMapper.getQnaAttachByNo(attachNo);
+    
+    // 다운로드 할 첨부 파일의 File 객체 -> Resource 객체
+    File file = new File(qnaAttachDTO.getPath(), qnaAttachDTO.getFilesystemName());
+    Resource resource = new FileSystemResource(file);
+    
+    // 다운로드 할 첨부 파일의 존재 여부 확인(다운로드 실패를 반환)
+    if(resource.exists() == false) {
+      return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+    }
+    
+    // 다운로드 횟수 증가하기
+    qnaMapper.qnaDownloadCount(attachNo);
+    
+    
+    // 다운로드 되는 파일명(첨부 파일의 원래 이름, UserAgent(브라우저)에 따른 인코딩 세팅)
+    String originName = qnaAttachDTO.getOriginName();
+    try {
+      
+      // IE (UserAgent에 Trident가 포함되어 있다.)
+      if(userAgent.contains("Trident")) {
+        originName = URLEncoder.encode(originName, "UTF-8").replace("+", " ");
+      }
+      // Edge (UserAgent에 Edg가 포함되어 있다.)
+      else if(userAgent.contains("Edg")) {
+        originName = URLEncoder.encode(originName, "UTF-8");
+      }
+      // Other
+      else {
+        originName = new String(originName.getBytes("UTF-8"), "ISO-8859-1");
+      }
+      
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+    
+    // 다운로드 응답 헤더 만들기 (Jsp/Servlet 코드)
+    
+   // MultiValueMap<String, String> responseHeader = new HttpHeaders();
+   // responseHeader.add("Content-Type", "application/octet-stream");
+   // responseHeader.add("Content-Disposition", "attachment; filename=" + originName);
+   // responseHeader.add("Content-Length", file.length() + "");
+    
+
+    // 다운로드 응답 헤더 만들기 (Spring 코드)
+    HttpHeaders responseHeader = new HttpHeaders();
+    responseHeader.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+    responseHeader.setContentDisposition(ContentDisposition
+                                          .attachment()
+                                          .filename(originName)
+                                          .build());
+    responseHeader.setContentLength(file.length());
+    
+    // 응답
+    return new ResponseEntity<Resource>(resource, responseHeader, HttpStatus.OK);
+  }
+  
+  
+  
 
 }

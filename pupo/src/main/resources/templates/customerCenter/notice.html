@@ -79,7 +79,7 @@ cursor: pointer;
                       </th:block>
                     <th:block th:if="${not #lists.isEmpty(noticeList)}">
                       <th:block th:each="notice, vs:${noticeList}" > 
-                        <tr class="btnDedatil" th:data-notice_no="${notice.noticeNo}">
+                        <tr class="btnDedatil" th:data-qna_no="${notice.noticeNo}">
                           <th:block th:if="${notice.noticeCategory == '긴급'}">
                             <td th:text="${notice.noticeCategory}"></td>
                           </th:block>
