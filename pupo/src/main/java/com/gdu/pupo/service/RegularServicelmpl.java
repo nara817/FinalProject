@@ -280,7 +280,7 @@ public class RegularServicelmpl implements RegularService {
     map.put("regularState", regularState);
     int getRegularCount = regularMapper.getRegularCount();
     
-    int recordPerPage = 5;
+    int recordPerPage = 10;
     
     pageUtil.setPageUtil(page, getRegularCount, recordPerPage);
     

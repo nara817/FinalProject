@@ -17,8 +17,8 @@
       <div class="wrapper fadeInDown">
         <div id="formContent">
           <div class="login-content">
+          <div style="width: 360px;">
           <!-- form 태그 시작 -->
-            <form id="frmLogin" method="post" th:action="@{/user/login.do}">
               <input type="hidden" name="url" th:value="${url}">
                 <div class="ftco-animate">
                   <div class="heading-section text-center">
@@ -67,7 +67,7 @@
                     <a class="a-link" th:href="@{/user/agree.html}" >회원가입</a>
                   </span>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>

@@ -57,41 +57,7 @@
   <div th:replace="~{/layout/footer::gnbFooter}"></div> 
 </body>
 <script th:inline="javascript">
-  function fnNewWrite() {
-      location.href='/customerCenter/noticeWrite.html';
-    }
 
-
-
- // recordPerPage의 변경
- $('#recordPerPage').on('change', function(){
-   location.href = '/customerCenter/change/record.do?recordPerPage=' + $(this).val();  // session에 recorePerPage 올리기
- });
- 
- // 세션에 저장된 recordPerPage값으로 <select> 태그의 값을 세팅
- let a = /*[[${session.recordPerPage}]]*/ null;
- if(a === null){
-   $('#recordPerPage').val(10);
- } else {
-   $('#recordPerPage').val(a);
- }
- 
- var frm;
- $(function(){
-   frm = $('#frm');
- })
- 
- function fnRemove(){
-   if(confirm('게시글을 삭제하면 모든 첨부 파일이 함께 삭제됩니다. 그래도 삭제하시겠습니까?') == false){
-     return;
-   }
-   frm.submit();
- }
-
- $('.btnDedatil').on('click', function() {
-      location.href = '/customerCenter/noticeDetail.html?noticeNo=' + $(this).data('notice_no');
-    });
-     
 
 </script>
 </html>

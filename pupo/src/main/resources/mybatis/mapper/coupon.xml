@@ -55,6 +55,12 @@
 	, 1
 	);
 	</insert>
+	<!-- 쿠폰 삭제  -->
+  <delete id="deleteCoupon" parameterType="CouponDTO">
+DELETE
+  FROM COUPON_T
+ WHERE COUPON_NO = #{couponNo};
+  </delete>
 	
 
 	

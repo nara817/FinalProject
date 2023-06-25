@@ -182,16 +182,15 @@
               <div class="ss">
                   <label class="ss_label">검색어</label> 
                     <select name='type' style="height:32px;">
-                    
-                <option value=""
+                <option value="">
                   <c:out value="${pageMaker.cri.type ==null?'selected':''}"/>전체</option>
-                  <option value="O"
+                  <option value="O">
                   <c:out value="${pageMaker.cri.type eq 'O'?'selected':''}"/>주문번호</option>
-                  <option value="I"
+                  <option value="I">
                   <c:out value="${pageMaker.cri.type eq 'I'?'selected':''}"/>상품명</option>
-                  <option value="R"
+                  <option value="R">
                   <c:out value="${pageMaker.cri.type eq 'R'?'selected':''}"/>고객명</option>
-                  <option value="P"
+                  <option value="P">
                   <c:out value="${pageMaker.cri.type eq 'P'?'selected':''}"/>연락처</option>
              </select>
                     <input  type='text' name='keyword' value = '<c:out value="${pageMaker.cri.keyword}"/>'>

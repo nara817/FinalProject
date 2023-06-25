@@ -160,6 +160,7 @@ public class RegularController {
     int regShipNo = Integer.parseInt(request.getParameter("regShipNo"));
     model.addAttribute("regPurchaseNo", regPurchaseNo);
     model.addAttribute("regShipNo", regShipNo);
+    regularService.regAgainPay();
     return "/regular/regularChangeDelivery";
   }
   

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/admin/adminMain::headFrag('관리자- 구독상품등록')}"></head>
+<div th:replace="~{/admin/adminMain::topFrag}"></div>
+<div th:replace="~{/admin/adminMain::sideFrag}"></div>
 <!-- 아이콘 -->
 <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-<meta charset="UTF-8">
-<title>관리자: 상품조회</title>
 <style>
     table {
       border-collapse: collapse;
@@ -51,16 +51,18 @@
     color: green; /* 마우스를 가져다 대면 초록색으로 변경 */
   }   
   </style>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+  <script>
     // 메인페이지로가기 이벤트
     function showText() {
       document.getElementById("hoverText").style.display = "inline";
     }
 
   </script>
-</head>
 <body>
+<div class="main-content">
+        <div class="section-body">
+          <div class="row mt-5">
+
 
   <h3>
     <a class="home" th:href="@{/admin/adminMain.html}" onmouseover="showText()" onmouseout="hideText()">
@@ -113,8 +115,9 @@
     </table>
     
   </form>
-  <script>
-
-  </script>
+  </div>
+  </div>
+  </div>
+    <div th:replace="~{/admin/adminMain::footerFrag}"></div>
 </body>
 </html>

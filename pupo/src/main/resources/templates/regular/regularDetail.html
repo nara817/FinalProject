@@ -4,7 +4,7 @@
 
 
 <!--/* /layout/header.html의 headFrag조각으로 head 태그를 바꾼다. */-->
-<head th:replace="~{/layout/header::headFrag('Welcome')}"></head>
+<head th:replace="~{/layout/header::headFrag('구독상세보기')}"></head>
 <style>
   #product > .view > article {
       width: 100%;
@@ -447,10 +447,10 @@
                 </section>
             </main>
       <hr>            
-              <div th:replace="~{/regular/regularReview::reviewFrag(regReviewList=${regReviewList}, pagination=${pagination}, regularDetail=${regularDetail})}"></div>
+      <div th:replace="~{/regular/regularReview::reviewFrag(regReviewList=${regReviewList}, pagination=${pagination}, regularDetail=${regularDetail})}"></div>
     </div>
        </section>
-       
+   <div th:replace="~{/layout/footer::gnbFooter}"></div> 
  </body>
  <script>
  function fnDown() {

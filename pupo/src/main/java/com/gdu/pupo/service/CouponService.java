@@ -1,6 +1,7 @@
 package com.gdu.pupo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,9 @@ public interface CouponService {
 	
 	// 이벤트 페이지 - 쿠폰 발급
 	public void getEventCoupon(HttpServletRequest request, HttpServletResponse response);
-	
+
+	// 쿠폰 삭제
+	public Map<String, Object> delCoupon(int couponNo);
 	
 	
 

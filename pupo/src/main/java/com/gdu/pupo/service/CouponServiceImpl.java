@@ -1,7 +1,9 @@
 package com.gdu.pupo.service;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.gdu.pupo.domain.CouponDTO;
 import com.gdu.pupo.domain.CouponUserDTO;
+import com.gdu.pupo.domain.RegularProductDTO;
 import com.gdu.pupo.mapper.CouponMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -106,9 +109,20 @@ public class CouponServiceImpl implements CouponService {
 		out.flush();
 		out.close();
 
-	} catch (Exception e) {
-		e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
 
-}
+	// 쿠폰 삭제
+	@Override
+	public Map<String, Object> delCoupon(int couponNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		CouponDTO couponDTO = new CouponDTO();
+		couponDTO.setCouponNo(couponNo);
+		map.put("delYn", couponMapper.deleteCoupon(couponDTO));
+		
+		return map;
+	}
 }
