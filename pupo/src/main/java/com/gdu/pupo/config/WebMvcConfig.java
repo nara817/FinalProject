@@ -5,6 +5,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.gdu.pupo.intercept.AdminCheckInterceptor;
 import com.gdu.pupo.intercept.LoginCheckInterceptor;
 import com.gdu.pupo.util.MyFileUtil;
 
@@ -17,13 +18,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
   // field
   private final LoginCheckInterceptor loginCheckInterceptor;
   private final MyFileUtil myFileUtil;
+  private final AdminCheckInterceptor adminCheckInterceptor;
+  
+  
   
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     
     registry.addInterceptor(loginCheckInterceptor)
-      .addPathPatterns("/bbs/write.html", "/upload/write.html")
+      .addPathPatterns("/regular/regularPayPage.do", "/regular/regularMyOrder.html" ,"/regular/regularPayDetail.html", "/regular/regWriteReview.html")
       .addPathPatterns("/user/logout.do");
+    registry.addInterceptor(adminCheckInterceptor)
+    .addPathPatterns("/regular/regularAddPage.html", "/regular/adminRegOrder.do", "/admin/**");
+    
     
     //registry.addInterceptor(loginCheckInterceptor)
     //  .addPathPatterns("/**")                  // 모든 요청

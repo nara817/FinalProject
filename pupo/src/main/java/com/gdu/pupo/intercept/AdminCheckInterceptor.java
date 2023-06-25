@@ -18,7 +18,8 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
     HttpSession session = request.getSession();
     
     // Admin 체크
-    if(session != null && session.getAttribute("loginId") != "admin") {
+    if(session != null && !"admin".equals((String) session.getAttribute("loginId"))) {
+
       
       // 응답
       response.setContentType("text/html; charset=UTF-8");

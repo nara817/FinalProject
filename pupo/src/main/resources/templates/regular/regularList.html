@@ -68,7 +68,7 @@
               <div class="text py-3 pb-4 px-3 text-center">
                 <h3><a th:href="@{/regular/regularDetail.do(regularNo=${regularList.regularNo})}" th:text="${regularList.regularName}"></a></h3>
                 <div class="d-flex">
-                  <div>
+                  <div class="text py-3 pb-4 px-3 text-center">
                     <p class="price"><span class="mr-2 price" th:text="${#numbers.formatInteger(regularList.regularSellPrice, 3, 'COMMA') + '원'}"></span></p>
                   </div>
                 </div>
