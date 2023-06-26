@@ -221,7 +221,7 @@ public class CustomerCenterController {
   }
 
 // notice 게시글 삭제하기
-  @PostMapping("/noticeRemove.do")
+  @GetMapping("/noticeRemove.do")
   public String noticeRemove(@RequestParam("noticeNo") int noticeNo, RedirectAttributes redirectAttributes) {
     redirectAttributes.addFlashAttribute("removeResult", noticeService.noticeRemove(noticeNo));
     return "redirect:/customerCenter/notice.html";

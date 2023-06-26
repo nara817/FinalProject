@@ -106,7 +106,7 @@
                                     <span class="arrow-bottom"><i class="fa-solid fa-angle-down" style="color: #82ae46;"></i></span>
                                    </div>    
                                 <th:block th:if="${session.loginId != null and session.sellerChk == 2}">
-                                <form class="frm_remove" method="post">
+                                <form class="frm_remove" method="post" th:action="@{/customerCenter/faqRemove.do}">
                                   <input type="hidden" name="faqNo" th:value="${faq.faqNo}">
                                   <button>삭제</button>
                                 </form>
